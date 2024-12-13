@@ -7,7 +7,7 @@ public class Pelicula {
 	private Integer añoProd;
 	private String genero;
 	private Boolean disponible=true;
-	private ArrayList<Reseña> listaReseñas=new ArrayList<Rese�a>();
+	private ArrayList<Reseña> listaReseñas=new ArrayList<Reseña>();
 	
 	private Pelicula (String pNombre,Integer pAñoProd,String pGenero) {
 		this.nombre=pNombre;
