@@ -1,0 +1,8 @@
+Modelo\Reseña.class
+Modelo\Pelicula.class
+Modelo\api.class
+Modelo\Usuario.class
+Controladores\VideoClub.class
+Controladores\GestorUsuarios.class
+Controladores\GestorPeliculas.class
+Modelo\Alquiler.class
