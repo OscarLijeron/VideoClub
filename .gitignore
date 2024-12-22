@@ -9,3 +9,9 @@ bin/
 # Ignorar archivos de configuración del sistema operativo
 Thumbs.db
 .DS_Store
+
+# Ignorar archivos compilados de Java
+*.class
+
+# Ignorar carpetas de salida de Maven y otros sistemas de compilación
+target/
