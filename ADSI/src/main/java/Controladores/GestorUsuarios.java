@@ -22,20 +22,20 @@ public class GestorUsuarios {
 		}
 		return miGestorU;
 	}
-	public void añadirSolicitudPelicula(String pNombre,Integer pAño, String pGenero) {
+	public void aÃ±adirSolicitudPelicula(String pNombre,Integer pAÃ±o, String pGenero) {
 		Optional<Usuario> unUsuario = this.catalogoUsuarios.stream()
 			    .filter(p -> p.esAdmin())
 			    .findFirst();
 
 			if (unUsuario.isPresent()) {
 			    Usuario admin = unUsuario.get();
-			    Pelicula pPeli= new Pelicula(pNombre,pAño,pGenero);
-			    this.BD.AñadirPeliSol(pNombre, pGenero, pAño);
-			    int idPeli=this.BD.consultarIdPelicula(pNombre, pAño, pGenero);
-			    this.BD.AñadirSolicitudPeli(admin.getId(),idPeli);
-			    admin.AñadirSolicitudPelicula(pPeli);
+			    Pelicula pPeli= new Pelicula(pNombre,pAÃ±o,pGenero);
+			    this.BD.AÃ±adirPeliSol(pNombre, pGenero, pAÃ±o);
+			    int idPeli=this.BD.consultarIdPelicula(pNombre, pAÃ±o, pGenero);
+			    this.BD.AÃ±adirSolicitudPeli(admin.getId(),idPeli);
+			    admin.AÃ±adirSolicitudPelicula(pPeli);
 			} else {
-			    System.out.println("No se encontró ningún usuario administrador.");
+			    System.out.println("No se encontro ningun usuario administrador.");
 			}
 		
 	}

@@ -24,14 +24,14 @@ public class VideoClub {
 		// TODO Auto-generated method stub
 
 	}
-	public void añadirPeliAlCatalogo(String pNombre,Integer pAñoProd,String pGenero) {
-		Pelicula pPeli=new Pelicula(pNombre,pAñoProd,pGenero);
-		this.BD.AñadirPeli(pNombre, pGenero, pAñoProd);
-		this.gestorP.añadirPeliAlCatalogo(pPeli);	
+	public void aÃ±adirPeliAlCatalogo(String pNombre,Integer pAÃ±oProd,String pGenero) {
+		Pelicula pPeli=new Pelicula(pNombre,pAÃ±oProd,pGenero);
+		this.BD.AÃ±adirPeli(pNombre, pGenero, pAÃ±oProd);
+		this.gestorP.aÃ±adirPeliAlCatalogo(pPeli);	
 	}
-	public void eliminarSolicitudPelicula(Integer pIdUsuario,String pNombre,Integer pAñoProd,String pGenero) {
-		Pelicula pPeli=new Pelicula(pNombre,pAñoProd,pGenero);
-		int idPeli=this.BD.consultarIdPelicula(pNombre, pAñoProd, pGenero);
+	public void eliminarSolicitudPelicula(Integer pIdUsuario,String pNombre,Integer pAÃ±oProd,String pGenero) {
+		Pelicula pPeli=new Pelicula(pNombre,pAÃ±oProd,pGenero);
+		int idPeli=this.BD.consultarIdPelicula(pNombre, pAÃ±oProd, pGenero);
 		this.BD.EliminarSolicitudPeli(pIdUsuario,idPeli);
 		this.gestorU.eliminarSolicitudPelicula(pIdUsuario, pPeli);	
 	}

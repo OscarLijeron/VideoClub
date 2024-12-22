@@ -24,25 +24,25 @@ public class GestorPeliculas {
 		}
 		return miGestorP;
 	}
-	public void añadirPeliAlCatalogo(Pelicula pPeli) {
+	public void aÃ±adirPeliAlCatalogo(Pelicula pPeli) {
 		this.catalogoPelis.add(pPeli);
 	}
 	public JSONArray mostrarCatalogoAmpliado(String pTitulo) {
-	    String resultados = buscarPeliculas(pTitulo); // Busca películas por título
-	    JSONArray peliculas = new JSONArray(); // Inicializa un JSONArray vacío
+	    String resultados = buscarPeliculas(pTitulo); // Busca pelï¿½culas por tï¿½tulo
+	    JSONArray peliculas = new JSONArray(); // Inicializa un JSONArray vacï¿½o
 
 	    if (resultados != null) { // Verifica si hay resultados
 	        JSONObject json = new JSONObject(resultados); // Convierte el String en un JSONObject
 	        if (json.has("Search")) { // Verifica si el objeto contiene la clave "Search"
 	            peliculas = json.getJSONArray("Search"); // Extrae el array de resultados
 	        } else {
-	            System.out.println("No se encontraron películas."); // Mensaje si no hay películas
+	            System.out.println("No se encontraron pelï¿½culas."); // Mensaje si no hay pelï¿½culas
 	        }
 	    } else {
 	        System.out.println("No se pudo obtener resultados de la API."); // Mensaje si la API falla
 	    }
 
-	    return peliculas; // Devuelve el catálogo de películas (vacío si no hay resultados)
+	    return peliculas; // Devuelve el catï¿½logo de pelï¿½culas (vacï¿½o si no hay resultados)
 	}
 
 	public static String buscarPeliculas(String titulo) {

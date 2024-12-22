@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 public class Usuario {
 	private String nombre;
-	private String contraseña;
+	private String contraseÃ±a;
 	private String correo;
 	private String rol;
 	private Integer id;
@@ -17,12 +17,12 @@ public class Usuario {
 	
 	
 	SQLiteConnection BD=SQLiteConnection.getSQLiteConnection();
-	public Usuario(String pNombre, String pContraseña,String pCorreo,String pRol) {
+	public Usuario(String pNombre, String pContraseÃ±a,String pCorreo,String pRol) {
 		this.nombre=pNombre;
-		this.contraseña=pContraseña;
+		this.contraseÃ±a=pContraseÃ±a;
 		this.correo=pCorreo;
 		this.rol=pRol;
-		this.id=this.BD.consultarIdUsuario(pNombre, pCorreo, pContraseña);
+		this.id=this.BD.consultarIdUsuario(pNombre, pCorreo, pContraseÃ±a);
 	}
 	public void IniciarSesion() {
 		
@@ -45,7 +45,7 @@ public class Usuario {
 		
 		
 	}
-	public void AñadirSolicitudPelicula(Pelicula pPeli) {
+	public void AÃ±adirSolicitudPelicula(Pelicula pPeli) {
 		this.solicitudesPelicula.add(pPeli);
 		
 	}
@@ -55,7 +55,7 @@ public class Usuario {
 		int i=0;
 		while(i<this.solicitudesPelicula.size() && enc==false) {
 			peliC=this.solicitudesPelicula.get(i);
-			if (pPeli.getAñoProd()==peliC.getAñoProd() && pPeli.getGenero().equals(peliC.getGenero()) && pPeli.getNombrePelicula().equals(peliC.getNombrePelicula())) {
+			if (pPeli.getAÃ±oProd()==peliC.getAÃ±oProd() && pPeli.getGenero().equals(peliC.getGenero()) && pPeli.getNombrePelicula().equals(peliC.getNombrePelicula())) {
 				enc=true;
 			}
 			i++;
@@ -77,7 +77,7 @@ public class Usuario {
         for (Pelicula pelicula : this.solicitudesPelicula) {
             JSONObject jsonPelicula = new JSONObject();
             jsonPelicula.put("titulo", pelicula.getNombrePelicula());
-            jsonPelicula.put("año", pelicula.getAñoProd());
+            jsonPelicula.put("aÃ±o", pelicula.getAÃ±oProd());
             jsonPelicula.put("genero", pelicula.getGenero());
             jsonArray.put(jsonPelicula);
         }
