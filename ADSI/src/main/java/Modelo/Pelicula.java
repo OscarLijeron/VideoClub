@@ -3,17 +3,28 @@ package Modelo;
 import java.util.ArrayList;
 
 public class Pelicula {
+	private Integer id; // Nuevo atributo para almacenar el ID de la película
 	private String nombre;
 	private Integer añoProd;
 	private String genero;
 	private Boolean disponible=true;
 	private ArrayList<Reseña> listaReseñas=new ArrayList<Reseña>();
 	
-	public Pelicula (String pNombre,Integer pAñoProd,String pGenero) {
-		this.nombre=pNombre;
-		this.añoProd=pAñoProd;
-		this.genero=pGenero;
-	}
+	// Constructor sin ID, por si aún no tiene al momento de crear la instancia
+    public Pelicula(String nombre, Integer añoProd, String genero) {
+        this.nombre = nombre;
+        this.añoProd = añoProd;
+        this.genero = genero;
+    }
+
+    // Constructor con ID
+    public Pelicula(Integer id, String nombre, Integer añoProd, String genero) {
+        this.id = id;
+        this.nombre = nombre;
+        this.añoProd = añoProd;
+        this.genero = genero;
+    }
+
     public Boolean estaDisponible() {
     	return this.disponible==true;
     }
@@ -43,4 +54,11 @@ public class Pelicula {
     public String getGenero() {
     	return this.genero;
     }
+	public Integer getId() {
+		return this.id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
 }

@@ -41,7 +41,9 @@ public class Usuario {
     	this.solicitudesUsuario.add(pUsuario);
 		//
 	}
-	public void AlquilarPelicula() {
+	public void alquilarPelicula( Alquiler pAlquiler) {
+		this.misAlquileres.add(pAlquiler);
+		//
 		
 		
 	}
@@ -97,5 +99,12 @@ public class Usuario {
 		return this.id;
 	}
 
+	public void addAlquiler(Alquiler alquiler) {
+		this.misAlquileres.add(alquiler);
+	}
+
+	public ArrayList<Alquiler> getMisAlquileres() {
+		return this.misAlquileres;
+	}
 
 }

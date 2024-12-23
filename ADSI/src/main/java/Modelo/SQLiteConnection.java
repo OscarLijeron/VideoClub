@@ -1,9 +1,11 @@
 package Modelo;
 import java.sql.Statement;
+import java.util.Optional;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 public class SQLiteConnection {
@@ -20,7 +22,7 @@ public class SQLiteConnection {
 
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
-                System.out.println("Conexi�n exitosa a SQLite.");
+                System.out.println("Conexion exitosa a SQLite.");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,7 +65,7 @@ public class SQLiteConnection {
 	public void AñadirPeli(String pNombrePeli,String pGenero, Integer pAño) {
         String url = "jdbc:sqlite:ADSI.db";
 
-        String sql = "INSERT INTO Pelicula (nombre, genero, a�o) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Pelicula (nombre, genero, año) VALUES (?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -132,14 +134,14 @@ public class SQLiteConnection {
 	            if (rs.next()) {
 	                return rs.getInt("idPelicula");
 	            } else {
-	                // Si no se encuentra la pel�cula
+	                // Si no se encuentra la pelicula
 	                System.out.println("Usuario no encontrada.");
 	                return null;
 	            }
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
-	        return -1; // Indica un error en la ejecuci�n
+	        return -1; // Indica un error en la ejecucion
 	    }
 	}
 	public void AñadirPeliSol(String pNombrePeli,String pGenero, Integer pAño) {
@@ -153,7 +155,7 @@ public class SQLiteConnection {
             pstmt.setString(1, pNombrePeli); 
             pstmt.setString(2, pGenero); 
             pstmt.setInt(3, pAño); 
-            pstmt.setString(3, "True"); 
+            pstmt.setString(4, "True"); 
             pstmt.executeUpdate();
 
             System.out.println("Registro insertado correctamente.");
@@ -162,5 +164,67 @@ public class SQLiteConnection {
         }
     }
 
+	public Optional<Pelicula> consultarPeliculaPorNombre(String pNombrePeli) {
+    // Ruta de conexión a la base de datos SQLite
+    String url = "jdbc:sqlite:ADSI.db";
 
+    // Consulta SQL con parámetros
+    String sql = "SELECT idPelicula, nombre, genero, año, disponible FROM Pelicula WHERE nombre = ?";
+
+    // Uso de try-with-resources para manejar la conexión y recursos automáticamente
+    try (Connection conn = DriverManager.getConnection(url);
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        // Asignar valores a los parámetros de la consulta
+        pstmt.setString(1, pNombrePeli);
+
+        // Ejecutar la consulta y procesar el resultado
+        try (ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) {
+                int id = rs.getInt("idPelicula");
+                String nombre = rs.getString("nombre");
+                String genero = rs.getString("genero");
+                int año = rs.getInt("año");
+                boolean disponible = rs.getBoolean("disponible");
+
+                // Crear una instancia de Pelicula
+                Pelicula pelicula = new Pelicula(nombre, año, genero);
+                pelicula.setId(id); // Si tienes un método setId en Pelicula
+                pelicula.setDisponible(disponible);
+
+                // Retornar la película envuelta en un Optional
+                return Optional.of(pelicula);
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    // Retornar un Optional vacío si no se encontró la película
+    return Optional.empty();
+}
+
+public void registrarAlquiler(int idUsuario, String nombrePelicula) {
+	// Ruta de conexión a la base de datos SQLite
+	String url = "jdbc:sqlite:ADSI.db";
+
+	// Consulta SQL con parámetros
+	String sql = "INSERT INTO Alquiler (idUsuario, nombrePelicula) VALUES (?, ?)";
+
+	// Uso de try-with-resources para manejar la conexión y recursos automáticamente
+	try (Connection conn = DriverManager.getConnection(url);
+		 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+		// Asignar valores a los parámetros de la consulta
+		pstmt.setInt(1, idUsuario);
+		pstmt.setString(2, nombrePelicula);
+
+		// Ejecutar la consulta
+		pstmt.executeUpdate();
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+}
+	
 }

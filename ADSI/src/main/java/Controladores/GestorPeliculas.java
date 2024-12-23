@@ -64,17 +64,4 @@ public class GestorPeliculas {
         return null;
     }
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

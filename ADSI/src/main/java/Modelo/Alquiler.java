@@ -8,7 +8,7 @@ public class Alquiler {
 	private Pelicula peliculaAlquilada;
 	private Date fechaAlquiler;
 
-	private Alquiler(Pelicula pPelicula) {
+	public Alquiler(Pelicula pPelicula) {
 		this.peliculaAlquilada=pPelicula;
 		// Obtiene la fecha actual como LocalDate
         LocalDate fechaActual = LocalDate.now();
@@ -17,4 +17,13 @@ public class Alquiler {
 	public Boolean esEstaPeli(Pelicula pPelicula) {
 		return this.peliculaAlquilada.equals(pPelicula);
 	}
+
+	public Date getFechaAlquiler() {
+		return fechaAlquiler;
+	}
+
+	public Pelicula getPelicula() {
+		return peliculaAlquilada;
+	}
+
 }
