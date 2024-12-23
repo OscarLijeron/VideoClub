@@ -15,3 +15,6 @@ Thumbs.db
 
 # Ignorar carpetas de salida de Maven y otros sistemas de compilación
 target/
+
+# Ignorar archivos de configuracion de vscode
+.vscode/
