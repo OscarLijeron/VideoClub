@@ -8,7 +8,7 @@ public class VideoClub {
 	private static VideoClub miGestorG=new VideoClub();
 	
 	
-	
+	GestorAlquileres gestorA=GestorAlquileres.getGestorAlquileres();
 	GestorPeliculas gestorP=GestorPeliculas.getGestorPeliculas();
 	GestorUsuarios  gestorU=GestorUsuarios.getGestorUsuarios();
 	SQLiteConnection BD=SQLiteConnection.getSQLiteConnection();
@@ -34,6 +34,12 @@ public class VideoClub {
 		int idPeli=this.BD.consultarIdPelicula(pNombre, pAñoProd, pGenero);
 		this.BD.EliminarSolicitudPeli(pIdUsuario,idPeli);
 		this.gestorU.eliminarSolicitudPelicula(pIdUsuario, pPeli);	
+	}
+
+	// Hazme la funcion de alquilar pelicula
+	public void alquilarPelicula(Integer idusuario, String nombrePelicula, String pGenero, Integer pAñoprod) {
+		Usuario usuario = this.BD.obtenerUsuario(idusuario);
+		gestorA.alquilarPelicula(usuario, nombrePelicula, pGenero, pAñoprod);
 	}
 
 }

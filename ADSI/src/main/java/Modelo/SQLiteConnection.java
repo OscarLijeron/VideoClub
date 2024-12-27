@@ -294,6 +294,40 @@ public class SQLiteConnection {
 		    return Optional.empty();
 		}
 
+        public Usuario obtenerUsuario(Integer idUsuario) {
+            // Ruta de la base de datos SQLite
+            String url = "jdbc:sqlite:ADSI.db";
+
+            // Consulta SQL
+            String sql = "SELECT nombre, correo, contraseña, rol FROM Usuarios WHERE idUsuario = ?";
+
+            try (Connection conn = DriverManager.getConnection(url);
+                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+                // Establecer los par�metros de la consulta
+                pstmt.setInt(1, idUsuario);
+
+                // Ejecutar la consulta y procesar los resultados
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    if (rs.next()) {
+                        // Crear una instancia de Usuario con los datos obtenidos
+                        String nombre = rs.getString("nombre");
+                        String correo = rs.getString("correo");
+                        String contraseña = rs.getString("contraseña");
+                        String rol = rs.getString("rol");
+
+                        Usuario usuario = new Usuario(nombre, contraseña, correo, rol);
+                        return usuario;
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // Retornar null si no se encuentra el usuario
+            return null;
+        } 
+
     
 
 
