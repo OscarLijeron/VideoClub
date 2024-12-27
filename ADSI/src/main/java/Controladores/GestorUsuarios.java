@@ -14,28 +14,44 @@ public class GestorUsuarios {
 	private ArrayList<Usuario> catalogoUsuarios;
 	
 	
-	SQLiteConnection BD=SQLiteConnection.getSQLiteConnection();
-	private  GestorUsuarios() {}
+	private static SQLiteConnection BD=SQLiteConnection.getSQLiteConnection();
+	private  GestorUsuarios() {
+		catalogoUsuarios=new ArrayList<Usuario>();
+	}
 	public static GestorUsuarios getGestorUsuarios() {
 		if (miGestorU==null) {
 			miGestorU=new GestorUsuarios();
 		}
 		return miGestorU;
 	}
-	public void aÃ±adirSolicitudPelicula(String pNombre,Integer pAÃ±o, String pGenero) {
+	public void añadirSolicitudPelicula(String pNombre,Integer pAño, String pGenero) {
 		Optional<Usuario> unUsuario = this.catalogoUsuarios.stream()
 			    .filter(p -> p.esAdmin())
 			    .findFirst();
 
 			if (unUsuario.isPresent()) {
 			    Usuario admin = unUsuario.get();
-			    Pelicula pPeli= new Pelicula(pNombre,pAÃ±o,pGenero);
-			    this.BD.AÃ±adirPeliSol(pNombre, pGenero, pAÃ±o);
-			    int idPeli=this.BD.consultarIdPelicula(pNombre, pAÃ±o, pGenero);
-			    this.BD.AÃ±adirSolicitudPeli(admin.getId(),idPeli);
-			    admin.AÃ±adirSolicitudPelicula(pPeli);
+			    Pelicula pPeli= new Pelicula(pNombre,pAño,pGenero);
+			    this.BD.AñadirPeliSol(pNombre, pGenero, pAño);
+			    int idPeli=this.BD.consultarIdPelicula(pNombre, pAño, pGenero);
+			    this.BD.AñadirSolicitudPeli(admin.getId(),idPeli);
+			    admin.AñadirSolicitudPelicula(pPeli);
 			} else {
-			    System.out.println("No se encontro ningun usuario administrador.");
+			    System.out.println("No se encontró ningún usuario administrador.");
+			}
+		
+	}
+	public void añadirSolicitudPeliculaParaRecuperar(String pNombre,Integer pAño, String pGenero) {
+		Optional<Usuario> unUsuario = this.catalogoUsuarios.stream()
+			    .filter(p -> p.esAdmin())
+			    .findFirst();
+
+			if (unUsuario.isPresent()) {
+			    Usuario admin = unUsuario.get();
+			    Pelicula pPeli= new Pelicula(pNombre,pAño,pGenero);
+			    admin.AñadirSolicitudPelicula(pPeli);
+			} else {
+			    System.out.println("No se encontró ningún usuario administrador.");
 			}
 		
 	}
@@ -49,6 +65,10 @@ public class GestorUsuarios {
 	public void eliminarSolicitudPelicula(Integer pIdUsuario,Pelicula pPelicula) {
 		Usuario unUsuario=this.catalogoUsuarios.stream().filter(p->p.tieneEsteId(pIdUsuario)).collect(null);
 		unUsuario.EliminarSolicitudPelicula(pPelicula);
+	}
+	public void añadirUsuarioParaRecuperar(String pNombre, String pContraseña, String pCorreo, String pRol) {
+		Usuario unUsuario=new Usuario(pNombre, pContraseña, pCorreo, pRol);
+		this.catalogoUsuarios.add(unUsuario);
 	}
 
 	public static void main(String[] args) {

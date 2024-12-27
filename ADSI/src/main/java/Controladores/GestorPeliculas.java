@@ -17,35 +17,41 @@ public class GestorPeliculas {
 	private static final String API_KEY = "9ef47ffb"; // Sustituye con tu clave de API
 	private static final String BASE_URL = "http://www.omdbapi.com/";
 	
-	private  GestorPeliculas() {}
+	private  GestorPeliculas() {
+		catalogoPelis=new ArrayList<Pelicula>();
+	}
 	public static GestorPeliculas getGestorPeliculas() {
 		if (miGestorP==null) {
 			miGestorP=new GestorPeliculas();
 		}
 		return miGestorP;
 	}
-	public void aÃ±adirPeliAlCatalogo(Pelicula pPeli) {
+	public void añadirPeliAlCatalogo(Pelicula pPeli) {
+		this.catalogoPelis.add(pPeli);
+	}
+	public void añadirPeliAlCatalogoParaRecuperar(String pNombre,Integer pAño,String pGenero) {
+		Pelicula pPeli=new Pelicula(pNombre,pAño,pGenero);
 		this.catalogoPelis.add(pPeli);
 	}
 	public JSONArray mostrarCatalogoAmpliado(String pTitulo) {
-	    String resultados = buscarPeliculas(pTitulo); // Busca pelï¿½culas por tï¿½tulo
-	    JSONArray peliculas = new JSONArray(); // Inicializa un JSONArray vacï¿½o
+	    String resultados = buscarPeliculas(pTitulo); // Busca películas por título
+	    JSONArray peliculas = new JSONArray(); // Inicializa un JSONArray vacío
 
 	    if (resultados != null) { // Verifica si hay resultados
 	        JSONObject json = new JSONObject(resultados); // Convierte el String en un JSONObject
 	        if (json.has("Search")) { // Verifica si el objeto contiene la clave "Search"
 	            peliculas = json.getJSONArray("Search"); // Extrae el array de resultados
 	        } else {
-	            System.out.println("No se encontraron pelï¿½culas."); // Mensaje si no hay pelï¿½culas
+	            System.out.println("No se encontraron películas."); // Mensaje si no hay películas
 	        }
 	    } else {
 	        System.out.println("No se pudo obtener resultados de la API."); // Mensaje si la API falla
 	    }
 
-	    return peliculas; // Devuelve el catï¿½logo de pelï¿½culas (vacï¿½o si no hay resultados)
+	    return peliculas; // Devuelve el catálogo de películas (vacío si no hay resultados)
 	}
 
-	public static String buscarPeliculas(String titulo) {
+	public String buscarPeliculas(String titulo) {
         try {
             String url = BASE_URL + "?apikey=" + API_KEY + "&s=" + titulo + "&type=movie";
             HttpRequest request = HttpRequest.newBuilder()
@@ -63,5 +69,49 @@ public class GestorPeliculas {
         }
         return null;
     }
+	public int longitudcatalogo() {
+		return this.catalogoPelis.size();
+	}
+	public static void main(String[] args) {
+        try {
+            // Obtener instancia del gestor de películas
+            GestorPeliculas gestorPeliculas = GestorPeliculas.getGestorPeliculas();
+
+            // Título de película a buscar (puedes cambiarlo para pruebas)
+            String tituloABuscar = "Batman";
+
+            // Llamar al método mostrarCatalogoAmpliado
+            JSONArray catalogoAmpliado = gestorPeliculas.mostrarCatalogoAmpliado(tituloABuscar);
+
+            // Mostrar resultados
+            if (catalogoAmpliado != null && catalogoAmpliado.length() > 0) {
+                System.out.println("Películas encontradas:");
+                for (int i = 0; i < catalogoAmpliado.length(); i++) {
+                    JSONObject pelicula = catalogoAmpliado.getJSONObject(i);
+                    System.out.println("Título: " + pelicula.getString("Title"));
+                    System.out.println("Año: " + pelicula.getString("Year"));
+                    System.out.println("Tipo: " + pelicula.getString("Type"));
+                    System.out.println("Poster: " + pelicula.getString("Poster"));
+                    System.out.println("-------------------------");
+                }
+            } else {
+                System.out.println("No se encontraron películas para el título proporcionado.");
+            }
+        } catch (Exception e) {
+            System.err.println("Error al ejecutar el programa: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

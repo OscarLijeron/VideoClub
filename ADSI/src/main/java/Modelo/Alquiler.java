@@ -17,13 +17,7 @@ public class Alquiler {
 	public Boolean esEstaPeli(Pelicula pPelicula) {
 		return this.peliculaAlquilada.equals(pPelicula);
 	}
-
-	public Date getFechaAlquiler() {
-		return fechaAlquiler;
-	}
-
 	public Pelicula getPelicula() {
-		return peliculaAlquilada;
+		return this.peliculaAlquilada;
 	}
-
 }

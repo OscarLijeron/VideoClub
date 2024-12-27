@@ -27,23 +27,7 @@
     <artifactId>sqlite-jdbc</artifactId>
     <version>3.34.0</version>
     </dependency>
-<!-- Dependencias para javafx -->
-    <dependency>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-base</artifactId>
-        <version>23.0.1</version>
-    </dependency>
-    <dependency>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-controls</artifactId>
-        <version>23.0.1</version>
-    </dependency>
-    <dependency>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-fxml</artifactId>
-        <version>23.0.1</version>
-    </dependency>
-<!-- Dependencias para javafx -->
+
   </dependencies>
 
   <build>

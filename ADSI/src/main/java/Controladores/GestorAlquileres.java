@@ -24,16 +24,16 @@ public class GestorAlquileres {
         return miGestorA;
     }
 
-    public boolean alquilarPelicula(Usuario usuario, String nombrePelicula) {
-        Optional<Pelicula> peliOpt = BD.consultarPeliculaPorNombre(nombrePelicula); 
+    public boolean alquilarPelicula(Usuario usuario, String nombrePelicula, String pGenero, Integer pAÒoprod) {
+        Optional<Pelicula> peliOpt = BD.consultarPelicula(nombrePelicula, pGenero, pAÒoprod); 
         if (peliOpt.isEmpty()) {
-            System.out.println("Pelicula no encontrada en el cat√°logo.");
+            System.out.println("Pelicula no encontrada en el cat·logo.");
             return false;
         }
 
         Pelicula pelicula = peliOpt.get();
         if (!pelicula.estaDisponible()) {
-            System.out.println("La pel√≠cula no est√° disponible.");
+            System.out.println("La pelÌcula no est· disponible.");
             return false;
         }
 
@@ -44,7 +44,7 @@ public class GestorAlquileres {
         pelicula.setDisponible(false);
 
         // Registrar en la base de datos
-        BD.registrarAlquiler(usuario.getId(), pelicula.getNombrePelicula());
+        BD.registrarAlquiler(usuario.getId(), BD.consultarIdPelicula(pelicula.getNombrePelicula(), pelicula.getAÒoProd(), pelicula.getGenero()));
         System.out.println("Pelicula alquilada exitosamente.");
         return true;
     }

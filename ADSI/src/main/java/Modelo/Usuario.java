@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 public class Usuario {
 	private String nombre;
-	private String contraseÃ±a;
+	private String contraseña;
 	private String correo;
 	private String rol;
 	private Integer id;
@@ -17,12 +17,12 @@ public class Usuario {
 	
 	
 	SQLiteConnection BD=SQLiteConnection.getSQLiteConnection();
-	public Usuario(String pNombre, String pContraseÃ±a,String pCorreo,String pRol) {
+	public Usuario(String pNombre, String pContraseña,String pCorreo,String pRol) {
 		this.nombre=pNombre;
-		this.contraseÃ±a=pContraseÃ±a;
+		this.contraseña=pContraseña;
 		this.correo=pCorreo;
 		this.rol=pRol;
-		this.id=this.BD.consultarIdUsuario(pNombre, pCorreo, pContraseÃ±a);
+		this.id=this.BD.consultarIdUsuario(pNombre, pCorreo, pContraseña);
 	}
 	public void IniciarSesion() {
 		
@@ -34,20 +34,16 @@ public class Usuario {
 	public void EliminarCuenta() {
 		
 	}
-	public void SolicitarPelicula() {
-		
-	}
     public void SolicitarRegistro(Usuario pUsuario) {
     	this.solicitudesUsuario.add(pUsuario);
 		//
 	}
-	public void alquilarPelicula( Alquiler pAlquiler) {
+	public void alquilarPelicula(Alquiler pAlquiler) {
 		this.misAlquileres.add(pAlquiler);
-		//
 		
 		
 	}
-	public void AÃ±adirSolicitudPelicula(Pelicula pPeli) {
+	public void AñadirSolicitudPelicula(Pelicula pPeli) {
 		this.solicitudesPelicula.add(pPeli);
 		
 	}
@@ -57,7 +53,7 @@ public class Usuario {
 		int i=0;
 		while(i<this.solicitudesPelicula.size() && enc==false) {
 			peliC=this.solicitudesPelicula.get(i);
-			if (pPeli.getAÃ±oProd()==peliC.getAÃ±oProd() && pPeli.getGenero().equals(peliC.getGenero()) && pPeli.getNombrePelicula().equals(peliC.getNombrePelicula())) {
+			if (pPeli.getAñoProd()==peliC.getAñoProd() && pPeli.getGenero().equals(peliC.getGenero()) && pPeli.getNombrePelicula().equals(peliC.getNombrePelicula())) {
 				enc=true;
 			}
 			i++;
@@ -79,7 +75,7 @@ public class Usuario {
         for (Pelicula pelicula : this.solicitudesPelicula) {
             JSONObject jsonPelicula = new JSONObject();
             jsonPelicula.put("titulo", pelicula.getNombrePelicula());
-            jsonPelicula.put("aÃ±o", pelicula.getAÃ±oProd());
+            jsonPelicula.put("año", pelicula.getAñoProd());
             jsonPelicula.put("genero", pelicula.getGenero());
             jsonArray.put(jsonPelicula);
         }
@@ -98,13 +94,9 @@ public class Usuario {
 	public int getId( ) {
 		return this.id;
 	}
-
-	public void addAlquiler(Alquiler alquiler) {
-		this.misAlquileres.add(alquiler);
-	}
-
 	public ArrayList<Alquiler> getMisAlquileres() {
 		return this.misAlquileres;
 	}
+
 
 }
