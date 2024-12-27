@@ -42,4 +42,12 @@ public class VideoClub {
 		gestorA.alquilarPelicula(usuario, nombrePelicula, pGenero, pAñoprod);
 	}
 
+	public void registrarse(String pNombre,String pContraseña, String pCorreo) {
+		this.gestorU.registrarUsuario(pNombre,pContraseña,pCorreo);
+	}
+		
+	public void procesarSolicitudRegistro(Integer pIdAdmin, Integer pIdUsuario) {
+		this.gestorU.procesarSolicitudRegistro(pIdAdmin,pIdUsuario);
+	}
+
 }

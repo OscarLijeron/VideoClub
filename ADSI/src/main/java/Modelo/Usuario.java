@@ -81,9 +81,19 @@ public class Usuario {
         }
         return jsonArray;		
 	}
-	public void mostrarSolicitudesUsuario() {
+	public JSONArray mostrarSolicitudesUsuario() {
+		JSONArray jsonArray = new JSONArray();
 		
+		for (Usuario usuario : this.solicitudesUsuario) {
+			JSONObject jsonUsuario = new JSONObject();
+			jsonUsuario.put("nombre", usuario.getNombre());
+			jsonUsuario.put("contraseña", usuario.getContraseña());
+			jsonUsuario.put("correo", usuario.getCorreo());
+			jsonArray.put(jsonUsuario);
+		}
+		return jsonArray;
 	}
+		
 	public Boolean esAdmin() {
 		String str="Admin";
 		return this.rol.equals(str);
@@ -97,6 +107,39 @@ public class Usuario {
 	public ArrayList<Alquiler> getMisAlquileres() {
 		return this.misAlquileres;
 	}
+
+	public String getNombre(){
+		return this.nombre;
+		}
+		
+	public String getContraseña(){
+		return this.nombre;
+	}
+		
+	public String getCorreo(){
+		return this.nombre;
+	}
+
+
+public Usuario buscarUsuario(Integer pID) {
+	Usuario usuario=null;
+	boolean enc=false;
+	int i=0;
+	while(i<this.solicitudesUsuario.size() && enc==false) {
+		usuario=this.solicitudesUsuario.get(i);
+		if (usuario.tieneEsteId(pID)) {
+			enc=true;
+		}
+		i++;
+	}
+	if(enc) {
+		return usuario;
+	}
+	else{
+		System.out.println("No esta el usuario");
+		return null;
+	}
+}
 
 
 }

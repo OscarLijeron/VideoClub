@@ -71,6 +71,32 @@ public class GestorUsuarios {
 		this.catalogoUsuarios.add(unUsuario);
 	}
 
+	//------------------------------------------------
+	public void registrarUsuario(String pNombre, String pContraseña, String pCorreo) {
+		Usuario nuevoUsuario = new Usuario(pNombre, pContraseña, pCorreo, "Usuario");
+	
+		Optional<Usuario> unUsuario = this.catalogoUsuarios.stream()
+		.filter(p -> p.esAdmin())
+		.findFirst();
+	
+		if(unUsuario.isPresent()){
+		Usuario admin= unUsuario.get();
+		admin.SolicitarRegistro(nuevoUsuario);
+		}
+	
+	}
+	//--------------------------------------------------------
+	public JSONArray mostrarSolicitudesUsuario(Integer pID) {
+		Usuario admin=this.catalogoUsuarios.stream().filter(p->p.tieneEsteId(pID)).collect(null);
+		return admin.mostrarSolicitudesUsuario();
+	}
+	public void procesarSolicitudRegistro(Integer pIdAdmin, Integer pIdUsuario) {
+		Usuario admin=this.catalogoUsuarios.stream().filter(p->p.tieneEsteId(pIdAdmin)).collect(null);
+		Usuario usuario=admin.buscarUsuario(pIdUsuario);
+		admin.ValidarUsuario(usuario);
+		//faltaria añadir a la base de datos
+	}
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
