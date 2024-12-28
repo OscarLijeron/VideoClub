@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 public class Pelicula {
 	private String nombre;
-	private Integer aÃ±oProd;
+	private Integer añoProd;
 	private String genero;
 	private Boolean disponible=true;
-	private ArrayList<ReseÃ±a> listaReseÃ±as=new ArrayList<ReseÃ±a>();
+	private ArrayList<Reseña> listaReseñas=new ArrayList<Reseña>();
 	
-	public Pelicula (String pNombre,Integer pAÃ±oProd,String pGenero) {
+	public Pelicula (String pNombre,Integer pAñoProd,String pGenero) {
 		this.nombre=pNombre;
-		this.aÃ±oProd=pAÃ±oProd;
+		this.añoProd=pAñoProd;
 		this.genero=pGenero;
 	}
     public Boolean estaDisponible() {
@@ -22,23 +22,23 @@ public class Pelicula {
     	//
     }
     public Double calcularPuntuacionPromedio() {
-    	Double rdo=this.listaReseÃ±as.stream()
-    		    .mapToDouble(o -> o.getPuntuacionP()) // Mapea cada reseï¿½a a su puntuaciï¿½n
+    	Double rdo=this.listaReseñas.stream()
+    		    .mapToDouble(o -> o.getPuntuacionP()) // Mapea cada reseña a su puntuación
     		    .average()                           // Calcula la media
     		    .orElse(0.0); 
     	return rdo;
     	//
     	
     }
-    public void AgregarReseÃ±a (ReseÃ±a pReseÃ±a) {
-    	this.listaReseÃ±as.add(pReseÃ±a);
+    public void AgregarReseña (Reseña pReseña) {
+    	this.listaReseñas.add(pReseña);
     	//
     }
     public String getNombrePelicula() {
     	return this.nombre;
     }
-    public Integer getAÃ±oProd() {
-    	return this.aÃ±oProd;
+    public Integer getAñoProd() {
+    	return this.añoProd;
     }
     public String getGenero() {
     	return this.genero;

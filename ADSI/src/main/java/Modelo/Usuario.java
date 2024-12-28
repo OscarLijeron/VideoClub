@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 public class Usuario {
 	private String nombre;
-	private String contrase√±a;
+	private String contraseÒa;
 	private String correo;
 	private String rol;
 	private Integer id;
@@ -17,12 +17,13 @@ public class Usuario {
 	
 	
 	SQLiteConnection BD=SQLiteConnection.getSQLiteConnection();
-	public Usuario(String pNombre, String pContrase√±a,String pCorreo,String pRol) {
+	public Usuario(String pNombre, String pContraseÒa,String pCorreo,String pRol) {
 		this.nombre=pNombre;
-		this.contrase√±a=pContrase√±a;
+		this.contraseÒa=pContraseÒa;
 		this.correo=pCorreo;
 		this.rol=pRol;
-		this.id=this.BD.consultarIdUsuario(pNombre, pCorreo, pContrase√±a);
+		this.id=this.BD.consultarIdUsuario(pNombre, pCorreo, pContraseÒa);
+		
 	}
 	public void IniciarSesion() {
 		
@@ -43,57 +44,50 @@ public class Usuario {
 		
 		
 	}
-	public void A√±adirSolicitudPelicula(Pelicula pPeli) {
+	public void AÒadirSolicitudPelicula(Pelicula pPeli) {
 		this.solicitudesPelicula.add(pPeli);
 		
 	}
 	public void EliminarSolicitudPelicula(Pelicula pPeli) {
-		Pelicula peliC=null;
-		boolean enc=false;
-		int i=0;
-		while(i<this.solicitudesPelicula.size() && enc==false) {
-			peliC=this.solicitudesPelicula.get(i);
-			if (pPeli.getA√±oProd()==peliC.getA√±oProd() && pPeli.getGenero().equals(peliC.getGenero()) && pPeli.getNombrePelicula().equals(peliC.getNombrePelicula())) {
-				enc=true;
-			}
-			i++;
-		}
-		if (enc) {
-		this.solicitudesPelicula.remove(peliC);
-		}else {
-			System.out.println("No esta la peli");
-		}
-		
+	    // Recorrer la lista de solicitudes de pelÌcula
+	    for (int i = 0; i < this.solicitudesPelicula.size(); i++) {
+	        Pelicula peliC = this.solicitudesPelicula.get(i);
+	        System.out.print(pPeli.getAÒoProd().equals(peliC.getAÒoProd()));
+	        // Comprobar si la pelÌcula coincide con la que queremos eliminar
+	        if (pPeli.getAÒoProd().equals(peliC.getAÒoProd()) &&
+	            pPeli.getGenero().equals(peliC.getGenero()) &&
+	            pPeli.getNombrePelicula().equals(peliC.getNombrePelicula())) {
+	            
+	            // Eliminar la pelÌcula de la lista
+	            this.solicitudesPelicula.remove(i);
+	            System.out.println("PelÌcula eliminada: " + pPeli.getNombrePelicula());
+	            return; // Salir del mÈtodo despuÈs de eliminar la pelÌcula
+	        }
+	    }
+
+	    // Si llegamos aquÌ, significa que no hemos encontrado la pelÌcula
+	    System.out.println("No est· la pelÌcula en la lista.");
 	}
+
 	public void EliminarAlquiler(Alquiler pAlquiler) {
 		this.misAlquileres.remove(pAlquiler);
 		//
 	}
 	public JSONArray mostrarSolicitudesPeli() {
 		JSONArray jsonArray = new JSONArray();
-
+        System.out.print(this.solicitudesPelicula.size());
         for (Pelicula pelicula : this.solicitudesPelicula) {
             JSONObject jsonPelicula = new JSONObject();
             jsonPelicula.put("titulo", pelicula.getNombrePelicula());
-            jsonPelicula.put("a√±o", pelicula.getA√±oProd());
+            jsonPelicula.put("aÒo", pelicula.getAÒoProd());
             jsonPelicula.put("genero", pelicula.getGenero());
             jsonArray.put(jsonPelicula);
         }
         return jsonArray;		
 	}
-	public JSONArray mostrarSolicitudesUsuario() {
-		JSONArray jsonArray = new JSONArray();
+	public void mostrarSolicitudesUsuario() {
 		
-		for (Usuario usuario : this.solicitudesUsuario) {
-			JSONObject jsonUsuario = new JSONObject();
-			jsonUsuario.put("nombre", usuario.getNombre());
-			jsonUsuario.put("contrase√±a", usuario.getContrase√±a());
-			jsonUsuario.put("correo", usuario.getCorreo());
-			jsonArray.put(jsonUsuario);
-		}
-		return jsonArray;
 	}
-		
 	public Boolean esAdmin() {
 		String str="Admin";
 		return this.rol.equals(str);
@@ -107,39 +101,6 @@ public class Usuario {
 	public ArrayList<Alquiler> getMisAlquileres() {
 		return this.misAlquileres;
 	}
-
-	public String getNombre(){
-		return this.nombre;
-		}
-		
-	public String getContrase√±a(){
-		return this.nombre;
-	}
-		
-	public String getCorreo(){
-		return this.nombre;
-	}
-
-
-public Usuario buscarUsuario(Integer pID) {
-	Usuario usuario=null;
-	boolean enc=false;
-	int i=0;
-	while(i<this.solicitudesUsuario.size() && enc==false) {
-		usuario=this.solicitudesUsuario.get(i);
-		if (usuario.tieneEsteId(pID)) {
-			enc=true;
-		}
-		i++;
-	}
-	if(enc) {
-		return usuario;
-	}
-	else{
-		System.out.println("No esta el usuario");
-		return null;
-	}
-}
 
 
 }

@@ -24,77 +24,72 @@ public class GestorUsuarios {
 		}
 		return miGestorU;
 	}
-	public void a√±adirSolicitudPelicula(String pNombre,Integer pA√±o, String pGenero) {
-		Optional<Usuario> unUsuario = this.catalogoUsuarios.stream()
-			    .filter(p -> p.esAdmin())
-			    .findFirst();
+	public void aÒadirSolicitudPelicula(String pNombre,Integer pAÒo, String pGenero) {
+		Usuario usuario = this.catalogoUsuarios.stream()
+                .filter(p -> p.esAdmin())
+                .findFirst()
+                .orElse(null); // Devuelve null si no encuentra un usuario
 
-			if (unUsuario.isPresent()) {
-			    Usuario admin = unUsuario.get();
-			    Pelicula pPeli= new Pelicula(pNombre,pA√±o,pGenero);
-			    this.BD.A√±adirPeliSol(pNombre, pGenero, pA√±o);
-			    int idPeli=this.BD.consultarIdPelicula(pNombre, pA√±o, pGenero);
-			    this.BD.A√±adirSolicitudPeli(admin.getId(),idPeli);
-			    admin.A√±adirSolicitudPelicula(pPeli);
+			if (usuario!=null) { 
+			    Pelicula pPeli= new Pelicula(pNombre,pAÒo,pGenero);
+			    BD.AÒadirPeliSol(pNombre, pGenero, pAÒo);
+			    int idPeli=BD.consultarIdPelicula(pNombre, pAÒo, pGenero);
+			    BD.AÒadirSolicitudPeli(usuario.getId(),idPeli);
+			    usuario.AÒadirSolicitudPelicula(pPeli);
 			} else {
-			    System.out.println("No se encontro ningun usuario administrador.");
+			    System.out.println("No se encontrÛ ning˙n usuario administrador.");
 			}
 		
 	}
-	public void a√±adirSolicitudPeliculaParaRecuperar(String pNombre,Integer pA√±o, String pGenero) {
-		Optional<Usuario> unUsuario = this.catalogoUsuarios.stream()
-			    .filter(p -> p.esAdmin())
-			    .findFirst();
+	public void aÒadirSolicitudPeliculaParaRecuperar(String pNombre,Integer pAÒo, String pGenero) {
+		Usuario usuario = this.catalogoUsuarios.stream()
+                .filter(p -> p.esAdmin())
+                .findFirst()
+                .orElse(null); // Devuelve null si no encuentra un usuario
 
-			if (unUsuario.isPresent()) {
-			    Usuario admin = unUsuario.get();
-			    Pelicula pPeli= new Pelicula(pNombre,pA√±o,pGenero);
-			    admin.A√±adirSolicitudPelicula(pPeli);
-			} else {
-			    System.out.println("No se encontro ningun usuario administrador.");
-			}
-		
+		if (usuario!=null) {
+		    System.out.println("Si se encontrÛ usuario administrador.");
+		   
+		    Pelicula pPeli = new Pelicula(pNombre, pAÒo, pGenero);
+		    usuario.AÒadirSolicitudPelicula(pPeli);  // Accede al usuario y aÒade la solicitud de pelÌcula
+		} else {
+		    System.out.println("No se encontrÛ ning˙n usuario administrador.");
+		}
+
 	}
 	public JSONArray mostrarSolicitudesPeli(Integer pID) {
-		Usuario usuario=this.catalogoUsuarios.stream().filter(p->p.tieneEsteId(pID)).collect(null);
+		Usuario usuario = this.catalogoUsuarios.stream()
+                .filter(p -> p.tieneEsteId(pID))
+                .findFirst()
+                .orElse(null); // Devuelve null si no encuentra un usuario
+
+		if (usuario != null) {
+			System.out.println("Usuario encontrado");
+		} else {
+			System.out.println("Usuario con ID " + pID + " no encontrado.");
+		}
+
 		return usuario.mostrarSolicitudesPeli();
 		
 		
 	}
 	
 	public void eliminarSolicitudPelicula(Integer pIdUsuario,Pelicula pPelicula) {
-		Usuario unUsuario=this.catalogoUsuarios.stream().filter(p->p.tieneEsteId(pIdUsuario)).collect(null);
-		unUsuario.EliminarSolicitudPelicula(pPelicula);
-	}
-	public void a√±adirUsuarioParaRecuperar(String pNombre, String pContrase√±a, String pCorreo, String pRol) {
-		Usuario unUsuario=new Usuario(pNombre, pContrase√±a, pCorreo, pRol);
-		this.catalogoUsuarios.add(unUsuario);
-	}
-
-	//------------------------------------------------
-	public void registrarUsuario(String pNombre, String pContrase√±a, String pCorreo) {
-		Usuario nuevoUsuario = new Usuario(pNombre, pContrase√±a, pCorreo, "Usuario");
-	
-		Optional<Usuario> unUsuario = this.catalogoUsuarios.stream()
-		.filter(p -> p.esAdmin())
-		.findFirst();
-	
-		if(unUsuario.isPresent()){
-		Usuario admin= unUsuario.get();
-		admin.SolicitarRegistro(nuevoUsuario);
+		Usuario usuario = this.catalogoUsuarios.stream()
+                .filter(p -> p.tieneEsteId(pIdUsuario))
+                .findFirst()
+                .orElse(null); // Devuelve null si no encuentra un usuario
+		if (usuario != null) {
+			System.out.println("Usuario encontrado");
+			usuario.EliminarSolicitudPelicula(pPelicula);
+		} else {
+			System.out.println("Usuario con ID " + pIdUsuario + " no encontrado.");
 		}
-	
+		
 	}
-	//--------------------------------------------------------
-	public JSONArray mostrarSolicitudesUsuario(Integer pID) {
-		Usuario admin=this.catalogoUsuarios.stream().filter(p->p.tieneEsteId(pID)).collect(null);
-		return admin.mostrarSolicitudesUsuario();
-	}
-	public void procesarSolicitudRegistro(Integer pIdAdmin, Integer pIdUsuario) {
-		Usuario admin=this.catalogoUsuarios.stream().filter(p->p.tieneEsteId(pIdAdmin)).collect(null);
-		Usuario usuario=admin.buscarUsuario(pIdUsuario);
-		admin.ValidarUsuario(usuario);
-		//faltaria a√±adir a la base de datos
+	public void aÒadirUsuarioParaRecuperar(String pNombre, String pContraseÒa, String pCorreo, String pRol) {
+		Usuario unUsuario=new Usuario(pNombre, pContraseÒa, pCorreo, pRol);
+		this.catalogoUsuarios.add(unUsuario);
 	}
 
 	public static void main(String[] args) {
