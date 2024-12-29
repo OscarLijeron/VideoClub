@@ -24,36 +24,36 @@ public class GestorUsuarios {
 		}
 		return miGestorU;
 	}
-	public void añadirSolicitudPelicula(String pNombre,Integer pAño, String pGenero) {
+	public void aÃ±adirSolicitudPelicula(String pNombre,Integer pAÃ±o, String pGenero) {
 		Usuario usuario = this.catalogoUsuarios.stream()
                 .filter(p -> p.esAdmin())
                 .findFirst()
                 .orElse(null); // Devuelve null si no encuentra un usuario
 
 			if (usuario!=null) { 
-			    Pelicula pPeli= new Pelicula(pNombre,pAño,pGenero);
-			    BD.AñadirPeliSol(pNombre, pGenero, pAño);
-			    int idPeli=BD.consultarIdPelicula(pNombre, pAño, pGenero);
-			    BD.AñadirSolicitudPeli(usuario.getId(),idPeli);
-			    usuario.AñadirSolicitudPelicula(pPeli);
+			    Pelicula pPeli= new Pelicula(pNombre,pAÃ±o,pGenero);
+			    BD.AÃ±adirPeliSol(pNombre, pGenero, pAÃ±o);
+			    int idPeli=BD.consultarIdPelicula(pNombre, pAÃ±o, pGenero);
+			    BD.AÃ±adirSolicitudPeli(usuario.getId(),idPeli);
+			    usuario.AÃ±adirSolicitudPelicula(pPeli);
 			} else {
-			    System.out.println("No se encontró ningún usuario administrador.");
+			    System.out.println("No se encontro ningun usuario administrador.");
 			}
 		
 	}
-	public void añadirSolicitudPeliculaParaRecuperar(String pNombre,Integer pAño, String pGenero) {
+	public void aÃ±adirSolicitudPeliculaParaRecuperar(String pNombre,Integer pAÃ±o, String pGenero) {
 		Usuario usuario = this.catalogoUsuarios.stream()
                 .filter(p -> p.esAdmin())
                 .findFirst()
                 .orElse(null); // Devuelve null si no encuentra un usuario
 
 		if (usuario!=null) {
-		    System.out.println("Si se encontró usuario administrador.");
+		    System.out.println("Si se encontro usuario administrador.");
 		   
-		    Pelicula pPeli = new Pelicula(pNombre, pAño, pGenero);
-		    usuario.AñadirSolicitudPelicula(pPeli);  // Accede al usuario y añade la solicitud de película
+		    Pelicula pPeli = new Pelicula(pNombre, pAÃ±o, pGenero);
+		    usuario.AÃ±adirSolicitudPelicula(pPeli);  // Accede al usuario y aï¿½ade la solicitud de pelï¿½cula
 		} else {
-		    System.out.println("No se encontró ningún usuario administrador.");
+		    System.out.println("No se encontro ningun usuario administrador.");
 		}
 
 	}
@@ -87,8 +87,8 @@ public class GestorUsuarios {
 		}
 		
 	}
-	public void añadirUsuarioParaRecuperar(String pNombre, String pContraseña, String pCorreo, String pRol) {
-		Usuario unUsuario=new Usuario(pNombre, pContraseña, pCorreo, pRol);
+	public void aÃ±adirUsuarioParaRecuperar(String pNombre, String pContraseÃ±a, String pCorreo, String pRol) {
+		Usuario unUsuario=new Usuario(pNombre, pContraseÃ±a, pCorreo, pRol);
 		this.catalogoUsuarios.add(unUsuario);
 	}
 

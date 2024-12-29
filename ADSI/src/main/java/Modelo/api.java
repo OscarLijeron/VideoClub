@@ -51,18 +51,18 @@ public class api {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Bienvenido al buscador de películas de OMDb");
+        System.out.println("Bienvenido al buscador de peliculas de OMDb");
         
         while (true) {
-            System.out.println("\n1. Buscar películas");
-            System.out.println("2. Obtener detalles de una película");
+            System.out.println("\n1. Buscar peliculas");
+            System.out.println("2. Obtener detalles de una pelicula");
             System.out.println("3. Salir");
-            System.out.print("Selecciona una opción: ");
+            System.out.print("Selecciona una opcion: ");
             String opcion = scanner.nextLine();
 
             switch (opcion) {
                 case "1":
-                    System.out.print("Introduce el título de la película: ");
+                    System.out.print("Introduce el titulo de la pelicula: ");
                     String titulo = scanner.nextLine();
                     String resultados = buscarPeliculas(titulo);
                     if (resultados != null) {
@@ -75,32 +75,32 @@ public class api {
                                                    " (" + pelicula.getString("Year") + ") - ID: " + pelicula.getString("imdbID"));
                             }
                         } else {
-                            System.out.println("No se encontraron películas.");
+                            System.out.println("No se encontraron pelï¿½culas.");
                         }
                     }
                     break;
                 case "2":
-                    System.out.print("Introduce el IMDb ID de la película: ");
+                    System.out.print("Introduce el IMDb ID de la pelicula: ");
                     String imdbId = scanner.nextLine();
                     String detalles = obtenerDetallePelicula(imdbId);
                     if (detalles != null) {
                         JSONObject pelicula = new JSONObject(detalles);
-                        System.out.println("Detalles de la película:");
-                        System.out.println("Título: " + pelicula.optString("Title"));
-                        System.out.println("Año: " + pelicula.optString("Year"));
-                        System.out.println("Género: " + pelicula.optString("Genre"));
+                        System.out.println("Detalles de la pelicula:");
+                        System.out.println("Titulo: " + pelicula.optString("Title"));
+                        System.out.println("AÃ±o: " + pelicula.optString("Year"));
+                        System.out.println("Genero: " + pelicula.optString("Genre"));
                         System.out.println("Director: " + pelicula.optString("Director"));
                         System.out.println("Argumento: " + pelicula.optString("Plot"));
                     } else {
-                        System.out.println("No se encontró información para esa ID.");
+                        System.out.println("No se encontro informacion para esa ID.");
                     }
                     break;
                 case "3":
-                    System.out.println("¡Adiós!");
+                    System.out.println("!Adios!");
                     scanner.close();
                     return;
                 default:
-                    System.out.println("Opción no válida.");
+                    System.out.println("Opcion no valida.");
             }
         }
     }
