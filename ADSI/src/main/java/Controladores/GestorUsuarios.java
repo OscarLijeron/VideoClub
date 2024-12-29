@@ -102,4 +102,13 @@ public class GestorUsuarios {
 		return null;
 	}
 	//-------------------------------------------------------------------
+	public Usuario obtenerUsuarioPorNombre(String nombreUsuario) {
+		for (Usuario usuario : catalogoUsuarios) {
+			if (usuario.getNombre().equals(nombreUsuario)) {
+				return usuario;
+			}
+		}
+		return null;
+	}
+	//-------------------------------------------------------------------
 }

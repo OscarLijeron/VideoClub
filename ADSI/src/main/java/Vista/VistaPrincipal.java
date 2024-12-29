@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 public class VistaPrincipal extends JFrame {
     private JPanel contentPane;
     private JPanel panel;
-    private JButton InicioSesion;
+    private JButton InicioS;
     private JButton Registro;
     private JButton VerCatalogo;
     private JPanel arriba;
@@ -72,27 +72,42 @@ public class VistaPrincipal extends JFrame {
         panel.add(botonesPanel);
 
         // Botón de Inicio de Sesión
-        InicioSesion = new JButton("Inicio de Sesion");
-        InicioSesion.setFont(new Font("Arial", Font.BOLD, 14));
-        InicioSesion.setBackground(new Color(35, 41, 122)); // Fondo color azul oscuro
-        InicioSesion.setForeground(Color.WHITE); // Texto blanco
-        InicioSesion.setPreferredSize(new Dimension(150, 40)); // Tamaño personalizado
-        InicioSesion.addActionListener(new ActionListener() {
+        InicioS = new JButton("Inicio de Sesion");
+        InicioS.setFont(new Font("Arial", Font.BOLD, 14));
+        InicioS.setBackground(new Color(35, 41, 122));
+        InicioS.setForeground(Color.WHITE);
+        InicioS.setPreferredSize(new Dimension(150, 40));
+        InicioS.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // aquí va el código que se ejecutará al pulsar el botón de inicio de sesión
+                // Capturar el nombre de usuario y comprobar nombre de usuario y contraseña en la base de datos
+                String usuarioNombre = usuario.getText();
+
+                // Verificar que el campo de usuario no esté vacío
+                if (usuarioNombre.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Por favor, ingrese un usuario.");
+                } else {
+                    // Crear y mostrar la nueva vista de InicioSesion
+
+                    InicioSesion vistaSes = InicioSesion.getInicioSesion(usuarioNombre);
+                    vistaSes.mostrar();
+
+                    // Cerrar la vista actual
+                    setVisible(false);
+                    dispose();
+                }
             }
         });
-        botonesPanel.add(InicioSesion);
+        botonesPanel.add(InicioS);
 
         // Botón de Registro
         Registro = new JButton("Registro");
         Registro.setFont(new Font("Arial", Font.BOLD, 14));
-        Registro.setBackground(new Color(35, 41, 122)); // Fondo color azul oscuro
-        Registro.setForeground(Color.WHITE); // Texto blanco
-        Registro.setPreferredSize(new Dimension(150, 40)); // Tamaño personalizado
+        Registro.setBackground(new Color(35, 41, 122));
+        Registro.setForeground(Color.WHITE);
+        Registro.setPreferredSize(new Dimension(150, 40));
         Registro.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // aquí va el código que se ejecutará al pulsar el botón de registro
+                // Aquí puedes agregar el código para el registro
             }
         });
         botonesPanel.add(Registro);
@@ -100,15 +115,15 @@ public class VistaPrincipal extends JFrame {
         // Botón de Ver Catalogo
         VerCatalogo = new JButton("Ver Catalogo");
         VerCatalogo.setFont(new Font("Arial", Font.BOLD, 14));
-        VerCatalogo.setBackground(new Color(35, 41, 122)); // Fondo color azul oscuro
-        VerCatalogo.setForeground(Color.WHITE); // Texto blanco
-        VerCatalogo.setPreferredSize(new Dimension(150, 40)); // Tamaño personalizado
+        VerCatalogo.setBackground(new Color(35, 41, 122));
+        VerCatalogo.setForeground(Color.WHITE);
+        VerCatalogo.setPreferredSize(new Dimension(150, 40));
         VerCatalogo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // aquí va el código que se ejecutará al pulsar el botón de ver catalogo
+                // Aquí puedes agregar el código para ver el catálogo
             }
         });
         botonesPanel.add(VerCatalogo);
-    }
-}
 
+    }
+}       
