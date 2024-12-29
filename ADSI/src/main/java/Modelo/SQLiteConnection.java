@@ -220,7 +220,7 @@ public class SQLiteConnection {
                 while (rs.next()) {
                     String nombre = rs.getString("nombre");
                     String correo = rs.getString("correo");
-                    String contraseña = rs.getString("contrase�a");
+                    String contraseña = rs.getString("contraseña");
                     String rol = rs.getString("rol");
                     GestorUsuarios.getGestorUsuarios().añadirUsuarioParaRecuperar(nombre, contraseña, correo, rol);
                 }

@@ -75,7 +75,7 @@ public class api {
                                                    " (" + pelicula.getString("Year") + ") - ID: " + pelicula.getString("imdbID"));
                             }
                         } else {
-                            System.out.println("No se encontraron pel�culas.");
+                            System.out.println("No se encontraron peliculas.");
                         }
                     }
                     break;
