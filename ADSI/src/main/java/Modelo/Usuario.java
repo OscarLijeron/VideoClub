@@ -101,6 +101,17 @@ public class Usuario {
 	public ArrayList<Alquiler> getMisAlquileres() {
 		return this.misAlquileres;
 	}
-
-
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	public JSONArray mostrarMisAlquileres() {
+		JSONArray jsonArray = new JSONArray();
+		for (Alquiler alquiler : this.misAlquileres) {
+			JSONObject jsonAlquiler = new JSONObject();
+			jsonAlquiler.put("titulo", alquiler.getPelicula().getNombrePelicula());
+			jsonAlquiler.put("año", alquiler.getPelicula().getAñoProd());
+			jsonAlquiler.put("genero", alquiler.getPelicula().getGenero());
+			jsonArray.put(jsonAlquiler);
+		}
+		return jsonArray;
+	}
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }

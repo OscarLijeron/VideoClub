@@ -26,6 +26,35 @@ public class GestorPeliculas {
 		}
 		return miGestorP;
 	}
+
+    public Pelicula obtenerPeliculaPorNombre(String pNombre) {
+        for (Pelicula p : this.catalogoPelis) {
+            if (p.getNombrePelicula().equals(pNombre)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    public JSONArray mostrarPeliculas() {
+        JSONArray peliculas = new JSONArray(); // Inicializa un JSONArray vac�o
+
+        if (this.catalogoPelis.size() > 0) { // Verifica si hay pel�culas en el cat�logo
+            for (Pelicula p : this.catalogoPelis) { // Recorre todas las pel�culas del cat�logo
+                JSONObject pelicula = new JSONObject(); // Inicializa un JSONObject vac�o
+                pelicula.put("Nombre", p.getNombrePelicula()); // A�ade el nombre de la pel�cula
+                pelicula.put("Año", p.getAñoProd()); // A�ade el a�o de producci�n
+                pelicula.put("Genero", p.getGenero()); // A�ade el g�nero de la pel�cula
+                peliculas.put(pelicula); // A�ade el JSONObject al JSONArray
+            }
+        } else {
+            System.out.println("No hay peliculas en el catalogo."); // Mensaje si no hay pel�culas
+        }
+
+        return peliculas; // Devuelve el cat�logo de pel�culas (vac�o si no hay pel�culas)
+    }
+
+
 	public void añadirPeliAlCatalogo(Pelicula pPeli) {
 		this.catalogoPelis.add(pPeli);
 	}
@@ -103,16 +132,5 @@ public class GestorPeliculas {
         }
         
     }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }

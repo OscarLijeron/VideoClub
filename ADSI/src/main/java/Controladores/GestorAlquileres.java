@@ -2,6 +2,9 @@ package Controladores;
 
 import java.util.ArrayList;
 import java.util.Optional;
+
+import org.json.JSONArray;
+
 import Modelo.Alquiler;
 import Modelo.Pelicula;
 import Modelo.Usuario;
@@ -24,8 +27,11 @@ public class GestorAlquileres {
         return miGestorA;
     }
 
-    public boolean alquilarPelicula(Usuario usuario, String nombrePelicula, String pGenero, Integer pAñoprod) {
-        Optional<Pelicula> peliOpt = BD.consultarPelicula(nombrePelicula, pGenero, pAñoprod); 
+    public boolean alquilarPelicula(Usuario usuario, Pelicula peli) {
+        String nombreP = peli.getNombrePelicula();
+        String genero = peli.getGenero();
+        Integer añoProd = peli.getAñoProd();
+        Optional<Pelicula> peliOpt = BD.consultarPelicula(nombreP, genero, añoProd); 
         if (peliOpt.isEmpty()) {
             System.out.println("Pelicula no encontrada en el catalogo.");
             return false;
@@ -55,5 +61,11 @@ public class GestorAlquileres {
             peliculas.add(alquiler.getPelicula());
         }
         return peliculas;
+    }
+
+    public JSONArray  obtenerAlquileresUsuario(int idUsuario) { //llama a gestorUsuario, busca a ese usuario y devuelve el JSON de sus alquileres
+        GestorUsuarios gestorUsuarios = GestorUsuarios.getGestorUsuarios();
+        Usuario usuario = gestorUsuarios.obtenerUsuarioPorId(idUsuario);
+        return usuario.mostrarMisAlquileres();
     }
 }
