@@ -111,4 +111,53 @@ public class GestorUsuarios {
 		return null;
 	}
 	//-------------------------------------------------------------------
+
+	public void registrarse(String pNombre, String pContraseña, String pCorreo) {
+		Usuario admin = this.catalogoUsuarios.stream()
+			.filter(p -> p.esAdmin())
+			.findFirst()
+			.orElse(null); // Devuelve null si no encuentra un usuario
+		
+			if (admin!=null) {
+				Usuario usuario = new Usuario(pNombre, pContraseña, pCorreo, "Usuario");
+				admin.SolicitarRegistro(usuario);
+			}
+			else {
+				System.out.println("No se encontro ningun usuario administrador.");
+			}
+	}
+		
+	public void aceptarSolicitudRegistro(Integer pIdAdmin, Integer pIdUsuario) {
+		Usuario admin = this.catalogoUsuarios.stream()
+			.filter(p -> p.tieneEsteId(pIdUsuario))
+			.findFirst()
+			.orElse(null); // Devuelve null si no encuentra un usuario
+		
+		if (admin!=null) {
+			Optional<Usuario> solUsuario = admin.getSolicitudesUsuario().stream()
+				.filter(p-> p.getId() == pIdUsuario).findFirst();
+		
+			if (solUsuario.isEmpty()) {
+				System.out.println("No se encontro la solicitud");
+			}
+			else {
+				Usuario usuario = solUsuario.get();
+				this.catalogoUsuarios.add(usuario);
+				admin.ValidarUsuario(usuario);				
+				BD.RegistrarUsuario(usuario.getNombre(),usuario.getContraseña(), usuario.getCorreo(),pIdAdmin);
+			}
+		}
+		else{
+			System.out.println("No se encontro ningun usuario administrador");
+		}
+	}
+		
+	public void eliminarCuenta(Integer pIdUsuario) {
+		//Creo que me falta algo en esta
+		Usuario usuario = this.obtenerUsuarioPorId(pIdUsuario);
+		if (usuario !=null) {
+			this.catalogoUsuarios.remove(usuario);
+			BD.EliminarUsuario(pIdUsuario);
+		}
+	}
 }

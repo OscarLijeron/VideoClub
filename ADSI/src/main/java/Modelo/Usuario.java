@@ -85,9 +85,7 @@ public class Usuario {
         }
         return jsonArray;		
 	}
-	public void mostrarSolicitudesUsuario() {
-		
-	}
+
 	public Boolean esAdmin() {
 		String str="Admin";
 		return this.rol.equals(str);
@@ -118,5 +116,29 @@ public class Usuario {
 		return this.nombre;
 	}
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+	
+	public String getContraseña() {
+	return this.contraseña;
+	}
+	
+	public String getCorreo() {
+	return this.correo;
+	}
+	
+	public ArrayList<Usuario> getSolicitudesUsuario() {
+	return this.solicitudesUsuario;
+	}
+	
+	public JSONArray mostrarSolicitudesUsuario() {
+		JSONArray jsonArray = new JSONArray();
+		for (Usuario usuario : this.solicitudesUsuario) {
+			JSONObject jsonUsuario = new JSONObject();
+			jsonUsuario.put("nombre", usuario.getNombre());
+			jsonUsuario.put("contraseña", usuario.getContraseña());
+			jsonUsuario.put("correo", usuario.getCorreo());
+			jsonArray.put(jsonUsuario);
+		}
+		return jsonArray; 
+	}
+	
 }

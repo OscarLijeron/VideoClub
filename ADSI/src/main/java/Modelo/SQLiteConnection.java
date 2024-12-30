@@ -330,6 +330,56 @@ public class SQLiteConnection {
 		    return Optional.empty();
 		}
 
+        public void RegistrarUsuario(String pNombre,String pContraseña, String pCorreo, Integer idValidador) {
+            String url = "jdbc:sqlite:ADSI.db";
+
+            String sql = "INSERT INTO Usuarios (nombre, contraseña, correo , rol, idValidador) VALUES (?, ?, ?, ?, ?)";
+            try (Connection conn = DriverManager.getConnection(url);
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                
+                pstmt.setString(1, pNombre); 
+                pstmt.setString(2, pContraseña); 
+                pstmt.setString(3, pCorreo); 
+                pstmt.setString(4, "Usuario");
+                pstmt.setInt(5, idValidador);
+                pstmt.executeUpdate();
+            
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+            
+        public void EliminarUsuario(Integer pId) {
+            String url = "jdbc:sqlite:ADSI.db";
+            
+            //Primero borramos sus relaciones
+            String sql1 = "DELETE FROM SolicitudPelicula WHERE idUsuario = ?";
+            String sql2 = "DELETE FROM Alquiler WHERE idUsuario = ?";
+            
+            //Ahora borramos el usuario
+            String sql3 = "DELETE FROM Usuarios WHERE id = ?";
+            
+            try (Connection conn = DriverManager.getConnection(url);
+                 PreparedStatement pstmt1 = conn.prepareStatement(sql1);
+                 PreparedStatement pstmt2 = conn.prepareStatement(sql2);
+                 PreparedStatement pstmt3 = conn.prepareStatement(sql3);) {
+            
+                pstmt1.setInt(1, pId);
+                pstmt1.executeUpdate();
+            
+                pstmt2.setInt(1, pId);
+                pstmt2.executeUpdate();
+            
+                pstmt3.setInt(1, pId);
+                pstmt3.executeUpdate();
+            
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+            
+
     
 
 

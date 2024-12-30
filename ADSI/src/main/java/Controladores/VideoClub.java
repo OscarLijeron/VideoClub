@@ -60,5 +60,17 @@ public class VideoClub {
 		}
 	}
 
+	public void registrarse(String pNombre, String pContraseña, String pCorreo) {
+		this.gestorU.registrarse(pNombre, pContraseña, pCorreo);
+	}
+		
+	public void aceptarSolicitudRegistro(Integer pIdAdmin, Integer pIdUsuario) {
+		this.gestorU.aceptarSolicitudRegistro(pIdAdmin,pIdUsuario);
+	}
+		
+	public void eliminarCuenta(Integer pIdUsuario) {
+		this.gestorU.eliminarCuenta(pIdUsuario);
+	}
+
 
 }
