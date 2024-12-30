@@ -160,4 +160,25 @@ public class GestorUsuarios {
 			BD.EliminarUsuario(pIdUsuario);
 		}
 	}
+
+	public Integer iniciarSesion(String pNombre, String pContraseña, String pCorreo) {
+		Integer idUsuario = BD.consultarIdUsuario(pNombre,pCorreo,pContraseña);
+		if(idUsuario!= null) {
+			return idUsuario;
+		}
+		else {
+			return null;
+		}
+
+	}
+
+	public boolean comprobarQueEsAdmin(Integer idUsuario){
+		boolean esAdmin = false;
+		Usuario usuario = this.obtenerUsuarioPorId(idUsuario);
+		if (usuario.esAdmin()) {
+			esAdmin=true;
+			return esAdmin;
+		}
+		return esAdmin;
+	}
 }

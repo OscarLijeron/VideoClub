@@ -1,7 +1,12 @@
 package Vista;
+
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.EmptyBorder;
+
+import Controladores.GestorUsuarios;
+import Controladores.VideoClub;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,12 +19,13 @@ public class VistaPrincipal extends JFrame {
     private JPanel arriba;
     private JLabel titulo;
     private JTextField usuario;
+    private JTextField correo;
     private JTextField contraseña;
 
     public VistaPrincipal() {
         setTitle("the BRO's");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 450, 300);
+        setBounds(100, 100, 450, 350);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -29,7 +35,7 @@ public class VistaPrincipal extends JFrame {
         arriba = new JPanel();
         arriba.setBackground(new Color(35, 41, 122)); // Color de fondo
         contentPane.add(arriba, BorderLayout.NORTH);
-        
+
         // Titulo con estilo
         titulo = new JLabel("Bienvenido a nuestro videoclub");
         titulo.setFont(new Font("Arial", Font.BOLD, 18));
@@ -39,7 +45,7 @@ public class VistaPrincipal extends JFrame {
 
         // Panel principal
         panel = new JPanel();
-        panel.setLayout(new GridLayout(5, 1, 10, 10)); // Aumentamos el espaciado entre los componentes
+        panel.setLayout(new GridLayout(7, 1, 10, 10)); // Aumentamos el número de filas
         panel.setBackground(new Color(240, 240, 240)); // Color de fondo suave
         contentPane.add(panel, BorderLayout.CENTER);
 
@@ -53,6 +59,17 @@ public class VistaPrincipal extends JFrame {
         usuario.setColumns(10);
         usuario.setFont(new Font("Arial", Font.PLAIN, 14));
         panel.add(usuario);
+
+        // Etiqueta y campo de correo
+        JLabel lblCorreo = new JLabel("Correo Electrónico");
+        lblCorreo.setHorizontalAlignment(SwingConstants.CENTER);
+        lblCorreo.setFont(new Font("Arial", Font.PLAIN, 14));
+        panel.add(lblCorreo);
+
+        correo = new JTextField();
+        correo.setColumns(10);
+        correo.setFont(new Font("Arial", Font.PLAIN, 14));
+        panel.add(correo);
 
         // Etiqueta y campo de contraseña
         JLabel lblContrasea = new JLabel("Contraseña");
@@ -79,21 +96,36 @@ public class VistaPrincipal extends JFrame {
         InicioS.setPreferredSize(new Dimension(150, 40));
         InicioS.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Capturar el nombre de usuario y comprobar nombre de usuario y contraseña en la base de datos
                 String usuarioNombre = usuario.getText();
+                String correoIngresado = correo.getText();
+                String contraseñaIngresada = contraseña.getText();
 
-                // Verificar que el campo de usuario no esté vacío
-                if (usuarioNombre.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Por favor, ingrese un usuario.");
+                // Verificar que los campos no estén vacíos
+                if (usuarioNombre.isEmpty() || correoIngresado.isEmpty() || contraseñaIngresada.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
                 } else {
-                    // Crear y mostrar la nueva vista de InicioSesion
+                    VideoClub.getGestorGeneral().recuperarBD();
+                    Integer idUsuario = VideoClub.getGestorGeneral().iniciarSesion(usuarioNombre,contraseñaIngresada,correoIngresado);
+                    if (idUsuario!=null){
+                        boolean esAdmin = false;
+                        esAdmin = GestorUsuarios.getGestorUsuarios().comprobarQueEsAdmin(idUsuario);
+                        if (esAdmin){
+                            // Aqui iria la vista para el admin
+                            InicioSesion vistaSes = InicioSesion.getInicioSesion(idUsuario);
+                            vistaSes.mostrar();
 
-                    InicioSesion vistaSes = InicioSesion.getInicioSesion(usuarioNombre);
-                    vistaSes.mostrar();
+                            setVisible(false);
+                            dispose();
+                        }
+                        else{
+                            //Aqui la vista para el no admin
+                            JOptionPane.showMessageDialog(null, "Usuario no es Admin");
+                        }
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Usuario no encontrado");
+                    }
 
-                    // Cerrar la vista actual
-                    setVisible(false);
-                    dispose();
                 }
             }
         });
@@ -124,6 +156,7 @@ public class VistaPrincipal extends JFrame {
             }
         });
         botonesPanel.add(VerCatalogo);
-
     }
-}       
+
+
+}

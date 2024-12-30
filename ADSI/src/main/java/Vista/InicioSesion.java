@@ -6,26 +6,23 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import Modelo.Usuario;
 import Controladores.GestorUsuarios;
 
 public class InicioSesion extends JFrame {
     private static InicioSesion instance = null;
-    private Usuario usuario;
 
     private JButton verAlquilados;
     private JButton alquilarPelicula;
 
     // Constructor privado que recibe el nombre del usuario
-    private InicioSesion(String nombreUsu) {
-        this.usuario = GestorUsuarios.getGestorUsuarios().obtenerUsuarioPorNombre(nombreUsu);
+    private InicioSesion(Integer idUsuario) {
         initialize();
     }
 
     // Método para obtener la instancia de la clase Singleton
-    public static InicioSesion getInicioSesion(String nombreUsu) {
+    public static InicioSesion getInicioSesion(Integer idUsuario) {
         if (instance == null) {
-            instance = new InicioSesion(nombreUsu);
+            instance = new InicioSesion(idUsuario);
         }
         return instance;
     }
@@ -33,7 +30,7 @@ public class InicioSesion extends JFrame {
     // Método para inicializar los componentes gráficos
     private void initialize() {
         // Configuración de la ventana
-        setTitle("Bienvenido, " + usuario.getNombre());
+        setTitle("Bienvenido");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
         JPanel contentPane = new JPanel();
@@ -46,7 +43,7 @@ public class InicioSesion extends JFrame {
         panelSuperior.setBackground(new Color(35, 41, 122));
         contentPane.add(panelSuperior, BorderLayout.NORTH);
 
-        JLabel lblMensajeBienvenida = new JLabel("Bienvenido, " + usuario.getNombre());
+        JLabel lblMensajeBienvenida = new JLabel("Bienvenido");
         lblMensajeBienvenida.setForeground(Color.WHITE);
         lblMensajeBienvenida.setFont(new Font("Arial", Font.BOLD, 16));
         lblMensajeBienvenida.setHorizontalAlignment(SwingConstants.CENTER);

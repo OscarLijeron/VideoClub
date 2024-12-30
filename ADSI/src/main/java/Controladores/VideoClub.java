@@ -72,5 +72,10 @@ public class VideoClub {
 		this.gestorU.eliminarCuenta(pIdUsuario);
 	}
 
+	public Integer iniciarSesion(String pNombre,String pContraseña, String pCorreo) {
+		return this.gestorU.iniciarSesion(pNombre, pContraseña, pCorreo);
+		
+	}
+
 
 }
