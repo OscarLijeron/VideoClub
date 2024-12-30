@@ -63,21 +63,35 @@ public class GestorPeliculas {
 		this.catalogoPelis.add(pPeli);
 	}
 	public JSONArray mostrarCatalogoAmpliado(String pTitulo) {
-	    String resultados = buscarPeliculas(pTitulo); // Busca pel�culas por t�tulo
-	    JSONArray peliculas = new JSONArray(); // Inicializa un JSONArray vac�o
+		String resultados = buscarPeliculas(pTitulo);
+	    JSONArray jsonArray = new JSONArray();
 
-	    if (resultados != null) { // Verifica si hay resultados
-	        JSONObject json = new JSONObject(resultados); // Convierte el String en un JSONObject
-	        if (json.has("Search")) { // Verifica si el objeto contiene la clave "Search"
-	            peliculas = json.getJSONArray("Search"); // Extrae el array de resultados
+	    if (resultados != null) {
+	        JSONObject json = new JSONObject(resultados);
+	        if (json.has("Search")) {
+	            JSONArray peliculas = json.getJSONArray("Search");
+	            for (int i = 0; i < peliculas.length(); i++) {
+	                JSONObject pelicula = peliculas.getJSONObject(i);
+	                String imdbId = pelicula.getString("imdbID");
+	                String detallesPelicula = obtenerDetallePelicula(imdbId);
+	                JSONObject peliculaJson = new JSONObject();
+	                peliculaJson.put("Title", pelicula.getString("Title"));
+	                peliculaJson.put("Year", pelicula.getString("Year"));
+	                peliculaJson.put("imdbID", imdbId);
+
+	                if (detallesPelicula != null) {
+	                    JSONObject detallesJson = new JSONObject(detallesPelicula);
+	                    peliculaJson.put("Genre", detallesJson.optString("Genre"));
+	                } else {
+	                    peliculaJson.put("Genre", "Desconocido");
+	                }
+	                jsonArray.put(peliculaJson);
+	            }
 	        } else {
-	            System.out.println("No se encontraron peliculas."); // Mensaje si no hay pel�culas
+	            System.out.println("No se encontraron películas.");
 	        }
-	    } else {
-	        System.out.println("No se pudo obtener resultados de la API."); // Mensaje si la API falla
 	    }
-
-	    return peliculas; // Devuelve el cat�logo de pel�culas (vac�o si no hay resultados)
+	    return jsonArray;
 	}
 
 	public String buscarPeliculas(String titulo) {
@@ -130,6 +144,26 @@ public class GestorPeliculas {
             System.err.println("Error al ejecutar el programa: " + e.getMessage());
             e.printStackTrace();
         }
+
+
+        private  String obtenerDetallePelicula(String imdbId) {
+        try {
+            String url = BASE_URL + "?apikey=" + API_KEY + "&i=" + imdbId;
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(new URI(url))
+                    .GET()
+                    .build();
+            HttpClient client = HttpClient.newHttpClient();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                return response.body();
+            }
+        } catch (Exception e) {
+            System.out.println("Error en la solicitud: " + e.getMessage());
+        }
+        return null;
+    }
         
     }
 	
