@@ -1,11 +1,14 @@
 package Vista;
 
 import javax.swing.*;
+
+import Controladores.VideoClub;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class RegistroUsuario extends JFrame {
+public class ActualizarDatosPersonales extends JFrame {
     private JPanel contentPane;
     private JTextField txtNombre;
     private JTextField txtContraseña;
@@ -13,8 +16,8 @@ public class RegistroUsuario extends JFrame {
     private JButton btnSolicitarRegistro;
     private JButton btnVolver;
 
-    public RegistroUsuario() {
-        setTitle("Registro de Usuario");
+    public ActualizarDatosPersonales(Integer pIdUsuario) {
+        setTitle("Actualizar Datos Personales");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
 
@@ -28,7 +31,7 @@ public class RegistroUsuario extends JFrame {
         panelTitulo.setBackground(new Color(35, 41, 122));
         contentPane.add(panelTitulo, BorderLayout.NORTH);
 
-        JLabel lblTitulo = new JLabel("Registro de Usuario");
+        JLabel lblTitulo = new JLabel("Actualizar Datos Personales");
         lblTitulo.setForeground(Color.WHITE);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 18));
         lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -75,7 +78,7 @@ public class RegistroUsuario extends JFrame {
         contentPane.add(panelBotones, BorderLayout.SOUTH);
 
         // Botón para solicitar registro
-        btnSolicitarRegistro = new JButton("Solicitar Registro");
+        btnSolicitarRegistro = new JButton("Actualizar Datos");
         btnSolicitarRegistro.setFont(new Font("Arial", Font.BOLD, 14));
         btnSolicitarRegistro.setBackground(new Color(35, 41, 122));
         btnSolicitarRegistro.setForeground(Color.WHITE);
@@ -88,8 +91,9 @@ public class RegistroUsuario extends JFrame {
                 if (nombre.isEmpty() || contraseña.isEmpty() || correo.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
                 } else {
-                    // Aquí puedes añadir la lógica para enviar la solicitud de registro
-                    JOptionPane.showMessageDialog(null, "Solicitud de registro enviada.");
+                    VideoClub.getGestorGeneral().recuperarBD();
+                    VideoClub.getGestorGeneral().actualizarDatosPersonales(pIdUsuario,nombre,correo,contraseña);
+                    JOptionPane.showMessageDialog(null, "Datos actualizados.");
                 }
             }
         });
@@ -102,13 +106,10 @@ public class RegistroUsuario extends JFrame {
         btnVolver.setForeground(Color.WHITE);
         btnVolver.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Aquí puedes añadir la lógica para volver a la página inicial
-                VistaPrincipal vistaPrincipal = new VistaPrincipal();
-                vistaPrincipal.setVisible(true);
-                dispose();
+                // Aquí puedes añadir la lógica para volver a la pagina de iniciar sesion
+                
             }
         });
         panelBotones.add(btnVolver);
     }
 }
-

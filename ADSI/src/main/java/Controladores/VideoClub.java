@@ -77,5 +77,13 @@ public class VideoClub {
 		
 	}
 
+	public void eliminarSolicitudRegistro(Integer pIdAdmin, Integer pIdUsuario) {
+		this.gestorU.eliminarSolicitudRegistro(pIdAdmin,pIdUsuario);
+	}
+
+	public void actualizarDatosPersonales(Integer pIdUsuario, String pNombre, String pContraseña, String pCorreo) {
+		this.gestorU.actualizarDatosPersonales(pIdUsuario,pNombre,pContraseña,pCorreo);
+	}
+
 
 }

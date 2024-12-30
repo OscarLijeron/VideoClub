@@ -139,7 +139,10 @@ public class VistaPrincipal extends JFrame {
         Registro.setPreferredSize(new Dimension(150, 40));
         Registro.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Aquí puedes agregar el código para el registro
+                RegistroUsuario vistaReg = new RegistroUsuario();
+                vistaReg.setVisible(true);
+                setVisible(false);
+                dispose();
             }
         });
         botonesPanel.add(Registro);

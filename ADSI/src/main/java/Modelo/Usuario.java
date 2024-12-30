@@ -140,5 +140,15 @@ public class Usuario {
 		}
 		return jsonArray; 
 	}
+
+	public void eliminarSolicitudRegistro(Usuario pUsuario) {
+		this.solicitudesUsuario.remove(pUsuario);
+	}
+
+	public void actualizarDatos(String pNombre, String pContraseña, String pCorreo) {
+		this.nombre = pNombre;
+		this.contraseña = pContraseña;
+		this.correo = pCorreo;
+	}
 	
 }

@@ -129,7 +129,7 @@ public class GestorUsuarios {
 		
 	public void aceptarSolicitudRegistro(Integer pIdAdmin, Integer pIdUsuario) {
 		Usuario admin = this.catalogoUsuarios.stream()
-			.filter(p -> p.tieneEsteId(pIdUsuario))
+			.filter(p -> p.tieneEsteId(pIdAdmin))
 			.findFirst()
 			.orElse(null); // Devuelve null si no encuentra un usuario
 		
@@ -143,7 +143,8 @@ public class GestorUsuarios {
 			else {
 				Usuario usuario = solUsuario.get();
 				this.catalogoUsuarios.add(usuario);
-				admin.ValidarUsuario(usuario);				
+				admin.ValidarUsuario(usuario);	
+				admin.eliminarSolicitudRegistro(usuario);			
 				BD.RegistrarUsuario(usuario.getNombre(),usuario.getContraseña(), usuario.getCorreo(),pIdAdmin);
 			}
 		}
@@ -180,5 +181,44 @@ public class GestorUsuarios {
 			return esAdmin;
 		}
 		return esAdmin;
+	}
+
+	public void eliminarSolicitudRegistro(Integer pIdAdmin, Integer pIdUsuario) {
+		Usuario admin = this.catalogoUsuarios.stream()
+			.filter(p -> p.tieneEsteId(pIdAdmin))
+			.findFirst()
+			.orElse(null); // Devuelve null si no encuentra un usuario
+		
+		if (admin!=null) {
+			Optional<Usuario> solUsuario = admin.getSolicitudesUsuario().stream()
+				.filter(p-> p.getId() == pIdUsuario).findFirst();
+		
+			if (solUsuario.isEmpty()) {
+				System.out.println("No se encontro la solicitud");
+			}
+			else {
+				Usuario usuario = solUsuario.get();	
+				admin.eliminarSolicitudRegistro(usuario);		
+				
+			}
+		}
+		else{
+			System.out.println("No se encontro ningun usuario administrador");
+		}
+	}
+
+	public void actualizarDatosPersonales(Integer pIdUsuario, String pNombre, String pContraseña, String pCorreo) {
+		Usuario usuario = this.catalogoUsuarios.stream()
+			.filter(p -> p.tieneEsteId(pIdUsuario))
+			.findFirst()
+			.orElse(null); // Devuelve null si no encuentra un usuario
+
+		if (usuario!=null) {
+			BD.ActualizarDatosUsuario(pIdUsuario, pNombre, pContraseña, pCorreo);
+			usuario.actualizarDatos(pNombre,pContraseña,pCorreo);
+		}
+		else{
+			System.out.println("No se encontro ningun usuario");
+		}
 	}
 }

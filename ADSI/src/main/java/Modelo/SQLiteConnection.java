@@ -378,6 +378,36 @@ public class SQLiteConnection {
                 e.printStackTrace();
             }
         }
+
+        public void ActualizarDatosUsuario(Integer pId, String nuevoNombre, String nuevaContraseña, String nuevoCorreo) {
+            String url = "jdbc:sqlite:ADSI.db";
+        
+            // Consulta SQL para actualizar los datos del usuario
+            String sql = "UPDATE Usuarios SET nombre = ?, contraseña = ?, correo = ? WHERE id = ?";
+        
+            try (Connection conn = DriverManager.getConnection(url);
+                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                
+                // Establecemos los valores en la consulta
+                pstmt.setString(1, nuevoNombre);        // Nuevo nombre
+                pstmt.setString(2, nuevaContraseña);    // Nueva contraseña
+                pstmt.setString(3, nuevoCorreo);        // Nuevo correo
+                pstmt.setInt(4, pId);                   // ID del usuario a actualizar
+        
+                // Ejecutamos la actualización
+                int filasActualizadas = pstmt.executeUpdate();
+        
+                // Informamos si se realizó la actualización correctamente
+                if (filasActualizadas > 0) {
+                    System.out.println("Datos del usuario actualizados correctamente.");
+                } else {
+                    System.out.println("No se encontró un usuario con el ID especificado.");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        
             
 
     
