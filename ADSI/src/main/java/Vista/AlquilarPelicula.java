@@ -5,26 +5,22 @@ import javax.swing.table.DefaultTableModel;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import Controladores.GestorPeliculas;
-import Controladores.GestorUsuarios;
 import Controladores.VideoClub;
-import Modelo.Usuario;
+
 
 public class AlquilarPelicula extends JFrame {
     private static AlquilarPelicula instance = null;
-    private Usuario usuario;
+    private int idUsuario;
     private JTable tablePeliculas;
     private JTextField txtBuscar;
     private DefaultTableModel tableModel;
 
     // Constructor privado
-    private AlquilarPelicula(int idUsuario) {
-        this.usuario = GestorUsuarios.getGestorUsuarios().obtenerUsuarioPorId(idUsuario);
+    private AlquilarPelicula(int idUsu) {
+        this.idUsuario = idUsu;
         initialize();
     }
 
@@ -63,9 +59,9 @@ public class AlquilarPelicula extends JFrame {
         JScrollPane scrollPane = new JScrollPane(tablePeliculas);
         panelPrincipal.add(scrollPane, BorderLayout.CENTER);
 
-        // Botón de cerrar
-        JButton btnCerrar = new JButton("Cerrar");
-        panelPrincipal.add(btnCerrar, BorderLayout.SOUTH);
+        //Boton para volver a la ventana anterior
+        JButton btnVolver = new JButton("Volver");
+        panelPrincipal.add(btnVolver, BorderLayout.SOUTH);
 
         // Listeners
         btnBuscar.addActionListener(e -> buscarPeliculas());
@@ -76,11 +72,13 @@ public class AlquilarPelicula extends JFrame {
                 String anio = tableModel.getValueAt(row, 1).toString();
                 String genero = tableModel.getValueAt(row, 2).toString();
                 int idPelicula = GestorPeliculas.getGestorPeliculas().obtenerPeliculaPorNAG(nombre, Integer.parseInt(anio), genero);
-                VideoClub.getGestorGeneral().alquilarPelicula(usuario.getId(), idPelicula);
+                VideoClub.getGestorGeneral().alquilarPelicula(this.idUsuario, idPelicula);
             }
         });
-        btnCerrar.addActionListener(e -> dispose());
-
+        btnVolver.addActionListener(e -> {
+        this.setVisible(false); // Ocultar la vista actual
+        InicioSesion.getInicioSesion(this.idUsuario).mostrar();
+        });
         // Cargar todas las películas al inicio
         cargarPeliculasDesdeJSON(GestorPeliculas.getGestorPeliculas().mostrarPeliculas());
     }
@@ -110,11 +108,9 @@ public class AlquilarPelicula extends JFrame {
                 peliculasFiltradas.add(pelicula);
             }
         }
-
         // Convertir la lista filtrada a JSONArray
         cargarPeliculasDesdeJSON(new JSONArray(peliculasFiltradas));
-    }
-    
+    }   
     public void mostrar() {
         setVisible(true);
     }
