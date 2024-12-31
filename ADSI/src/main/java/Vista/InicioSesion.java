@@ -6,16 +6,16 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import Controladores.GestorUsuarios;
 
 public class InicioSesion extends JFrame {
     private static InicioSesion instance = null;
-
+    private int idUsuario;
     private JButton verAlquilados;
     private JButton alquilarPelicula;
 
     // Constructor privado que recibe el nombre del usuario
-    private InicioSesion(Integer idUsuario) {
+    private InicioSesion(Integer idUsu) {
+        this.idUsuario = idUsu;
         initialize();
     }
 
@@ -61,8 +61,9 @@ public class InicioSesion extends JFrame {
         verAlquilados.setForeground(Color.WHITE);
         verAlquilados.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Aquí puedes agregar la funcionalidad para ver los alquileres
-
+                AlquileresUsuario vistaMisAlq = AlquileresUsuario.getAlquileresUsuario(idUsuario);
+                vistaMisAlq.mostrar();
+                setVisible(false);
                 JOptionPane.showMessageDialog(null, "Mostrar películas alquiladas");
             }
         });
@@ -75,7 +76,9 @@ public class InicioSesion extends JFrame {
         alquilarPelicula.setForeground(Color.WHITE);
         alquilarPelicula.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Aquí puedes agregar la funcionalidad para alquilar una película
+                AlquilarPelicula vistaAlqPeli = AlquilarPelicula.getAlquilarPelicula(idUsuario);
+                vistaAlqPeli.mostrar();
+                setVisible(false);
                 JOptionPane.showMessageDialog(null, "Proceso de alquiler de película");
             }
         });

@@ -5,8 +5,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import Modelo.Usuario;
-import Controladores.GestorUsuarios;
 import Controladores.VideoClub;
 
 import org.json.JSONArray;
@@ -14,13 +12,13 @@ import org.json.JSONObject;
 
 public class AlquileresUsuario extends JFrame {
     private static AlquileresUsuario instance = null;
-    private Usuario usuario;
+    private int idUsuario;
     private JPanel contentPane;
     private JList<String> listAlquileres;
 
     // Constructor privado que recibe el nombre del usuario
     private AlquileresUsuario(int idUsuario) {
-        this.usuario = GestorUsuarios.getGestorUsuarios().obtenerUsuarioPorId(idUsuario);
+        this.idUsuario = idUsuario;
         initialize();
     }
 
@@ -49,7 +47,7 @@ public class AlquileresUsuario extends JFrame {
         contentPane.add(lblTitle, BorderLayout.NORTH);
 
         // Lista de alquileres
-        JSONArray alquileres = VideoClub.getGestorGeneral().obtenerAlquileresUsuario(this.usuario.getId());
+        JSONArray alquileres = VideoClub.getGestorGeneral().obtenerAlquileresUsuario(idUsuario);
         DefaultListModel<String> alquileresModel = new DefaultListModel<>();
 
         for (int i = 0; i < alquileres.length(); i++) {
@@ -84,7 +82,7 @@ public class AlquileresUsuario extends JFrame {
     private void volverAInicioSesion() {
         JOptionPane.showMessageDialog(this, "Volviendo a inicio de sesión...");
         this.setVisible(false); // Ocultar la vista actual
-        InicioSesion.getInicioSesion(this.usuario.getId()).mostrar();
+        InicioSesion.getInicioSesion(idUsuario).mostrar(); // Mostrar la vista de inicio de sesión
     }
 
     // Método para mostrar la ventana
