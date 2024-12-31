@@ -27,43 +27,30 @@ public class GestorAlquileres {
         return miGestorA;
     }
 
-    public boolean alquilarPelicula(Usuario usuario, Pelicula peli) {
-        String nombreP = peli.getNombrePelicula();
-        String genero = peli.getGenero();
-        Integer añoProd = peli.getAñoProd();
-        Optional<Pelicula> peliOpt = BD.consultarPelicula(nombreP, genero, añoProd); 
+    public boolean alquilarPelicula(int idUsuario, int idPelicula) {
+        Optional<Pelicula> peliOpt = GestorPeliculas.getGestorPeliculas().obtenerPeliculaPorId(idPelicula);
         if (peliOpt.isEmpty()) {
             System.out.println("Pelicula no encontrada en el catalogo.");
             return false;
         }
-
         Pelicula pelicula = peliOpt.get();
         if (!pelicula.estaDisponible()) {
             System.out.println("La pelicula no esta disponible.");
             return false;
         }
-
         // Registrar el alquiler
-        Alquiler nuevoAlquiler = new Alquiler(pelicula);
+        Alquiler nuevoAlquiler = new Alquiler(pelicula, idUsuario);
         this.listaAlquileres.add(nuevoAlquiler);
-        usuario.alquilarPelicula(nuevoAlquiler);
+        GestorUsuarios.getGestorUsuarios().obtenerUsuarioPorId(idUsuario).alquilarPelicula(nuevoAlquiler);
         pelicula.setDisponible(false);
 
         // Registrar en la base de datos
-        BD.registrarAlquiler(usuario.getId(), BD.consultarIdPelicula(pelicula.getNombrePelicula(), pelicula.getAñoProd(), pelicula.getGenero()));
+        BD.registrarAlquiler(idUsuario, BD.consultarIdPelicula(pelicula.getNombrePelicula(), pelicula.getAñoProd(), pelicula.getGenero()));
         System.out.println("Pelicula alquilada exitosamente.");
         return true;
     }
 
-    public ArrayList<Pelicula> obtenerPeliculasAlquiladas(Usuario usuario) {
-        ArrayList<Pelicula> peliculas = new ArrayList<>();
-        for (Alquiler alquiler : usuario.getMisAlquileres()) {
-            peliculas.add(alquiler.getPelicula());
-        }
-        return peliculas;
-    }
-
-    public JSONArray  obtenerAlquileresUsuario(int idUsuario) { //llama a gestorUsuario, busca a ese usuario y devuelve el JSON de sus alquileres
+    public JSONArray  obtenerAlquileresUsuario(int idUsuario) { 
         GestorUsuarios gestorUsuarios = GestorUsuarios.getGestorUsuarios();
         Usuario usuario = gestorUsuarios.obtenerUsuarioPorId(idUsuario);
         return usuario.mostrarMisAlquileres();

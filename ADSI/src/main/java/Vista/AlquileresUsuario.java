@@ -19,15 +19,15 @@ public class AlquileresUsuario extends JFrame {
     private JList<String> listAlquileres;
 
     // Constructor privado que recibe el nombre del usuario
-    private AlquileresUsuario(Usuario usu) {
-        this.usuario = usu;
+    private AlquileresUsuario(int idUsuario) {
+        this.usuario = GestorUsuarios.getGestorUsuarios().obtenerUsuarioPorId(idUsuario);
         initialize();
     }
 
     // Método para obtener la instancia de la clase Singleton
-    public static AlquileresUsuario getAlquileresUsuario(Usuario usu) {
+    public static AlquileresUsuario getAlquileresUsuario(int idUsuario) {
         if (instance == null) {
-            instance = new AlquileresUsuario(usu);
+            instance = new AlquileresUsuario(idUsuario);
         }
         return instance;
     }
@@ -84,7 +84,7 @@ public class AlquileresUsuario extends JFrame {
     private void volverAInicioSesion() {
         JOptionPane.showMessageDialog(this, "Volviendo a inicio de sesión...");
         this.setVisible(false); // Ocultar la vista actual
-        InicioSesion.getInicioSesion(this.usuario.getNombre()).mostrar();
+        InicioSesion.getInicioSesion(this.usuario.getId()).mostrar();
     }
 
     // Método para mostrar la ventana

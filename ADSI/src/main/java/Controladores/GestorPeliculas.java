@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import java.util.Optional;
 
 import Modelo.Pelicula;
 public class GestorPeliculas {
@@ -26,6 +27,23 @@ public class GestorPeliculas {
 		}
 		return miGestorP;
 	}
+    public Optional<Pelicula> obtenerPeliculaPorId(int pId) {
+        for (Pelicula p : this.catalogoPelis) {
+            if (p.getIdPelicula() == pId) {
+                return Optional.of(p);
+            }
+        }
+        return Optional.empty();
+    }
+
+    public int obtenerPeliculaPorNAG(String pNombre, int pAño, String pGenero) {
+        for (Pelicula p : this.catalogoPelis) {
+            if (p.getNombrePelicula().equals(pNombre) && p.getAñoProd() == pAño && p.getGenero().equals(pGenero)) {
+                return p.getIdPelicula();
+            }
+        }
+        return -1;
+    }
 
     public Pelicula obtenerPeliculaPorNombre(String pNombre) {
         for (Pelicula p : this.catalogoPelis) {
@@ -34,6 +52,20 @@ public class GestorPeliculas {
             }
         }
         return null;
+    }
+
+    public JSONArray mostrarPeliculasPorNombre(String pNombre) {
+        JSONArray peliculas = new JSONArray();
+        for (Pelicula p : this.catalogoPelis) {
+            if (p.getNombrePelicula().contains(pNombre)) {
+                JSONObject pelicula = new JSONObject();
+                pelicula.put("Nombre", p.getNombrePelicula());
+                pelicula.put("Año", p.getAñoProd());
+                pelicula.put("Genero", p.getGenero());
+                peliculas.put(pelicula);
+            }
+        }
+        return peliculas;
     }
 
     public JSONArray mostrarPeliculas() {
@@ -143,10 +175,9 @@ public class GestorPeliculas {
         } catch (Exception e) {
             System.err.println("Error al ejecutar el programa: " + e.getMessage());
             e.printStackTrace();
-        }
-
-
-        private  String obtenerDetallePelicula(String imdbId) {
+        }  
+    }
+    private  String obtenerDetallePelicula(String imdbId) {
         try {
             String url = BASE_URL + "?apikey=" + API_KEY + "&i=" + imdbId;
             HttpRequest request = HttpRequest.newBuilder()
@@ -163,8 +194,6 @@ public class GestorPeliculas {
             System.out.println("Error en la solicitud: " + e.getMessage());
         }
         return null;
-    }
-        
     }
 	
 }

@@ -1,12 +1,9 @@
 package Controladores;
 
-import java.util.ArrayList;
-
 import org.json.JSONArray;
 
 import Modelo.Pelicula;
 import Modelo.SQLiteConnection;
-import Modelo.Usuario;
 
 public class VideoClub {
 	private static VideoClub miGestorG=new VideoClub();
@@ -50,14 +47,8 @@ public class VideoClub {
 		return gestorP.mostrarPeliculas();
 	}
 
-	//alquilar pelicula
-	public void alquilarPelicula(int idUsuario, String nombreP) {
-		GestorUsuarios gestorUsuarios = GestorUsuarios.getGestorUsuarios();
-		Usuario usuario = gestorUsuarios.obtenerUsuarioPorId(idUsuario);
-		Pelicula pelicula = gestorP.obtenerPeliculaPorNombre(nombreP);
-		if (usuario != null && pelicula != null) {
-			gestorA.alquilarPelicula(usuario, pelicula);
-		}
+	public void alquilarPelicula(int idUsuario, int idPelicula){
+		gestorA.alquilarPelicula(idUsuario, idPelicula);
 	}
 
 	public void registrarse(String pNombre, String pContraseña, String pCorreo) {
@@ -84,6 +75,5 @@ public class VideoClub {
 	public void actualizarDatosPersonales(Integer pIdUsuario, String pNombre, String pContraseña, String pCorreo) {
 		this.gestorU.actualizarDatosPersonales(pIdUsuario,pNombre,pContraseña,pCorreo);
 	}
-
 
 }
