@@ -21,10 +21,10 @@ public class VideoClub {
 		return miGestorG;
 	}
 	
-	public void a�adirPeliAlCatalogo(String pNombre,Integer pAñoProd,String pGenero) {
+	public void añadirPeliAlCatalogo(String pNombre,Integer pAñoProd,String pGenero) {
 		Pelicula pPeli=new Pelicula(pNombre,pAñoProd,pGenero);
-		this.BD.A�adirPeli(pNombre, pGenero, pAñoProd);
-		this.gestorP.a�adirPeliAlCatalogo(pPeli);	
+		this.BD.AñadirPeli(pNombre, pGenero, pAñoProd);
+		this.gestorP.añadirPeliAlCatalogo(pPeli);	
 	}
 	public void eliminarSolicitudPelicula(Integer pIdUsuario,String pNombre,Integer pAñoProd,String pGenero) {
 		Pelicula pPeli=new Pelicula(pNombre,pAñoProd,pGenero);

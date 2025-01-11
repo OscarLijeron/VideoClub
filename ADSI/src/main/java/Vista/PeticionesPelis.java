@@ -143,7 +143,7 @@ public class PeticionesPelis extends JFrame {
 		}
 		return tituloPeli;
 	}
-	private JTextField getA�oPeli() {
+	private JTextField getAñoPeli() {
 		if (añoPeli == null) {
 			añoPeli = new JTextField();
 			añoPeli.setText("Poner año produccion");
@@ -207,7 +207,7 @@ public class PeticionesPelis extends JFrame {
 				String añoPTexto=añoPeli.getText();
 				int añoP=Integer.parseInt(añoPTexto);
 				String generoP=generoPeli.getText();
-				VideoClub.getGestorGeneral().eliminarSolicitudPelicula(idUsuario, tituloP, a�oP, generoP);
+				VideoClub.getGestorGeneral().eliminarSolicitudPelicula(idUsuario, tituloP, añoP, generoP);
 				
 			}
 			

@@ -24,7 +24,7 @@ public class GestorUsuarios {
 		}
 		return miGestorU;
 	}
-	public void a�adirSolicitudPelicula(String pNombre,Integer pAño, String pGenero) {
+	public void añadirSolicitudPelicula(String pNombre,Integer pAño, String pGenero) {
 		Usuario usuario = this.catalogoUsuarios.stream()
                 .filter(p -> p.esAdmin())
                 .findFirst()
@@ -87,8 +87,8 @@ public class GestorUsuarios {
 		}
 		
 	}
-	public void a�adirUsuarioParaRecuperar(String pNombre, String pContrase�a, String pCorreo, String pRol) {
-		Usuario unUsuario=new Usuario(pNombre, pContrase�a, pCorreo, pRol);
+	public void añadirUsuarioParaRecuperar(String pNombre, String pContraseña, String pCorreo, String pRol) {
+		Usuario unUsuario=new Usuario(pNombre, pContraseña, pCorreo, pRol);
 		this.catalogoUsuarios.add(unUsuario);
 	}
 

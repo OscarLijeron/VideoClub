@@ -67,7 +67,7 @@ public class SQLiteConnection {
         }
     }
 	
-	public void A�adirSolicitudPeli(Integer pIdUsuario, Integer pIdPeli) {
+	public void AñadirSolicitudPeli(Integer pIdUsuario, Integer pIdPeli) {
         String url = "jdbc:sqlite:ADSI.db";
 
         String sql = "INSERT INTO SolicitudPelicula (idUsuario, idPelicula) VALUES (?, ?)";
