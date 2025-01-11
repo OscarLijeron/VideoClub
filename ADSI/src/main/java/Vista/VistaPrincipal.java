@@ -72,7 +72,7 @@ public class VistaPrincipal extends JFrame {
         panel.add(correo);
 
         // Etiqueta y campo de contrase�a
-        JLabel lblContrasea = new JLabel("Contrase�a");
+        JLabel lblContrasea = new JLabel("Contraseña");
         lblContrasea.setHorizontalAlignment(SwingConstants.CENTER);
         lblContrasea.setFont(new Font("Arial", Font.PLAIN, 14));
         panel.add(lblContrasea);
