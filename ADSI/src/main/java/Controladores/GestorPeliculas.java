@@ -27,22 +27,14 @@ public class GestorPeliculas {
 		}
 		return miGestorP;
 	}
-    public Optional<Pelicula> obtenerPeliculaPorId(int pId) {
+    
+    public Optional<Pelicula> obtenerPeliculaPorNAG(String pNombre, int pAño, String pGenero) {
         for (Pelicula p : this.catalogoPelis) {
-            if (p.getIdPelicula() == pId) {
+            if (p.getNombrePelicula().equals(pNombre) && p.getAñoProd() == pAño && p.getGenero().equals(pGenero)) {
                 return Optional.of(p);
             }
         }
         return Optional.empty();
-    }
-
-    public int obtenerPeliculaPorNAG(String pNombre, int pAño, String pGenero) {
-        for (Pelicula p : this.catalogoPelis) {
-            if (p.getNombrePelicula().equals(pNombre) && p.getAñoProd() == pAño && p.getGenero().equals(pGenero)) {
-                return p.getIdPelicula();
-            }
-        }
-        return -1;
     }
 
     public Pelicula obtenerPeliculaPorNombre(String pNombre) {
@@ -54,7 +46,7 @@ public class GestorPeliculas {
         return null;
     }
 
-    public JSONArray mostrarPeliculasPorNombre(String pNombre) {
+    /*public JSONArray mostrarPeliculasPorNombre(String pNombre) {
         JSONArray peliculas = new JSONArray();
         for (Pelicula p : this.catalogoPelis) {
             if (p.getNombrePelicula().contains(pNombre)) {
@@ -66,7 +58,7 @@ public class GestorPeliculas {
             }
         }
         return peliculas;
-    }
+    } */
 
     public JSONArray mostrarPeliculas() {
         JSONArray peliculas = new JSONArray(); // Inicializa un JSONArray vacio

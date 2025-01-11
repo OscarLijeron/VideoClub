@@ -27,8 +27,8 @@ public class GestorAlquileres {
         return miGestorA;
     }
 
-    public boolean alquilarPelicula(int idUsuario, int idPelicula) {
-        Optional<Pelicula> peliOpt = GestorPeliculas.getGestorPeliculas().obtenerPeliculaPorId(idPelicula);
+    public boolean alquilarPelicula(int idUsuario, String nombrePeli, int añoProd, String genero) {
+        Optional<Pelicula> peliOpt = GestorPeliculas.getGestorPeliculas().obtenerPeliculaPorNAG(nombrePeli, añoProd, genero);
         if (peliOpt.isEmpty()) {
             System.out.println("Pelicula no encontrada en el catalogo.");
             return false;

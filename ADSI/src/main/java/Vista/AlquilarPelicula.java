@@ -71,8 +71,7 @@ public class AlquilarPelicula extends JFrame {
                 String nombre = tableModel.getValueAt(row, 0).toString();
                 String anio = tableModel.getValueAt(row, 1).toString();
                 String genero = tableModel.getValueAt(row, 2).toString();
-                int idPelicula = GestorPeliculas.getGestorPeliculas().obtenerPeliculaPorNAG(nombre, Integer.parseInt(anio), genero);
-                VideoClub.getGestorGeneral().alquilarPelicula(this.idUsuario, idPelicula);
+                VideoClub.getGestorGeneral().alquilarPelicula(this.idUsuario, nombre, Integer.parseInt(anio), genero);
             }
         });
         btnVolver.addActionListener(e -> {

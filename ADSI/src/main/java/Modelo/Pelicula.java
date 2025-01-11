@@ -3,7 +3,6 @@ package Modelo;
 import java.util.ArrayList;
 
 public class Pelicula {
-	private int id;
 	private String nombre;
 	private Integer añoProd;
 	private String genero;
@@ -44,7 +43,5 @@ public class Pelicula {
     public String getGenero() {
     	return this.genero;
     }
-	public int getIdPelicula() {
-		return this.id;
-	}
+	
 }
