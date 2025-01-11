@@ -69,7 +69,7 @@ public class Usuario {
 	    System.out.println("No esta la pelicula en la lista.");
 	}
 
-	public void EliminarAlquiler(Alquiler pAlquiler) {
+	public void eliminarAlquiler(Alquiler pAlquiler) {
 		this.misAlquileres.remove(pAlquiler);
 		//
 	}

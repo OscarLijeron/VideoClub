@@ -28,4 +28,13 @@ public class Alquiler {
 	public int getIdUsuario() {
 		return this.idUsuario;
 	}	
+	
+	public Boolean estaVencido() {
+		// Obtiene la fecha actual como LocalDate
+		LocalDate fechaActual = LocalDate.now();
+		Date fechaActualDate=Date.from(fechaActual.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		long diferencia=fechaActualDate.getTime()-this.fechaAlquiler.getTime();
+		long dias=diferencia/(1000*60*60*24);
+		return dias>2;
+	}
 }

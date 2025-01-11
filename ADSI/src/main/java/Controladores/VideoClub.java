@@ -33,10 +33,13 @@ public class VideoClub {
 		this.BD.EliminarPeliSol(pNombre, pGenero, pAñoProd);
 		this.gestorU.eliminarSolicitudPelicula(pIdUsuario, pPeli);	
 	}
+	public void iniciarScheduler() {
+		this.BD.iniciarScheduler();
+	}
 	public void recuperarBD() {
-		this.BD.recuperarUsuarios();
 		this.BD.recuperarPelis();
 		this.BD.recuperarSolicitudPelis();
+		this.BD.iniciarScheduler();
 	}
 
     public JSONArray obtenerAlquileresUsuario(int idUsuario) {
@@ -74,6 +77,10 @@ public class VideoClub {
 
 	public void actualizarDatosPersonales(Integer pIdUsuario, String pNombre, String pContraseña, String pCorreo) {
 		this.gestorU.actualizarDatosPersonales(pIdUsuario,pNombre,pContraseña,pCorreo);
+	}
+
+	public void eliminarAlquilerVencido(int idUsuario, String nombrePeli, int añoProd, String genero) {
+		this.gestorA.eliminarAlquilerVencido( idUsuario,  nombrePeli,  añoProd,  genero);
 	}
 
 }

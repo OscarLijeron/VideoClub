@@ -55,4 +55,28 @@ public class GestorAlquileres {
         Usuario usuario = gestorUsuarios.obtenerUsuarioPorId(idUsuario);
         return usuario.mostrarMisAlquileres();
     }
+
+    public void eliminarAlquilerVencido(int idUsuario, String nombrePeli, int añoProd, String genero) {
+        Optional<Pelicula> peliOpt = GestorPeliculas.getGestorPeliculas().obtenerPeliculaPorNAG(nombrePeli, añoProd, genero);
+        if (peliOpt.isEmpty()) {
+            System.out.println("Pelicula no encontrada en el catalogo.");
+            return;
+        }
+        Pelicula pelicula = peliOpt.get();
+        Optional<Alquiler> alquilerOpt = this.listaAlquileres.stream().filter(a -> a.getPelicula().equals(pelicula) && a.getIdUsuario() == idUsuario).findFirst();
+        if (alquilerOpt.isEmpty()) {
+            System.out.println("El usuario no tiene alquilada la pelicula.");
+            return;
+        }
+        Alquiler alquiler = alquilerOpt.get();
+        if (alquiler.estaVencido()) {
+            this.listaAlquileres.remove(alquiler);
+            GestorUsuarios.getGestorUsuarios().obtenerUsuarioPorId(idUsuario).eliminarAlquiler(alquiler);
+            pelicula.setDisponible(true);
+            System.out.println("Alquiler eliminado exitosamente.");
+        } else {
+            System.out.println("El alquiler no esta vencido.");
+        }
+    }
+
 }

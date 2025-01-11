@@ -3,6 +3,7 @@ import java.sql.Statement;
 
 import Controladores.GestorPeliculas;
 import Controladores.GestorUsuarios;
+import Controladores.VideoClub;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,11 +11,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.Optional;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.sql.Date;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class SQLiteConnection {
 	private static SQLiteConnection miDB=new SQLiteConnection();
+    private ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 	private  SQLiteConnection() {}
 	public static SQLiteConnection getSQLiteConnection() {
 		if (miDB==null) {
@@ -408,9 +415,63 @@ public class SQLiteConnection {
             }
         }
         
-            
 
+        public void limpiarAlquileresVencidos() {
+            String url = "jdbc:sqlite:ADSI.db";
+            String sqlSeleccionar = "SELECT idUsuario, idPelicula FROM Alquiler WHERE julianday('now') - julianday(fechaAlquiler) > 2";
+            String sqlEliminar = "DELETE FROM Alquiler WHERE idUsuario = ? AND idPelicula = ?";
+            String sqlActualizarPelicula = "UPDATE Pelicula SET estaDisponible = 1 WHERE idPelicula = ?";
+            String sqlNombreGnroAño = "SELECT nombre, genero, año FROM Pelicula WHERE idPelicula = ?";
+        
+            try (Connection conn = DriverManager.getConnection(url);
+                 PreparedStatement stmtSeleccionar = conn.prepareStatement(sqlSeleccionar);
+                 PreparedStatement stmtEliminar = conn.prepareStatement(sqlEliminar);
+                 PreparedStatement stmtActualizarPelicula = conn.prepareStatement(sqlActualizarPelicula);
+                 PreparedStatement stmtNombreGnroAño = conn.prepareStatement(sqlNombreGnroAño);
+                 ResultSet rs = stmtSeleccionar.executeQuery()) {
+        
+                while (rs.next()) {
+                    int idUsuario = rs.getInt("idUsuario");
+                    int idPelicula = rs.getInt("idPelicula");
+        
+                    // Obtener el nombre, género y año de la película
+                    stmtNombreGnroAño.setInt(1, idPelicula);
+                    try (ResultSet rsPelicula = stmtNombreGnroAño.executeQuery()) {
+                        if (rsPelicula.next()) {
+                            String nombre = rsPelicula.getString("nombre");
+                            String genero = rsPelicula.getString("genero");
+                            int año = rsPelicula.getInt("año");
+        
+                            // Sincronizar el modelo pasando nombre, género y año
+                            VideoClub.getGestorGeneral().eliminarAlquilerVencido(idUsuario, nombre, año, genero);
+                        }
+                    }
+        
+                    // Eliminar el alquiler vencido
+                    stmtEliminar.setInt(1, idUsuario);
+                    stmtEliminar.setInt(2, idPelicula);
+                    stmtEliminar.executeUpdate();
+        
+                    // Marcar la película como disponible
+                    stmtActualizarPelicula.setInt(1, idPelicula);
+                    stmtActualizarPelicula.executeUpdate();
+                }
+        
+                System.out.println("Limpieza de alquileres vencidos completada.");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        public void iniciarScheduler() {
+            scheduler.scheduleAtFixedRate(() -> {
+                try {
+                    limpiarAlquileresVencidos();
+                } catch (Exception e) {
+                    System.err.println("Error al ejecutar la limpieza: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }, 0, 1, TimeUnit.HOURS); // Ejecutar cada 1 hora
+        }
     
-
-
 }
