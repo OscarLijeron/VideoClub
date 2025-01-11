@@ -104,7 +104,6 @@ public class VistaPrincipal extends JFrame {
                 if (usuarioNombre.isEmpty() || correoIngresado.isEmpty() || contraseñaIngresada.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
                 } else {
-                    VideoClub.getGestorGeneral().recuperarBD();
                     Integer idUsuario = VideoClub.getGestorGeneral().iniciarSesion(usuarioNombre,contraseñaIngresada,correoIngresado);
                     if (idUsuario!=null){
                         boolean esAdmin = false;
