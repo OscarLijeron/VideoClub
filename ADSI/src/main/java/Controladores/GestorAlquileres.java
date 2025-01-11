@@ -45,7 +45,7 @@ public class GestorAlquileres {
         pelicula.setDisponible(false);
 
         // Registrar en la base de datos
-        BD.registrarAlquiler(idUsuario, BD.consultarIdPelicula(pelicula.getNombrePelicula(), pelicula.getAÃ±oProd(), pelicula.getGenero()));
+        BD.registrarAlquiler(idUsuario, BD.consultarIdPelicula(pelicula.getNombrePelicula(), pelicula.getAñoProd(), pelicula.getGenero()));
         System.out.println("Pelicula alquilada exitosamente.");
         return true;
     }

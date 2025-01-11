@@ -67,7 +67,7 @@ public class SQLiteConnection {
         }
     }
 	
-	public void AÃ±adirSolicitudPeli(Integer pIdUsuario, Integer pIdPeli) {
+	public void AñadirSolicitudPeli(Integer pIdUsuario, Integer pIdPeli) {
         String url = "jdbc:sqlite:ADSI.db";
 
         String sql = "INSERT INTO SolicitudPelicula (idUsuario, idPelicula) VALUES (?, ?)";
@@ -84,17 +84,17 @@ public class SQLiteConnection {
             e.printStackTrace();
         }
     }
-	public void AÃ±adirPeli(String pNombrePeli,String pGenero, Integer pAÃ±o) {
+	public void AñadirPeli(String pNombrePeli,String pGenero, Integer pAño) {
         String url = "jdbc:sqlite:ADSI.db";
 
-        String sql = "INSERT INTO Pelicula (nombre, genero, aÃ±o) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Pelicula (nombre, genero, año) VALUES (?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, pNombrePeli); 
             pstmt.setString(2, pGenero); 
-            pstmt.setInt(3, pAÃ±o); 
+            pstmt.setInt(3, pAño); 
             pstmt.executeUpdate();
 
             System.out.println("Registro insertado correctamente.");
@@ -102,12 +102,12 @@ public class SQLiteConnection {
             e.printStackTrace();
         }
     }
-	public Integer consultarIdPelicula(String pNombre, Integer pAÃ±o, String pGenero) {
+	public Integer consultarIdPelicula(String pNombre, Integer pAño, String pGenero) {
 	    // Ruta de conexiï¿½n a la base de datos SQLite
 	    String url = "jdbc:sqlite:ADSI.db";
 
 	    // Consulta SQL con parï¿½metros
-	    String sql = "SELECT idPelicula FROM Pelicula WHERE nombre = ? AND aÃ±o = ? AND genero = ?";
+	    String sql = "SELECT idPelicula FROM Pelicula WHERE nombre = ? AND año = ? AND genero = ?";
 
 	    // Uso de try-with-resources para cerrar automï¿½ticamente recursos
 	    try (Connection conn = DriverManager.getConnection(url);
@@ -115,7 +115,7 @@ public class SQLiteConnection {
 
 	        // Asignar valores a los parï¿½metros de la consulta
 	        pstmt.setString(1, pNombre);
-	        pstmt.setInt(2, pAÃ±o);
+	        pstmt.setInt(2, pAño);
 	        pstmt.setString(3, pGenero);
 
 	        // Ejecutar la consulta
@@ -134,12 +134,12 @@ public class SQLiteConnection {
 	        return -1; // Indica un error en la ejecuciï¿½n
 	    }
 	}
-	public Integer consultarIdUsuario(String pNombre, String pCorreo, String pContraseÃ±a) {
+	public Integer consultarIdUsuario(String pNombre, String pCorreo, String pContraseña) {
 	    // Ruta de conexiï¿½n a la base de datos SQLite
 	    String url = "jdbc:sqlite:ADSI.db";
 
 	    // Consulta SQL con parï¿½metros
-	    String sql = "SELECT id FROM Usuarios WHERE nombre = ? AND correo = ? AND contraseÃ±a = ?";
+	    String sql = "SELECT id FROM Usuarios WHERE nombre = ? AND correo = ? AND contraseña = ?";
 
 	    // Uso de try-with-resources para cerrar automï¿½ticamente recursos
 	    try (Connection conn = DriverManager.getConnection(url);
@@ -148,7 +148,7 @@ public class SQLiteConnection {
 	        // Asignar valores a los parï¿½metros de la consulta
 	        pstmt.setString(1, pNombre);
 	        pstmt.setString(2, pCorreo);
-	        pstmt.setString(3, pContraseÃ±a);
+	        pstmt.setString(3, pContraseña);
 
 	        // Ejecutar la consulta
 	        try (ResultSet rs = pstmt.executeQuery()) {
@@ -166,17 +166,17 @@ public class SQLiteConnection {
 	        return -1; // Indica un error en la ejecuciï¿½n
 	    }
 	}
-	public void AÃ±adirPeliSol(String pNombrePeli,String pGenero, Integer pAÃ±o) {
+	public void AñadirPeliSol(String pNombrePeli,String pGenero, Integer pAño) {
         String url = "jdbc:sqlite:ADSI.db";
 
-        String sql = "INSERT INTO Pelicula (nombre, genero, aÃ±o, esSolicitada) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Pelicula (nombre, genero, año, esSolicitada) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, pNombrePeli); 
             pstmt.setString(2, pGenero); 
-            pstmt.setInt(3, pAÃ±o); 
+            pstmt.setInt(3, pAño); 
             pstmt.setString(4, "True"); 
             pstmt.executeUpdate();
 
@@ -185,17 +185,17 @@ public class SQLiteConnection {
             e.printStackTrace();
         }
 	}
-	public void EliminarPeliSol(String pNombrePeli,String pGenero, Integer pAÃ±o) {
+	public void EliminarPeliSol(String pNombrePeli,String pGenero, Integer pAño) {
         String url = "jdbc:sqlite:ADSI.db";
 
-        String sql = "DELETE FROM Pelicula WHERE nombre = ? AND genero= ? AND aÃ±o= ? AND esSolicitada= ? ";
+        String sql = "DELETE FROM Pelicula WHERE nombre = ? AND genero= ? AND año= ? AND esSolicitada= ? ";
 
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, pNombrePeli); 
             pstmt.setString(2, pGenero); 
-            pstmt.setInt(3, pAÃ±o); 
+            pstmt.setInt(3, pAño); 
             pstmt.setString(4, "True"); 
             pstmt.executeUpdate();
 
@@ -210,7 +210,7 @@ public class SQLiteConnection {
             String url = "jdbc:sqlite:ADSI.db";
 
             // Consulta SQL para recuperar los datos de la tabla Usuarios
-            String sql = "SELECT nombre, correo, contraseÃ±a, rol FROM Usuarios";
+            String sql = "SELECT nombre, correo, contraseña, rol FROM Usuarios";
 
             try (Connection conn = DriverManager.getConnection(url);
                  Statement stmt = conn.createStatement();
@@ -220,9 +220,9 @@ public class SQLiteConnection {
                 while (rs.next()) {
                     String nombre = rs.getString("nombre");
                     String correo = rs.getString("correo");
-                    String contraseÃ±a = rs.getString("contraseÃ±a");
+                    String contraseña = rs.getString("contraseña");
                     String rol = rs.getString("rol");
-                    GestorUsuarios.getGestorUsuarios().aÃ±adirUsuarioParaRecuperar(nombre, contraseÃ±a, correo, rol);
+                    GestorUsuarios.getGestorUsuarios().añadirUsuarioParaRecuperar(nombre, contraseña, correo, rol);
                 }
 
             } catch (Exception e) {
@@ -234,7 +234,7 @@ public class SQLiteConnection {
             String url = "jdbc:sqlite:ADSI.db";
 
             // Consulta SQL para recuperar los datos de la tabla Usuarios
-            String sql = "SELECT nombre, genero, aÃ±o FROM Pelicula WHERE esSolicitada ='False'";
+            String sql = "SELECT nombre, genero, año FROM Pelicula WHERE esSolicitada ='False'";
 
             try (Connection conn = DriverManager.getConnection(url);
                  Statement stmt = conn.createStatement();
@@ -244,8 +244,8 @@ public class SQLiteConnection {
                 while (rs.next()) {
                     String nombre = rs.getString("nombre");
                     String genero = rs.getString("genero");
-                    Integer aÃ±o = rs.getInt("aÃ±o");
-                    GestorPeliculas.getGestorPeliculas().aÃ±adirPeliAlCatalogoParaRecuperar(nombre, aÃ±o, genero);
+                    Integer año = rs.getInt("año");
+                    GestorPeliculas.getGestorPeliculas().añadirPeliAlCatalogoParaRecuperar(nombre, año, genero);
                 }
 
             } catch (Exception e) {
@@ -257,7 +257,7 @@ public class SQLiteConnection {
             String url = "jdbc:sqlite:ADSI.db";
 
             // Consulta SQL para recuperar los datos de la tabla Usuarios
-            String sql = "SELECT nombre, genero, aÃ±o FROM Pelicula WHERE esSolicitada ='True'";
+            String sql = "SELECT nombre, genero, año FROM Pelicula WHERE esSolicitada ='True'";
 
             try (Connection conn = DriverManager.getConnection(url);
                  Statement stmt = conn.createStatement();
@@ -267,8 +267,8 @@ public class SQLiteConnection {
                 while (rs.next()) {
                     String nombre = rs.getString("nombre");
                     String genero = rs.getString("genero");
-                    Integer aÃ±o = rs.getInt("aÃ±o");
-                    GestorUsuarios.getGestorUsuarios().aÃ±adirSolicitudPeliculaParaRecuperar(nombre, aÃ±o, genero);
+                    Integer año = rs.getInt("año");
+                    GestorUsuarios.getGestorUsuarios().añadirSolicitudPeliculaParaRecuperar(nombre, año, genero);
                 }
 
             } catch (Exception e) {
@@ -295,19 +295,19 @@ public class SQLiteConnection {
 	        }
 			
 		}
-		public Optional<Pelicula> consultarPelicula(String nombrePelicula, String pGenero, Integer pAÃ±oprod) {
+		public Optional<Pelicula> consultarPelicula(String nombrePelicula, String pGenero, Integer pAñoprod) {
 		    // Ruta de la base de datos SQLite
 		    String url = "jdbc:sqlite:ADSI.db";
 
 		    // Consulta SQL
-		    String sql = "SELECT nombre, genero, aÃ±o FROM Pelicula WHERE esSolicitada = 'False' AND nombre = ? AND aÃ±o = ? AND genero = ?";
+		    String sql = "SELECT nombre, genero, año FROM Pelicula WHERE esSolicitada = 'False' AND nombre = ? AND año = ? AND genero = ?";
 
 		    try (Connection conn = DriverManager.getConnection(url);
 		         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 		        // Establecer los parï¿½metros de la consulta
 		        pstmt.setString(1, nombrePelicula);
-		        pstmt.setInt(2, pAÃ±oprod);
+		        pstmt.setInt(2, pAñoprod);
 		        pstmt.setString(3, pGenero);
 
 		        // Ejecutar la consulta y procesar los resultados
@@ -316,9 +316,9 @@ public class SQLiteConnection {
 		                // Crear una instancia de Pelicula con los datos obtenidos
 		                String nombre = rs.getString("nombre");
 		                String genero = rs.getString("genero");
-		                int aÃ±o = rs.getInt("aÃ±o");
+		                int año = rs.getInt("año");
 
-		                Pelicula pelicula = new Pelicula(nombre, aÃ±o, genero);
+		                Pelicula pelicula = new Pelicula(nombre, año, genero);
 	                return Optional.of(pelicula);
 		            }
 		        }
@@ -330,15 +330,15 @@ public class SQLiteConnection {
 		    return Optional.empty();
 		}
 
-        public void RegistrarUsuario(String pNombre,String pContraseÃ±a, String pCorreo, Integer idValidador) {
+        public void RegistrarUsuario(String pNombre,String pContraseña, String pCorreo, Integer idValidador) {
             String url = "jdbc:sqlite:ADSI.db";
 
-            String sql = "INSERT INTO Usuarios (nombre, contraseÃ±a, correo , rol, idValidador) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO Usuarios (nombre, contraseña, correo , rol, idValidador) VALUES (?, ?, ?, ?, ?)";
             try (Connection conn = DriverManager.getConnection(url);
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 
                 pstmt.setString(1, pNombre); 
-                pstmt.setString(2, pContraseÃ±a); 
+                pstmt.setString(2, pContraseña); 
                 pstmt.setString(3, pCorreo); 
                 pstmt.setString(4, "Usuario");
                 pstmt.setInt(5, idValidador);
@@ -379,18 +379,18 @@ public class SQLiteConnection {
             }
         }
 
-        public void ActualizarDatosUsuario(Integer pId, String nuevoNombre, String nuevaContraseÃ±a, String nuevoCorreo) {
+        public void ActualizarDatosUsuario(Integer pId, String nuevoNombre, String nuevaContraseña, String nuevoCorreo) {
             String url = "jdbc:sqlite:ADSI.db";
         
             // Consulta SQL para actualizar los datos del usuario
-            String sql = "UPDATE Usuarios SET nombre = ?, contraseÃ±a = ?, correo = ? WHERE id = ?";
+            String sql = "UPDATE Usuarios SET nombre = ?, contraseña = ?, correo = ? WHERE id = ?";
         
             try (Connection conn = DriverManager.getConnection(url);
                  PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 
                 // Establecemos los valores en la consulta
                 pstmt.setString(1, nuevoNombre);        // Nuevo nombre
-                pstmt.setString(2, nuevaContraseÃ±a);    // Nueva contraseÃ±a
+                pstmt.setString(2, nuevaContraseña);    // Nueva contraseña
                 pstmt.setString(3, nuevoCorreo);        // Nuevo correo
                 pstmt.setInt(4, pId);                   // ID del usuario a actualizar
         

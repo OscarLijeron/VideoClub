@@ -21,16 +21,16 @@ public class VideoClub {
 		return miGestorG;
 	}
 	
-	public void aÃ±adirPeliAlCatalogo(String pNombre,Integer pAÃ±oProd,String pGenero) {
-		Pelicula pPeli=new Pelicula(pNombre,pAÃ±oProd,pGenero);
-		this.BD.AÃ±adirPeli(pNombre, pGenero, pAÃ±oProd);
-		this.BD.EliminarPeli(this.BD.consultarIdPelicula(pNombre, pAÃ±oProd, pGenero)); //elimina la peli del sol
-		this.gestorP.aÃ±adirPeliAlCatalogo(pPeli);	
+	public void añadirPeliAlCatalogo(String pNombre,Integer pAñoProd,String pGenero) {
+		Pelicula pPeli=new Pelicula(pNombre,pAñoProd,pGenero);
+		this.BD.AñadirPeli(pNombre, pGenero, pAñoProd);
+		this.gestorP.añadirPeliAlCatalogo(pPeli);	
 	}
-	public void eliminarSolicitudPelicula(Integer pIdUsuario,String pNombre,Integer pAÃ±oProd,String pGenero) {
-		Pelicula pPeli=new Pelicula(pNombre,pAÃ±oProd,pGenero);
-		int idPeli=this.BD.consultarIdPelicula(pNombre, pAÃ±oProd, pGenero);
+	public void eliminarSolicitudPelicula(Integer pIdUsuario,String pNombre,Integer pAñoProd,String pGenero) {
+		Pelicula pPeli=new Pelicula(pNombre,pAñoProd,pGenero);
+		int idPeli=this.BD.consultarIdPelicula(pNombre, pAñoProd, pGenero);
 		this.BD.EliminarSolicitudPeli(pIdUsuario,idPeli);
+		this.BD.EliminarPeliSol(pNombre, pGenero, pAñoProd);
 		this.gestorU.eliminarSolicitudPelicula(pIdUsuario, pPeli);	
 	}
 	public void recuperarBD() {
@@ -51,8 +51,8 @@ public class VideoClub {
 		gestorA.alquilarPelicula(idUsuario, idPelicula);
 	}
 
-	public void registrarse(String pNombre, String pContraseÃ±a, String pCorreo) {
-		this.gestorU.registrarse(pNombre, pContraseÃ±a, pCorreo);
+	public void registrarse(String pNombre, String pContraseña, String pCorreo) {
+		this.gestorU.registrarse(pNombre, pContraseña, pCorreo);
 	}
 		
 	public void aceptarSolicitudRegistro(Integer pIdAdmin, Integer pIdUsuario) {
@@ -63,8 +63,8 @@ public class VideoClub {
 		this.gestorU.eliminarCuenta(pIdUsuario);
 	}
 
-	public Integer iniciarSesion(String pNombre,String pContraseÃ±a, String pCorreo) {
-		return this.gestorU.iniciarSesion(pNombre, pContraseÃ±a, pCorreo);
+	public Integer iniciarSesion(String pNombre,String pContraseña, String pCorreo) {
+		return this.gestorU.iniciarSesion(pNombre, pContraseña, pCorreo);
 		
 	}
 
@@ -72,8 +72,8 @@ public class VideoClub {
 		this.gestorU.eliminarSolicitudRegistro(pIdAdmin,pIdUsuario);
 	}
 
-	public void actualizarDatosPersonales(Integer pIdUsuario, String pNombre, String pContraseÃ±a, String pCorreo) {
-		this.gestorU.actualizarDatosPersonales(pIdUsuario,pNombre,pContraseÃ±a,pCorreo);
+	public void actualizarDatosPersonales(Integer pIdUsuario, String pNombre, String pContraseña, String pCorreo) {
+		this.gestorU.actualizarDatosPersonales(pIdUsuario,pNombre,pContraseña,pCorreo);
 	}
 
 }

@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 public class RegistroUsuario extends JFrame {
     private JPanel contentPane;
     private JTextField txtNombre;
-    private JTextField txtContraseña;
+    private JTextField txtContrase�a;
     private JTextField txtCorreo;
     private JButton btnSolicitarRegistro;
     private JButton btnVolver;
@@ -23,7 +23,7 @@ public class RegistroUsuario extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout(0, 0));
 
-        // Panel superior para el título
+        // Panel superior para el titulo
         JPanel panelTitulo = new JPanel();
         panelTitulo.setBackground(new Color(35, 41, 122));
         contentPane.add(panelTitulo, BorderLayout.NORTH);
@@ -49,15 +49,15 @@ public class RegistroUsuario extends JFrame {
         txtNombre.setFont(new Font("Arial", Font.PLAIN, 14));
         panelCampos.add(txtNombre);
 
-        // Etiqueta y campo de texto para Contraseña
-        JLabel lblContraseña = new JLabel("Contraseña:");
-        lblContraseña.setHorizontalAlignment(SwingConstants.RIGHT);
-        lblContraseña.setFont(new Font("Arial", Font.PLAIN, 14));
-        panelCampos.add(lblContraseña);
+        // Etiqueta y campo de texto para Contrase�a
+        JLabel lblContrase�a = new JLabel("Contrase�a:");
+        lblContrase�a.setHorizontalAlignment(SwingConstants.RIGHT);
+        lblContrase�a.setFont(new Font("Arial", Font.PLAIN, 14));
+        panelCampos.add(lblContrase�a);
 
-        txtContraseña = new JTextField();
-        txtContraseña.setFont(new Font("Arial", Font.PLAIN, 14));
-        panelCampos.add(txtContraseña);
+        txtContrase�a = new JTextField();
+        txtContrase�a.setFont(new Font("Arial", Font.PLAIN, 14));
+        panelCampos.add(txtContrase�a);
 
         // Etiqueta y campo de texto para Correo
         JLabel lblCorreo = new JLabel("Correo:");
@@ -74,7 +74,7 @@ public class RegistroUsuario extends JFrame {
         panelBotones.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 10));
         contentPane.add(panelBotones, BorderLayout.SOUTH);
 
-        // Botón para solicitar registro
+        // Boton para solicitar registro
         btnSolicitarRegistro = new JButton("Solicitar Registro");
         btnSolicitarRegistro.setFont(new Font("Arial", Font.BOLD, 14));
         btnSolicitarRegistro.setBackground(new Color(35, 41, 122));
@@ -82,27 +82,27 @@ public class RegistroUsuario extends JFrame {
         btnSolicitarRegistro.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String nombre = txtNombre.getText();
-                String contraseña = txtContraseña.getText();
+                String contrase�a = txtContrase�a.getText();
                 String correo = txtCorreo.getText();
 
-                if (nombre.isEmpty() || contraseña.isEmpty() || correo.isEmpty()) {
+                if (nombre.isEmpty() || contrase�a.isEmpty() || correo.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
                 } else {
-                    // Aquí puedes añadir la lógica para enviar la solicitud de registro
+                    // Aqui puedes a�adir la logica para enviar la solicitud de registro
                     JOptionPane.showMessageDialog(null, "Solicitud de registro enviada.");
                 }
             }
         });
         panelBotones.add(btnSolicitarRegistro);
 
-        // Botón para volver a la página inicial
+        // Boton para volver a la pagina inicial
         btnVolver = new JButton("Volver");
         btnVolver.setFont(new Font("Arial", Font.BOLD, 14));
         btnVolver.setBackground(new Color(35, 41, 122));
         btnVolver.setForeground(Color.WHITE);
         btnVolver.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Aquí puedes añadir la lógica para volver a la página inicial
+                // Aqui puedes a�adir la logica para volver a la pagina inicial
                 VistaPrincipal vistaPrincipal = new VistaPrincipal();
                 vistaPrincipal.setVisible(true);
                 dispose();

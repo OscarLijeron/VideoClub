@@ -86,7 +86,7 @@ public class PedirSolicitudPeli extends JFrame {
 	private JTextField getAnioPeli() {
 		if (anioPeli == null) {
 			anioPeli = new JTextField();
-			anioPeli.setText("Poner a\u00F1o producci\u00F3n aqui");
+			anioPeli.setText("Poner año produccion aqui");
 			anioPeli.setColumns(10);
 		}
 		return anioPeli;
@@ -142,7 +142,7 @@ public class PedirSolicitudPeli extends JFrame {
 				String anioPTexto=anioPeli.getText();
 				int anioP=Integer.parseInt(anioPTexto);
 				String generoP=generoPeli.getText();
-				GestorUsuarios.getGestorUsuarios().aÃ±adirSolicitudPelicula(tituloP, anioP, generoP);
+				GestorUsuarios.getGestorUsuarios().añadirSolicitudPelicula(tituloP, anioP, generoP);
 			}
 			
 			if (e.getSource().equals(Salir)){

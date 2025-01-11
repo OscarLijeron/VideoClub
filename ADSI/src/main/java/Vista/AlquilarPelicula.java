@@ -34,7 +34,7 @@ public class AlquilarPelicula extends JFrame {
 
     // Inicializar componentes gráficos
     private void initialize() {
-        setTitle("Alquilar Película");
+        setTitle("Alquilar Pelicula");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);
@@ -52,8 +52,8 @@ public class AlquilarPelicula extends JFrame {
         panelBusqueda.add(btnBuscar);
         panelPrincipal.add(panelBusqueda, BorderLayout.NORTH);
 
-        // Tabla para mostrar las películas
-        String[] columnNames = {"Nombre", "Año", "Género"};
+        // Tabla para mostrar las peliculas
+        String[] columnNames = {"Nombre", "A�o", "Genero"};
         tableModel = new DefaultTableModel(columnNames, 0);
         tablePeliculas = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(tablePeliculas);
@@ -79,24 +79,24 @@ public class AlquilarPelicula extends JFrame {
         this.setVisible(false); // Ocultar la vista actual
         InicioSesion.getInicioSesion(this.idUsuario).mostrar();
         });
-        // Cargar todas las películas al inicio
+        // Cargar todas las peliculas al inicio
         cargarPeliculasDesdeJSON(GestorPeliculas.getGestorPeliculas().mostrarPeliculas());
     }
 
-    // Cargar películas en la tabla desde un JSONArray
+    // Cargar peliculas en la tabla desde un JSONArray
     private void cargarPeliculasDesdeJSON(JSONArray peliculas) {
         tableModel.setRowCount(0);
         for (int i = 0; i < peliculas.length(); i++) {
             JSONObject pelicula = peliculas.getJSONObject(i);
             tableModel.addRow(new Object[]{
                     pelicula.getString("Nombre"),
-                    pelicula.getInt("Año"),
+                    pelicula.getInt("A�o"),
                     pelicula.getString("Genero")
             });
         }
     }
 
-    // Buscar películas por nombre
+    // Buscar peliculas por nombre
     private void buscarPeliculas() {
         String query = txtBuscar.getText().toLowerCase();
         JSONArray peliculas = GestorPeliculas.getGestorPeliculas().mostrarPeliculas();

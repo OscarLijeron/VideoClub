@@ -20,7 +20,7 @@ public class VistaPrincipal extends JFrame {
     private JLabel titulo;
     private JTextField usuario;
     private JTextField correo;
-    private JTextField contraseña;
+    private JTextField contrase�a;
 
     public VistaPrincipal() {
         setTitle("the BRO's");
@@ -61,7 +61,7 @@ public class VistaPrincipal extends JFrame {
         panel.add(usuario);
 
         // Etiqueta y campo de correo
-        JLabel lblCorreo = new JLabel("Correo Electrónico");
+        JLabel lblCorreo = new JLabel("Correo Electronico");
         lblCorreo.setHorizontalAlignment(SwingConstants.CENTER);
         lblCorreo.setFont(new Font("Arial", Font.PLAIN, 14));
         panel.add(lblCorreo);
@@ -71,16 +71,16 @@ public class VistaPrincipal extends JFrame {
         correo.setFont(new Font("Arial", Font.PLAIN, 14));
         panel.add(correo);
 
-        // Etiqueta y campo de contraseña
-        JLabel lblContrasea = new JLabel("Contraseña");
+        // Etiqueta y campo de contrase�a
+        JLabel lblContrasea = new JLabel("Contrase�a");
         lblContrasea.setHorizontalAlignment(SwingConstants.CENTER);
         lblContrasea.setFont(new Font("Arial", Font.PLAIN, 14));
         panel.add(lblContrasea);
 
-        contraseña = new JTextField();
-        contraseña.setColumns(10);
-        contraseña.setFont(new Font("Arial", Font.PLAIN, 14));
-        panel.add(contraseña);
+        contrase�a = new JTextField();
+        contrase�a.setColumns(10);
+        contrase�a.setFont(new Font("Arial", Font.PLAIN, 14));
+        panel.add(contrase�a);
 
         // Botones
         JPanel botonesPanel = new JPanel();
@@ -88,7 +88,7 @@ public class VistaPrincipal extends JFrame {
         botonesPanel.setBackground(new Color(240, 240, 240));
         panel.add(botonesPanel);
 
-        // Botón de Inicio de Sesión
+        // Boton de Inicio de Sesion
         InicioS = new JButton("Inicio de Sesion");
         InicioS.setFont(new Font("Arial", Font.BOLD, 14));
         InicioS.setBackground(new Color(35, 41, 122));
@@ -98,14 +98,14 @@ public class VistaPrincipal extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String usuarioNombre = usuario.getText();
                 String correoIngresado = correo.getText();
-                String contraseñaIngresada = contraseña.getText();
+                String contrase�aIngresada = contrase�a.getText();
 
-                // Verificar que los campos no estén vacíos
-                if (usuarioNombre.isEmpty() || correoIngresado.isEmpty() || contraseñaIngresada.isEmpty()) {
+                // Verificar que los campos no esten vacios
+                if (usuarioNombre.isEmpty() || correoIngresado.isEmpty() || contrase�aIngresada.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
                 } else {
                     VideoClub.getGestorGeneral().recuperarBD();
-                    Integer idUsuario = VideoClub.getGestorGeneral().iniciarSesion(usuarioNombre,contraseñaIngresada,correoIngresado);
+                    Integer idUsuario = VideoClub.getGestorGeneral().iniciarSesion(usuarioNombre,contrase�aIngresada,correoIngresado);
                     if (idUsuario!=null){
                         boolean esAdmin = false;
                         esAdmin = GestorUsuarios.getGestorUsuarios().comprobarQueEsAdmin(idUsuario);
@@ -120,6 +120,12 @@ public class VistaPrincipal extends JFrame {
                         else{
                             //Aqui la vista para el no admin
                             JOptionPane.showMessageDialog(null, "Usuario no es Admin");
+                         
+                            InicioSesion vistaSes = InicioSesion.getInicioSesion(idUsuario);
+                            vistaSes.mostrar();
+
+                            setVisible(false);
+                            dispose();
                         }
                     }
                     else{
@@ -131,7 +137,7 @@ public class VistaPrincipal extends JFrame {
         });
         botonesPanel.add(InicioS);
 
-        // Botón de Registro
+        // Boton de Registro
         Registro = new JButton("Registro");
         Registro.setFont(new Font("Arial", Font.BOLD, 14));
         Registro.setBackground(new Color(35, 41, 122));
@@ -147,7 +153,7 @@ public class VistaPrincipal extends JFrame {
         });
         botonesPanel.add(Registro);
 
-        // Botón de Ver Catalogo
+        // Boton de Ver Catalogo
         VerCatalogo = new JButton("Ver Catalogo");
         VerCatalogo.setFont(new Font("Arial", Font.BOLD, 14));
         VerCatalogo.setBackground(new Color(35, 41, 122));
@@ -155,7 +161,7 @@ public class VistaPrincipal extends JFrame {
         VerCatalogo.setPreferredSize(new Dimension(150, 40));
         VerCatalogo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Aquí puedes agregar el código para ver el catálogo
+                // Aqui puedes agregar el codigo para ver el catálogo
             }
         });
         botonesPanel.add(VerCatalogo);

@@ -22,7 +22,7 @@ public class AlquileresUsuario extends JFrame {
         initialize();
     }
 
-    // Método para obtener la instancia de la clase Singleton
+    // Metodo para obtener la instancia de la clase Singleton
     public static AlquileresUsuario getAlquileresUsuario(int idUsuario) {
         if (instance == null) {
             instance = new AlquileresUsuario(idUsuario);
@@ -30,9 +30,9 @@ public class AlquileresUsuario extends JFrame {
         return instance;
     }
 
-    // Método para inicializar los componentes gráficos
+    // Metodo para inicializar los componentes graficos
     private void initialize() {
-        // Configuración de la ventana
+        // Configuracion de la ventana
         setTitle("Mis Alquileres");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 600, 400);
@@ -41,8 +41,8 @@ public class AlquileresUsuario extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout(0, 0));
 
-        // Título
-        JLabel lblTitle = new JLabel("Películas Alquiladas", SwingConstants.CENTER);
+        // Titulo
+        JLabel lblTitle = new JLabel("Peliculas Alquiladas", SwingConstants.CENTER);
         lblTitle.setFont(new Font("Arial", Font.BOLD, 16));
         contentPane.add(lblTitle, BorderLayout.NORTH);
 
@@ -52,7 +52,7 @@ public class AlquileresUsuario extends JFrame {
 
         for (int i = 0; i < alquileres.length(); i++) {
             JSONObject alquiler = alquileres.getJSONObject(i);
-            String pelicula = alquiler.getString("titulo") + " (" + alquiler.getInt("año") + ")";
+            String pelicula = alquiler.getString("titulo") + " (" + alquiler.getInt("a�o") + ")";
             alquileresModel.addElement(pelicula);
         }
 
@@ -67,25 +67,25 @@ public class AlquileresUsuario extends JFrame {
         JPanel panelBotones = new JPanel();
         contentPane.add(panelBotones, BorderLayout.SOUTH);
 
-        // Botón Volver
+        // Boton Volver
         JButton btnVolver = new JButton("Volver");
         btnVolver.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Acción al hacer clic en Volver
+                // Accion al hacer clic en Volver
                 volverAInicioSesion();
             }
         });
         panelBotones.add(btnVolver);
     }
 
-    // Método para regresar a la vista de inicio de sesión
+    // Metodo para regresar a la vista de inicio de sesion
     private void volverAInicioSesion() {
-        JOptionPane.showMessageDialog(this, "Volviendo a inicio de sesión...");
+        JOptionPane.showMessageDialog(this, "Volviendo a inicio de sesion...");
         this.setVisible(false); // Ocultar la vista actual
-        InicioSesion.getInicioSesion(idUsuario).mostrar(); // Mostrar la vista de inicio de sesión
+        InicioSesion.getInicioSesion(idUsuario).mostrar(); // Mostrar la vista de inicio de sesion
     }
 
-    // Método para mostrar la ventana
+    // Metodo para mostrar la ventana
     public void mostrar() {
         setVisible(true);
     }

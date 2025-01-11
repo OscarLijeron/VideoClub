@@ -36,9 +36,9 @@ public class GestorPeliculas {
         return Optional.empty();
     }
 
-    public int obtenerPeliculaPorNAG(String pNombre, int pAÃ±o, String pGenero) {
+    public int obtenerPeliculaPorNAG(String pNombre, int pAño, String pGenero) {
         for (Pelicula p : this.catalogoPelis) {
-            if (p.getNombrePelicula().equals(pNombre) && p.getAÃ±oProd() == pAÃ±o && p.getGenero().equals(pGenero)) {
+            if (p.getNombrePelicula().equals(pNombre) && p.getAñoProd() == pAño && p.getGenero().equals(pGenero)) {
                 return p.getIdPelicula();
             }
         }
@@ -60,7 +60,7 @@ public class GestorPeliculas {
             if (p.getNombrePelicula().contains(pNombre)) {
                 JSONObject pelicula = new JSONObject();
                 pelicula.put("Nombre", p.getNombrePelicula());
-                pelicula.put("AÃ±o", p.getAÃ±oProd());
+                pelicula.put("Año", p.getAñoProd());
                 pelicula.put("Genero", p.getGenero());
                 peliculas.put(pelicula);
             }
@@ -75,7 +75,7 @@ public class GestorPeliculas {
             for (Pelicula p : this.catalogoPelis) { // Recorre todas las pelï¿½culas del catï¿½logo
                 JSONObject pelicula = new JSONObject(); // Inicializa un JSONObject vacï¿½o
                 pelicula.put("Nombre", p.getNombrePelicula()); // Aï¿½ade el nombre de la pelï¿½cula
-                pelicula.put("AÃ±o", p.getAÃ±oProd()); // Aï¿½ade el aï¿½o de producciï¿½n
+                pelicula.put("Año", p.getAñoProd()); // Aï¿½ade el aï¿½o de producciï¿½n
                 pelicula.put("Genero", p.getGenero()); // Aï¿½ade el gï¿½nero de la pelï¿½cula
                 peliculas.put(pelicula); // Aï¿½ade el JSONObject al JSONArray
             }
@@ -87,11 +87,11 @@ public class GestorPeliculas {
     }
 
 
-	public void aÃ±adirPeliAlCatalogo(Pelicula pPeli) {
+	public void añadirPeliAlCatalogo(Pelicula pPeli) {
 		this.catalogoPelis.add(pPeli);
 	}
-	public void aÃ±adirPeliAlCatalogoParaRecuperar(String pNombre,Integer pAÃ±o,String pGenero) {
-		Pelicula pPeli=new Pelicula(pNombre,pAÃ±o,pGenero);
+	public void añadirPeliAlCatalogoParaRecuperar(String pNombre,Integer pAño,String pGenero) {
+		Pelicula pPeli=new Pelicula(pNombre,pAño,pGenero);
 		this.catalogoPelis.add(pPeli);
 	}
 	public JSONArray mostrarCatalogoAmpliado(String pTitulo) {
@@ -164,7 +164,7 @@ public class GestorPeliculas {
                 for (int i = 0; i < catalogoAmpliado.length(); i++) {
                     JSONObject pelicula = catalogoAmpliado.getJSONObject(i);
                     System.out.println("Titulo: " + pelicula.getString("Title"));
-                    System.out.println("AÃ±o: " + pelicula.getString("Year"));
+                    System.out.println("Año: " + pelicula.getString("Year"));
                     System.out.println("Tipo: " + pelicula.getString("Type"));
                     System.out.println("Poster: " + pelicula.getString("Poster"));
                     System.out.println("-------------------------");

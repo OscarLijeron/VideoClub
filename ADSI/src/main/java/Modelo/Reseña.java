@@ -1,11 +1,11 @@
 package Modelo;
 
-public class ReseÃ±a {
+public class Reseña {
 	private Float puntuacionP;
 	private String comentario;
 	private Usuario usuarioAutor;
 	
-	public ReseÃ±a(Float pPuntuacion, String pComentario, Usuario pUsuario) {
+	public Reseña(Float pPuntuacion, String pComentario, Usuario pUsuario) {
 		this.comentario=pComentario;
 		this.puntuacionP=pPuntuacion;
 		this.usuarioAutor=pUsuario;

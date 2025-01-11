@@ -19,7 +19,7 @@ public class InicioSesion extends JFrame {
         initialize();
     }
 
-    // Método para obtener la instancia de la clase Singleton
+    // Metodo para obtener la instancia de la clase Singleton
     public static InicioSesion getInicioSesion(Integer idUsuario) {
         if (instance == null) {
             instance = new InicioSesion(idUsuario);
@@ -27,9 +27,9 @@ public class InicioSesion extends JFrame {
         return instance;
     }
 
-    // Método para inicializar los componentes gráficos
+    // Metodo para inicializar los componentes graficos
     private void initialize() {
-        // Configuración de la ventana
+        // Configuracion de la ventana
         setTitle("Bienvenido");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
@@ -54,7 +54,7 @@ public class InicioSesion extends JFrame {
         panelBotones.setLayout(new GridLayout(3, 1, 10, 10));
         contentPane.add(panelBotones, BorderLayout.CENTER);
 
-        // Botón "Ver Alquilados"
+        // Boton "Ver Alquilados"
         verAlquilados = new JButton("Ver Alquilados");
         verAlquilados.setFont(new Font("Arial", Font.BOLD, 14));
         verAlquilados.setBackground(new Color(35, 41, 122));
@@ -64,13 +64,13 @@ public class InicioSesion extends JFrame {
                 AlquileresUsuario vistaMisAlq = AlquileresUsuario.getAlquileresUsuario(idUsuario);
                 vistaMisAlq.mostrar();
                 setVisible(false);
-                JOptionPane.showMessageDialog(null, "Mostrar películas alquiladas");
+                JOptionPane.showMessageDialog(null, "Mostrar peliculas alquiladas");
             }
         });
         panelBotones.add(verAlquilados);
 
-        // Botón "Alquilar Película"
-        alquilarPelicula = new JButton("Alquilar Película");
+        // Boton "Alquilar Pelicula"
+        alquilarPelicula = new JButton("Alquilar Pelicula");
         alquilarPelicula.setFont(new Font("Arial", Font.BOLD, 14));
         alquilarPelicula.setBackground(new Color(35, 41, 122));
         alquilarPelicula.setForeground(Color.WHITE);
@@ -79,13 +79,13 @@ public class InicioSesion extends JFrame {
                 AlquilarPelicula vistaAlqPeli = AlquilarPelicula.getAlquilarPelicula(idUsuario);
                 vistaAlqPeli.mostrar();
                 setVisible(false);
-                JOptionPane.showMessageDialog(null, "Proceso de alquiler de película");
+                JOptionPane.showMessageDialog(null, "Proceso de alquiler de pelicula");
             }
         });
         panelBotones.add(alquilarPelicula);
     }
 
-    // Método para mostrar la ventana de inicio de sesión
+    // Metodo para mostrar la ventana de inicio de sesion
     public void mostrar() {
         setVisible(true);
     }

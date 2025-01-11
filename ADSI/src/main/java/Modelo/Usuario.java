@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 public class Usuario {
 	private String nombre;
-	private String contraseÃ±a;
+	private String contraseña;
 	private String correo;
 	private String rol;
 	private Integer id;
@@ -17,12 +17,12 @@ public class Usuario {
 	
 	
 	SQLiteConnection BD=SQLiteConnection.getSQLiteConnection();
-	public Usuario(String pNombre, String pContraseÃ±a,String pCorreo,String pRol) {
+	public Usuario(String pNombre, String pContraseña,String pCorreo,String pRol) {
 		this.nombre=pNombre;
-		this.contraseÃ±a=pContraseÃ±a;
+		this.contraseña=pContraseña;
 		this.correo=pCorreo;
 		this.rol=pRol;
-		this.id=this.BD.consultarIdUsuario(pNombre, pCorreo, pContraseÃ±a);
+		this.id=this.BD.consultarIdUsuario(pNombre, pCorreo, pContraseña);
 		
 	}
 	public void IniciarSesion() {
@@ -44,7 +44,7 @@ public class Usuario {
 		
 		
 	}
-	public void AÃ±adirSolicitudPelicula(Pelicula pPeli) {
+	public void AñadirSolicitudPelicula(Pelicula pPeli) {
 		this.solicitudesPelicula.add(pPeli);
 		
 	}
@@ -52,9 +52,9 @@ public class Usuario {
 	    // Recorrer la lista de solicitudes de pelï¿½cula
 	    for (int i = 0; i < this.solicitudesPelicula.size(); i++) {
 	        Pelicula peliC = this.solicitudesPelicula.get(i);
-	        System.out.print(pPeli.getAÃ±oProd().equals(peliC.getAÃ±oProd()));
+	        System.out.print(pPeli.getAñoProd().equals(peliC.getAñoProd()));
 	        // Comprobar si la pelï¿½cula coincide con la que queremos eliminar
-	        if (pPeli.getAÃ±oProd().equals(peliC.getAÃ±oProd()) &&
+	        if (pPeli.getAñoProd().equals(peliC.getAñoProd()) &&
 	            pPeli.getGenero().equals(peliC.getGenero()) &&
 	            pPeli.getNombrePelicula().equals(peliC.getNombrePelicula())) {
 	            
@@ -79,7 +79,7 @@ public class Usuario {
         for (Pelicula pelicula : this.solicitudesPelicula) {
             JSONObject jsonPelicula = new JSONObject();
             jsonPelicula.put("titulo", pelicula.getNombrePelicula());
-            jsonPelicula.put("aÃ±o", pelicula.getAÃ±oProd());
+            jsonPelicula.put("año", pelicula.getAñoProd());
             jsonPelicula.put("genero", pelicula.getGenero());
             jsonArray.put(jsonPelicula);
         }
@@ -105,7 +105,7 @@ public class Usuario {
 		for (Alquiler alquiler : this.misAlquileres) {
 			JSONObject jsonAlquiler = new JSONObject();
 			jsonAlquiler.put("titulo", alquiler.getPelicula().getNombrePelicula());
-			jsonAlquiler.put("aÃ±o", alquiler.getPelicula().getAÃ±oProd());
+			jsonAlquiler.put("año", alquiler.getPelicula().getAñoProd());
 			jsonAlquiler.put("genero", alquiler.getPelicula().getGenero());
 			jsonArray.put(jsonAlquiler);
 		}
@@ -117,8 +117,8 @@ public class Usuario {
 	}
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
-	public String getContraseÃ±a() {
-	return this.contraseÃ±a;
+	public String getContraseña() {
+	return this.contraseña;
 	}
 	
 	public String getCorreo() {
@@ -134,7 +134,7 @@ public class Usuario {
 		for (Usuario usuario : this.solicitudesUsuario) {
 			JSONObject jsonUsuario = new JSONObject();
 			jsonUsuario.put("nombre", usuario.getNombre());
-			jsonUsuario.put("contraseÃ±a", usuario.getContraseÃ±a());
+			jsonUsuario.put("contraseña", usuario.getContraseña());
 			jsonUsuario.put("correo", usuario.getCorreo());
 			jsonArray.put(jsonUsuario);
 		}
@@ -145,9 +145,9 @@ public class Usuario {
 		this.solicitudesUsuario.remove(pUsuario);
 	}
 
-	public void actualizarDatos(String pNombre, String pContraseÃ±a, String pCorreo) {
+	public void actualizarDatos(String pNombre, String pContraseña, String pCorreo) {
 		this.nombre = pNombre;
-		this.contraseÃ±a = pContraseÃ±a;
+		this.contraseña = pContraseña;
 		this.correo = pCorreo;
 	}
 	
