@@ -20,7 +20,7 @@ public class VistaPrincipal extends JFrame {
     private JLabel titulo;
     private JTextField usuario;
     private JTextField correo;
-    private JTextField contraseña;
+    private JTextField contraseÃ±a;
 
     public VistaPrincipal() {
         setTitle("the BRO's");
@@ -71,16 +71,16 @@ public class VistaPrincipal extends JFrame {
         correo.setFont(new Font("Arial", Font.PLAIN, 14));
         panel.add(correo);
 
-        // Etiqueta y campo de contraseña
-        JLabel lblContrasea = new JLabel("Contraseña");
+        // Etiqueta y campo de contraseï¿½a
+        JLabel lblContrasea = new JLabel("Contraseï¿½a");
         lblContrasea.setHorizontalAlignment(SwingConstants.CENTER);
         lblContrasea.setFont(new Font("Arial", Font.PLAIN, 14));
         panel.add(lblContrasea);
 
-        contraseña = new JTextField();
-        contraseña.setColumns(10);
-        contraseña.setFont(new Font("Arial", Font.PLAIN, 14));
-        panel.add(contraseña);
+        contraseÃ±a = new JTextField();
+        contraseÃ±a.setColumns(10);
+        contraseÃ±a.setFont(new Font("Arial", Font.PLAIN, 14));
+        panel.add(contraseÃ±a);
 
         // Botones
         JPanel botonesPanel = new JPanel();
@@ -98,14 +98,14 @@ public class VistaPrincipal extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String usuarioNombre = usuario.getText();
                 String correoIngresado = correo.getText();
-                String contraseñaIngresada = contraseña.getText();
+                String contraseÃ±aIngresada = contraseÃ±a.getText();
 
                 // Verificar que los campos no esten vacios
-                if (usuarioNombre.isEmpty() || correoIngresado.isEmpty() || contraseñaIngresada.isEmpty()) {
+                if (usuarioNombre.isEmpty() || correoIngresado.isEmpty() || contraseÃ±aIngresada.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
                 } else {
                     VideoClub.getGestorGeneral().recuperarBD();
-                    Integer idUsuario = VideoClub.getGestorGeneral().iniciarSesion(usuarioNombre,contraseñaIngresada,correoIngresado);
+                    Integer idUsuario = VideoClub.getGestorGeneral().iniciarSesion(usuarioNombre,contraseÃ±aIngresada,correoIngresado);
                     if (idUsuario!=null){
                         boolean esAdmin = false;
                         esAdmin = GestorUsuarios.getGestorUsuarios().comprobarQueEsAdmin(idUsuario);

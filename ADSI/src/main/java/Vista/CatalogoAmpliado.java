@@ -126,7 +126,7 @@ public class CatalogoAmpliado extends JFrame {
 			        	 genero= "No esta disponible";
 			        }
 			        
-			        detalles.append((i + 1) + ". Titulo: " + titulo + ", Año: " + anio + ", Genero: " + genero + "\n");
+			        detalles.append((i + 1) + ". Titulo: " + titulo + ", AÃ±o: " + anio + ", Genero: " + genero + "\n");
 			    }
 				String info=detalles.toString();
 				infoPelis.setText(info);			

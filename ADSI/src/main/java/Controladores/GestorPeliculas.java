@@ -36,9 +36,9 @@ public class GestorPeliculas {
         return Optional.empty();
     }
 
-    public int obtenerPeliculaPorNAG(String pNombre, int pA�o, String pGenero) {
+    public int obtenerPeliculaPorNAG(String pNombre, int pAño, String pGenero) {
         for (Pelicula p : this.catalogoPelis) {
-            if (p.getNombrePelicula().equals(pNombre) && p.getA�oProd() == pA�o && p.getGenero().equals(pGenero)) {
+            if (p.getNombrePelicula().equals(pNombre) && p.getAñoProd() == pAño && p.getGenero().equals(pGenero)) {
                 return p.getIdPelicula();
             }
         }
@@ -60,7 +60,7 @@ public class GestorPeliculas {
             if (p.getNombrePelicula().contains(pNombre)) {
                 JSONObject pelicula = new JSONObject();
                 pelicula.put("Nombre", p.getNombrePelicula());
-                pelicula.put("A�o", p.getA�oProd());
+                pelicula.put("Año", p.getAñoProd());
                 pelicula.put("Genero", p.getGenero());
                 peliculas.put(pelicula);
             }
@@ -69,29 +69,29 @@ public class GestorPeliculas {
     }
 
     public JSONArray mostrarPeliculas() {
-        JSONArray peliculas = new JSONArray(); // Inicializa un JSONArray vac�o
+        JSONArray peliculas = new JSONArray(); // Inicializa un JSONArray vacio
 
-        if (this.catalogoPelis.size() > 0) { // Verifica si hay pel�culas en el cat�logo
-            for (Pelicula p : this.catalogoPelis) { // Recorre todas las pel�culas del cat�logo
-                JSONObject pelicula = new JSONObject(); // Inicializa un JSONObject vac�o
-                pelicula.put("Nombre", p.getNombrePelicula()); // A�ade el nombre de la pel�cula
-                pelicula.put("A�o", p.getA�oProd()); // A�ade el a�o de producci�n
-                pelicula.put("Genero", p.getGenero()); // A�ade el g�nero de la pel�cula
-                peliculas.put(pelicula); // A�ade el JSONObject al JSONArray
+        if (this.catalogoPelis.size() > 0) { // Verifica si hay peliculas en el catalogo
+            for (Pelicula p : this.catalogoPelis) { // Recorre todas las peliculas del catalogo
+                JSONObject pelicula = new JSONObject(); // Inicializa un JSONObject vacio
+                pelicula.put("Nombre", p.getNombrePelicula()); // Añade el nombre de la pelicula
+                pelicula.put("Año", p.getAñoProd()); // Añade el año de produccion
+                pelicula.put("Genero", p.getGenero()); // Añade el genero de la pelicula
+                peliculas.put(pelicula); // Añade el JSONObject al JSONArray
             }
         } else {
-            System.out.println("No hay peliculas en el catalogo."); // Mensaje si no hay pel�culas
+            System.out.println("No hay peliculas en el catalogo."); // Mensaje si no hay peliculas
         }
 
-        return peliculas; // Devuelve el cat�logo de pel�culas (vac�o si no hay pel�culas)
+        return peliculas; // Devuelve el catalogo de peliculas (vacio si no hay peliculas)
     }
 
 
-	public void a�adirPeliAlCatalogo(Pelicula pPeli) {
+	public void añadirPeliAlCatalogo(Pelicula pPeli) {
 		this.catalogoPelis.add(pPeli);
 	}
-	public void a�adirPeliAlCatalogoParaRecuperar(String pNombre,Integer pA�o,String pGenero) {
-		Pelicula pPeli=new Pelicula(pNombre,pA�o,pGenero);
+	public void añadirPeliAlCatalogoParaRecuperar(String pNombre,Integer pAño,String pGenero) {
+		Pelicula pPeli=new Pelicula(pNombre,pAño,pGenero);
 		this.catalogoPelis.add(pPeli);
 	}
 	public JSONArray mostrarCatalogoAmpliado(String pTitulo) {
@@ -164,7 +164,7 @@ public class GestorPeliculas {
                 for (int i = 0; i < catalogoAmpliado.length(); i++) {
                     JSONObject pelicula = catalogoAmpliado.getJSONObject(i);
                     System.out.println("Titulo: " + pelicula.getString("Title"));
-                    System.out.println("A�o: " + pelicula.getString("Year"));
+                    System.out.println("Año: " + pelicula.getString("Year"));
                     System.out.println("Tipo: " + pelicula.getString("Type"));
                     System.out.println("Poster: " + pelicula.getString("Poster"));
                     System.out.println("-------------------------");

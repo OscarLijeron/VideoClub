@@ -24,24 +24,24 @@ public class GestorUsuarios {
 		}
 		return miGestorU;
 	}
-	public void añadirSolicitudPelicula(String pNombre,Integer pAño, String pGenero) {
+	public void aï¿½adirSolicitudPelicula(String pNombre,Integer pAÃ±o, String pGenero) {
 		Usuario usuario = this.catalogoUsuarios.stream()
                 .filter(p -> p.esAdmin())
                 .findFirst()
                 .orElse(null); // Devuelve null si no encuentra un usuario
 
 			if (usuario!=null) { 
-			    Pelicula pPeli= new Pelicula(pNombre,pAño,pGenero);
-			    BD.AñadirPeliSol(pNombre, pGenero, pAño);
-			    int idPeli=BD.consultarIdPelicula(pNombre, pAño, pGenero);
-			    BD.AñadirSolicitudPeli(usuario.getId(),idPeli);
-			    usuario.AñadirSolicitudPelicula(pPeli);
+			    Pelicula pPeli= new Pelicula(pNombre,pAÃ±o,pGenero);
+			    BD.AÃ±adirPeliSol(pNombre, pGenero, pAÃ±o);
+			    int idPeli=BD.consultarIdPelicula(pNombre, pAÃ±o, pGenero);
+			    BD.AÃ±adirSolicitudPeli(usuario.getId(),idPeli);
+			    usuario.AÃ±adirSolicitudPelicula(pPeli);
 			} else {
 			    System.out.println("No se encontro ningun usuario administrador.");
 			}
 		
 	}
-	public void añadirSolicitudPeliculaParaRecuperar(String pNombre,Integer pAño, String pGenero) {
+	public void aÃ±adirSolicitudPeliculaParaRecuperar(String pNombre,Integer pAÃ±o, String pGenero) {
 		Usuario usuario = this.catalogoUsuarios.stream()
                 .filter(p -> p.esAdmin())
                 .findFirst()
@@ -50,8 +50,8 @@ public class GestorUsuarios {
 		if (usuario!=null) {
 		    System.out.println("Si se encontro usuario administrador.");
 		   
-		    Pelicula pPeli = new Pelicula(pNombre, pAño, pGenero);
-		    usuario.AñadirSolicitudPelicula(pPeli);  // Accede al usuario y aï¿½ade la solicitud de pelï¿½cula
+		    Pelicula pPeli = new Pelicula(pNombre, pAÃ±o, pGenero);
+		    usuario.AÃ±adirSolicitudPelicula(pPeli);  // Accede al usuario y aï¿½ade la solicitud de pelï¿½cula
 		} else {
 		    System.out.println("No se encontro ningun usuario administrador.");
 		}
@@ -87,8 +87,8 @@ public class GestorUsuarios {
 		}
 		
 	}
-	public void añadirUsuarioParaRecuperar(String pNombre, String pContraseña, String pCorreo, String pRol) {
-		Usuario unUsuario=new Usuario(pNombre, pContraseña, pCorreo, pRol);
+	public void aï¿½adirUsuarioParaRecuperar(String pNombre, String pContraseï¿½a, String pCorreo, String pRol) {
+		Usuario unUsuario=new Usuario(pNombre, pContraseï¿½a, pCorreo, pRol);
 		this.catalogoUsuarios.add(unUsuario);
 	}
 
@@ -112,14 +112,14 @@ public class GestorUsuarios {
 	}
 	//-------------------------------------------------------------------
 
-	public void registrarse(String pNombre, String pContraseña, String pCorreo) {
+	public void registrarse(String pNombre, String pContraseÃ±a, String pCorreo) {
 		Usuario admin = this.catalogoUsuarios.stream()
 			.filter(p -> p.esAdmin())
 			.findFirst()
 			.orElse(null); // Devuelve null si no encuentra un usuario
 		
 			if (admin!=null) {
-				Usuario usuario = new Usuario(pNombre, pContraseña, pCorreo, "Usuario");
+				Usuario usuario = new Usuario(pNombre, pContraseÃ±a, pCorreo, "Usuario");
 				admin.SolicitarRegistro(usuario);
 			}
 			else {
@@ -145,7 +145,7 @@ public class GestorUsuarios {
 				this.catalogoUsuarios.add(usuario);
 				admin.ValidarUsuario(usuario);	
 				admin.eliminarSolicitudRegistro(usuario);			
-				BD.RegistrarUsuario(usuario.getNombre(),usuario.getContraseña(), usuario.getCorreo(),pIdAdmin);
+				BD.RegistrarUsuario(usuario.getNombre(),usuario.getContraseÃ±a(), usuario.getCorreo(),pIdAdmin);
 			}
 		}
 		else{
@@ -162,8 +162,8 @@ public class GestorUsuarios {
 		}
 	}
 
-	public Integer iniciarSesion(String pNombre, String pContraseña, String pCorreo) {
-		Integer idUsuario = BD.consultarIdUsuario(pNombre,pCorreo,pContraseña);
+	public Integer iniciarSesion(String pNombre, String pContraseÃ±a, String pCorreo) {
+		Integer idUsuario = BD.consultarIdUsuario(pNombre,pCorreo,pContraseÃ±a);
 		if(idUsuario!= null) {
 			return idUsuario;
 		}
@@ -207,15 +207,15 @@ public class GestorUsuarios {
 		}
 	}
 
-	public void actualizarDatosPersonales(Integer pIdUsuario, String pNombre, String pContraseña, String pCorreo) {
+	public void actualizarDatosPersonales(Integer pIdUsuario, String pNombre, String pContraseÃ±a, String pCorreo) {
 		Usuario usuario = this.catalogoUsuarios.stream()
 			.filter(p -> p.tieneEsteId(pIdUsuario))
 			.findFirst()
 			.orElse(null); // Devuelve null si no encuentra un usuario
 
 		if (usuario!=null) {
-			BD.ActualizarDatosUsuario(pIdUsuario, pNombre, pContraseña, pCorreo);
-			usuario.actualizarDatos(pNombre,pContraseña,pCorreo);
+			BD.ActualizarDatosUsuario(pIdUsuario, pNombre, pContraseÃ±a, pCorreo);
+			usuario.actualizarDatos(pNombre,pContraseÃ±a,pCorreo);
 		}
 		else{
 			System.out.println("No se encontro ningun usuario");

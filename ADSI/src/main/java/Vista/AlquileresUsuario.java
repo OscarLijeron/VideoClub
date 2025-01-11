@@ -52,7 +52,7 @@ public class AlquileresUsuario extends JFrame {
 
         for (int i = 0; i < alquileres.length(); i++) {
             JSONObject alquiler = alquileres.getJSONObject(i);
-            String pelicula = alquiler.getString("titulo") + " (" + alquiler.getInt("año") + ")";
+            String pelicula = alquiler.getString("titulo") + " (" + alquiler.getInt("aÃ±o") + ")";
             alquileresModel.addElement(pelicula);
         }
 

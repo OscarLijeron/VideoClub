@@ -53,7 +53,7 @@ public class AlquilarPelicula extends JFrame {
         panelPrincipal.add(panelBusqueda, BorderLayout.NORTH);
 
         // Tabla para mostrar las peliculas
-        String[] columnNames = {"Nombre", "Año", "Genero"};
+        String[] columnNames = {"Nombre", "Aï¿½o", "Genero"};
         tableModel = new DefaultTableModel(columnNames, 0);
         tablePeliculas = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(tablePeliculas);
@@ -90,7 +90,7 @@ public class AlquilarPelicula extends JFrame {
             JSONObject pelicula = peliculas.getJSONObject(i);
             tableModel.addRow(new Object[]{
                     pelicula.getString("Nombre"),
-                    pelicula.getInt("Año"),
+                    pelicula.getInt("AÃ±o"),
                     pelicula.getString("Genero")
             });
         }

@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 public class RegistroUsuario extends JFrame {
     private JPanel contentPane;
     private JTextField txtNombre;
-    private JTextField txtContraseña;
+    private JTextField txtContraseÃ±a;
     private JTextField txtCorreo;
     private JButton btnSolicitarRegistro;
     private JButton btnVolver;
@@ -49,15 +49,15 @@ public class RegistroUsuario extends JFrame {
         txtNombre.setFont(new Font("Arial", Font.PLAIN, 14));
         panelCampos.add(txtNombre);
 
-        // Etiqueta y campo de texto para Contraseña
-        JLabel lblContraseña = new JLabel("Contraseña:");
-        lblContraseña.setHorizontalAlignment(SwingConstants.RIGHT);
-        lblContraseña.setFont(new Font("Arial", Font.PLAIN, 14));
-        panelCampos.add(lblContraseña);
+        // Etiqueta y campo de texto para ContraseÃ±a
+        JLabel lblContraseÃ±a = new JLabel("ContraseÃ±a:");
+        lblContraseÃ±a.setHorizontalAlignment(SwingConstants.RIGHT);
+        lblContraseÃ±a.setFont(new Font("Arial", Font.PLAIN, 14));
+        panelCampos.add(lblContraseÃ±a);
 
-        txtContraseña = new JTextField();
-        txtContraseña.setFont(new Font("Arial", Font.PLAIN, 14));
-        panelCampos.add(txtContraseña);
+        txtContraseÃ±a = new JTextField();
+        txtContraseÃ±a.setFont(new Font("Arial", Font.PLAIN, 14));
+        panelCampos.add(txtContraseÃ±a);
 
         // Etiqueta y campo de texto para Correo
         JLabel lblCorreo = new JLabel("Correo:");
@@ -82,13 +82,13 @@ public class RegistroUsuario extends JFrame {
         btnSolicitarRegistro.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String nombre = txtNombre.getText();
-                String contraseña = txtContraseña.getText();
+                String contraseÃ±a = txtContraseÃ±a.getText();
                 String correo = txtCorreo.getText();
 
-                if (nombre.isEmpty() || contraseña.isEmpty() || correo.isEmpty()) {
+                if (nombre.isEmpty() || contraseÃ±a.isEmpty() || correo.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
                 } else {
-                    // Aqui puedes añadir la logica para enviar la solicitud de registro
+                    // Aqui puedes aï¿½adir la logica para enviar la solicitud de registro
                     JOptionPane.showMessageDialog(null, "Solicitud de registro enviada.");
                 }
             }
@@ -102,7 +102,7 @@ public class RegistroUsuario extends JFrame {
         btnVolver.setForeground(Color.WHITE);
         btnVolver.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Aqui puedes añadir la logica para volver a la pagina inicial
+                // Aqui puedes aÃ±adir la logica para volver a la pagina inicial
                 VistaPrincipal vistaPrincipal = new VistaPrincipal();
                 vistaPrincipal.setVisible(true);
                 dispose();

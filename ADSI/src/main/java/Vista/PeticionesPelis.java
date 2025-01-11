@@ -34,7 +34,7 @@ public class PeticionesPelis extends JFrame {
 	private JPanel panel_1;
 	private JTextArea peticionesInfo;
 	private JTextField tituloPeli;
-	private JTextField añoPeli;
+	private JTextField aÃ±oPeli;
 	private JTextField generoPeli;
 	private Controler controler = null;
 	private JButton buscarPeticiones;
@@ -78,7 +78,7 @@ public class PeticionesPelis extends JFrame {
 			panel.add(getAceptar());
 			panel.add(getDenegar());
 			panel.add(getTextField_3());
-			panel.add(getAñoPeli());
+			panel.add(getAÃ±oPeli());
 			panel.add(getGeneroPeli());
 		}
 		return panel;
@@ -117,7 +117,7 @@ public class PeticionesPelis extends JFrame {
 	}
 	private JLabel getTitulo() {
 		if (titulo == null) {
-			titulo = new JLabel("Peticiones Pel\u00EDculas");
+			titulo = new JLabel("Peticiones Peliculas");
 			titulo.setHorizontalAlignment(SwingConstants.CENTER);
 		}
 		return titulo;
@@ -143,13 +143,13 @@ public class PeticionesPelis extends JFrame {
 		}
 		return tituloPeli;
 	}
-	private JTextField getAñoPeli() {
-		if (añoPeli == null) {
-			añoPeli = new JTextField();
-			añoPeli.setText("Poner a\u00F1o producci\u00F3n");
-			añoPeli.setColumns(15);
+	private JTextField getAï¿½oPeli() {
+		if (aÃ±oPeli == null) {
+			aÃ±oPeli = new JTextField();
+			aÃ±oPeli.setText("Poner aÃ±o produccion");
+			aÃ±oPeli.setColumns(15);
 		}
-		return añoPeli;
+		return aÃ±oPeli;
 	}
 	private JTextField getGeneroPeli() {
 		if (generoPeli == null) {
@@ -179,10 +179,10 @@ public class PeticionesPelis extends JFrame {
 				    for (int i = 0; i < jsonArray.length(); i++) {
 				        JSONObject pelicula = jsonArray.getJSONObject(i);
 				        String titulo = pelicula.getString("titulo");
-				        int anioNum = pelicula.getInt("año");
+				        int anioNum = pelicula.getInt("aÃ±o");
 				        String anio = String.valueOf(anioNum);
 				        String genero = pelicula.getString("genero");
-				        detalles.append((i + 1) + ". Titulo: " + titulo + ", Año: " + anio + ", Genero: " + genero + "\n");
+				        detalles.append((i + 1) + ". Titulo: " + titulo + ", AÃ±o: " + anio + ", Genero: " + genero + "\n");
 				    }
 				    peticionesInfo.setText(detalles.toString());
 				} else {
@@ -193,21 +193,21 @@ public class PeticionesPelis extends JFrame {
 				String idUsuarioTexto=idUsuario.getText();
 				int idUsuario=Integer.parseInt(idUsuarioTexto);
 				String tituloP=tituloPeli.getText();
-				String añoPTexto=añoPeli.getText();
-				int añoP=Integer.parseInt(añoPTexto);
+				String aÃ±oPTexto=aÃ±oPeli.getText();
+				int aÃ±oP=Integer.parseInt(aÃ±oPTexto);
 				String generoP=generoPeli.getText();
-				VideoClub.getGestorGeneral().eliminarSolicitudPelicula(idUsuario, tituloP, añoP, generoP);
-				VideoClub.getGestorGeneral().añadirPeliAlCatalogo(tituloP, añoP, generoP);
+				VideoClub.getGestorGeneral().eliminarSolicitudPelicula(idUsuario, tituloP, aÃ±oP, generoP);
+				VideoClub.getGestorGeneral().aÃ±adirPeliAlCatalogo(tituloP, aÃ±oP, generoP);
 							
 			}
 			if (e.getSource().equals(Denegar)){			
 				String idUsuarioTexto=idUsuario.getText();
 				int idUsuario=Integer.parseInt(idUsuarioTexto);
 				String tituloP=tituloPeli.getText();
-				String añoPTexto=añoPeli.getText();
-				int añoP=Integer.parseInt(añoPTexto);
+				String aÃ±oPTexto=aÃ±oPeli.getText();
+				int aÃ±oP=Integer.parseInt(aÃ±oPTexto);
 				String generoP=generoPeli.getText();
-				VideoClub.getGestorGeneral().eliminarSolicitudPelicula(idUsuario, tituloP, añoP, generoP);
+				VideoClub.getGestorGeneral().eliminarSolicitudPelicula(idUsuario, tituloP, aï¿½oP, generoP);
 				
 			}
 			
