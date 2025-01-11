@@ -1,5 +1,7 @@
 package Controladores;
 
+import java.util.Date;
+
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -77,6 +79,12 @@ public class GestorAlquileres {
         } else {
             System.out.println("El alquiler no esta vencido.");
         }
+    }
+
+    public void recuperarAlquiler( int idUsuario, String nombrePeli, int añoProd, String genero, Date fechaAlquiler) {
+        Alquiler alquiler = new Alquiler(GestorPeliculas.getGestorPeliculas().obtenerPeliculaPorNAG(nombrePeli, añoProd, genero).get(), idUsuario, fechaAlquiler); 
+        this.listaAlquileres.add(alquiler);
+        GestorUsuarios.getGestorUsuarios().obtenerUsuarioPorId(idUsuario).alquilarPelicula(alquiler);
     }
 
 }

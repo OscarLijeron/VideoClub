@@ -1,6 +1,7 @@
 package Controladores;
 
 import org.json.JSONArray;
+import java.util.Date;
 
 import Modelo.Pelicula;
 import Modelo.SQLiteConnection;
@@ -38,8 +39,9 @@ public class VideoClub {
 	}
 	public void recuperarBD() {
 		this.BD.recuperarPelis();
+		this.BD.recuperarUsuarios();
 		this.BD.recuperarSolicitudPelis();
-		this.BD.iniciarScheduler();
+		this.BD.recuperarAlquileres();
 	}
 
     public JSONArray obtenerAlquileresUsuario(int idUsuario) {
@@ -81,6 +83,11 @@ public class VideoClub {
 
 	public void eliminarAlquilerVencido(int idUsuario, String nombrePeli, int añoProd, String genero) {
 		this.gestorA.eliminarAlquilerVencido( idUsuario,  nombrePeli,  añoProd,  genero);
+	}
+
+
+	public void recuperarAlquiler (int idUsuario, String nombrePeli, int añoProd, String genero, Date fechaAlquiler) {
+		this.gestorA.recuperarAlquiler(idUsuario, nombrePeli, añoProd, genero, fechaAlquiler);
 	}
 
 }

@@ -241,7 +241,7 @@ public class SQLiteConnection {
             String url = "jdbc:sqlite:ADSI.db";
 
             // Consulta SQL para recuperar los datos de la tabla Usuarios
-            String sql = "SELECT nombre, genero, año FROM Pelicula WHERE esSolicitada ='False'";
+            String sql = "SELECT nombre, genero, año, estaDisponible FROM Pelicula WHERE esSolicitada ='False'";
 
             try (Connection conn = DriverManager.getConnection(url);
                  Statement stmt = conn.createStatement();
@@ -252,7 +252,8 @@ public class SQLiteConnection {
                     String nombre = rs.getString("nombre");
                     String genero = rs.getString("genero");
                     Integer año = rs.getInt("año");
-                    GestorPeliculas.getGestorPeliculas().añadirPeliAlCatalogoParaRecuperar(nombre, año, genero);
+                    Boolean estaDisponible = rs.getBoolean("estaDisponible");
+                    GestorPeliculas.getGestorPeliculas().añadirPeliAlCatalogoParaRecuperar(nombre, año, genero, estaDisponible);
                 }
 
             } catch (Exception e) {
@@ -472,6 +473,45 @@ public class SQLiteConnection {
                     e.printStackTrace();
                 }
             }, 0, 1, TimeUnit.HOURS); // Ejecutar cada 1 hora
+        }
+
+        public void recuperarAlquileres() {
+            // Ruta de la base de datos SQLite
+            String url = "jdbc:sqlite:ADSI.db";
+
+            // Consulta SQL para recuperar los datos de la tabla Alquiler
+            String sql = "SELECT idUsuario, idPelicula, fechaAlquiler FROM Alquiler";
+
+            try (Connection conn = DriverManager.getConnection(url);
+                 Statement stmt = conn.createStatement();
+                 ResultSet rs = stmt.executeQuery(sql)) {
+
+                // Recorrer los resultados y mostrar los datos por pantalla
+                while (rs.next()) {
+                    int idUsuario = rs.getInt("idUsuario");
+                    int idPelicula = rs.getInt("idPelicula");
+                    Date fechaAlquiler = rs.getDate("fechaAlquiler");
+
+                    // Obtener el nombre, género y año de la película
+                    String sqlNombreGnroAño = "SELECT nombre, genero, año FROM Pelicula WHERE idPelicula = ?";
+                    try (PreparedStatement stmtNombreGnroAño = conn.prepareStatement(sqlNombreGnroAño)) {
+                        stmtNombreGnroAño.setInt(1, idPelicula);
+                        try (ResultSet rsPelicula = stmtNombreGnroAño.executeQuery()) {
+                            if (rsPelicula.next()) {
+                                String nombre = rsPelicula.getString("nombre");
+                                String genero = rsPelicula.getString("genero");
+                                int año = rsPelicula.getInt("año");
+
+                                // Sincronizar el modelo pasando nombre, género y año
+                                VideoClub.getGestorGeneral().recuperarAlquiler(idUsuario, nombre, año, genero, fechaAlquiler);
+                            }
+                        }
+                    }
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     
 }

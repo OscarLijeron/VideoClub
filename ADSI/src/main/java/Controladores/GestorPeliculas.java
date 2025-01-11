@@ -46,20 +46,6 @@ public class GestorPeliculas {
         return null;
     }
 
-    /*public JSONArray mostrarPeliculasPorNombre(String pNombre) {
-        JSONArray peliculas = new JSONArray();
-        for (Pelicula p : this.catalogoPelis) {
-            if (p.getNombrePelicula().contains(pNombre)) {
-                JSONObject pelicula = new JSONObject();
-                pelicula.put("Nombre", p.getNombrePelicula());
-                pelicula.put("Año", p.getAñoProd());
-                pelicula.put("Genero", p.getGenero());
-                peliculas.put(pelicula);
-            }
-        }
-        return peliculas;
-    } */
-
     public JSONArray mostrarPeliculas() {
         JSONArray peliculas = new JSONArray(); // Inicializa un JSONArray vacio
 
@@ -82,8 +68,8 @@ public class GestorPeliculas {
 	public void añadirPeliAlCatalogo(Pelicula pPeli) {
 		this.catalogoPelis.add(pPeli);
 	}
-	public void añadirPeliAlCatalogoParaRecuperar(String pNombre,Integer pAño,String pGenero) {
-		Pelicula pPeli=new Pelicula(pNombre,pAño,pGenero);
+	public void añadirPeliAlCatalogoParaRecuperar(String pNombre,Integer pAño,String pGenero, boolean estaDisp) {
+		Pelicula pPeli=new Pelicula(pNombre,pAño,pGenero, estaDisp);
 		this.catalogoPelis.add(pPeli);
 	}
 	public JSONArray mostrarCatalogoAmpliado(String pTitulo) {

@@ -14,6 +14,14 @@ public class Pelicula {
 		this.añoProd=pAñoProd;
 		this.genero=pGenero;
 	}
+
+	public Pelicula (String pNombre,Integer pAñoProd,String pGenero,Boolean pDisponible) {
+		this.nombre=pNombre;
+		this.añoProd=pAñoProd;
+		this.genero=pGenero;
+		this.disponible=pDisponible;
+	}
+	
     public Boolean estaDisponible() {
     	return this.disponible==true;
     }

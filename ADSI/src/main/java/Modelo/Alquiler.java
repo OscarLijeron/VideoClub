@@ -16,6 +16,13 @@ public class Alquiler {
         LocalDate fechaActual = LocalDate.now();
 		this.fechaAlquiler=Date.from(fechaActual.atStartOfDay(ZoneId.systemDefault()).toInstant());
 	}
+
+	public Alquiler(Pelicula pPelicula, int idUsuario, Date fechaAlquiler) {
+		this.peliculaAlquilada=pPelicula;
+		this.idUsuario=idUsuario;
+		this.fechaAlquiler=fechaAlquiler;
+	}
+
 	public Boolean esEstaPeli(Pelicula pPelicula) {
 		return this.peliculaAlquilada.equals(pPelicula);
 	}
