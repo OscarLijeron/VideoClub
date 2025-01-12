@@ -15,6 +15,7 @@ import Controladores.GestorPeliculas;
 
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.Color;
@@ -32,11 +33,12 @@ public class CatalogoAmpliado extends JFrame {
 	private JButton Salir;
 	private Controler controler = null;
 	private JTextArea infoPelis;
+	private int idUsuario;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -52,7 +54,8 @@ public class CatalogoAmpliado extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CatalogoAmpliado() {
+	public CatalogoAmpliado(Integer pIdUsuario) {
+		idUsuario=pIdUsuario;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -134,7 +137,7 @@ public class CatalogoAmpliado extends JFrame {
 			
 			if (e.getSource().equals(Salir)){
 			
-				System.exit(0);
+				volverAInicioSesion();
 				
 			}
 			
@@ -153,4 +156,10 @@ public class CatalogoAmpliado extends JFrame {
 		}
 		return infoPelis;
 	}
+	 // Metodo para regresar a la vista de inicio de sesion
+    private void volverAInicioSesion() {
+        JOptionPane.showMessageDialog(this, "Volviendo a inicio de sesion...");
+        this.setVisible(false); // Ocultar la vista actual
+        InicioSesion.getInicioSesion(idUsuario).mostrar(); // Mostrar la vista de inicio de sesion
+    }
 }

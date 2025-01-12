@@ -71,7 +71,7 @@ public class VistaPrincipal extends JFrame {
         correo.setFont(new Font("Arial", Font.PLAIN, 14));
         panel.add(correo);
 
-        // Etiqueta y campo de contrase�a
+        // Etiqueta y campo de contraseña
         JLabel lblContrasea = new JLabel("Contraseña");
         lblContrasea.setHorizontalAlignment(SwingConstants.CENTER);
         lblContrasea.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -104,13 +104,15 @@ public class VistaPrincipal extends JFrame {
                 if (usuarioNombre.isEmpty() || correoIngresado.isEmpty() || contraseñaIngresada.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
                 } else {
+                    //VideoClub.getGestorGeneral().recuperarBD();
                     Integer idUsuario = VideoClub.getGestorGeneral().iniciarSesion(usuarioNombre,contraseñaIngresada,correoIngresado);
                     if (idUsuario!=null){
                         boolean esAdmin = false;
                         esAdmin = GestorUsuarios.getGestorUsuarios().comprobarQueEsAdmin(idUsuario);
                         if (esAdmin){
                             // Aqui iria la vista para el admin
-                            InicioSesion vistaSes = InicioSesion.getInicioSesion(idUsuario);
+                            JOptionPane.showMessageDialog(null, "Usuario es Admin");
+                            InicioSesionAdmin vistaSes = InicioSesionAdmin.getInicioSesionAdmin(idUsuario);
                             vistaSes.mostrar();
 
                             setVisible(false);

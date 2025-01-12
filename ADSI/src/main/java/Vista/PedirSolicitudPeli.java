@@ -16,6 +16,7 @@ import java.awt.BorderLayout;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -33,11 +34,12 @@ public class PedirSolicitudPeli extends JFrame {
 	private JLabel Titulo;
 	private JButton Salir;
 	private Controler controler = null;
+	private int idUsuario;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -53,7 +55,8 @@ public class PedirSolicitudPeli extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public PedirSolicitudPeli() {
+	public PedirSolicitudPeli(Integer pIdUsuario) {
+		idUsuario=pIdUsuario;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -86,7 +89,7 @@ public class PedirSolicitudPeli extends JFrame {
 	private JTextField getAnioPeli() {
 		if (anioPeli == null) {
 			anioPeli = new JTextField();
-			anioPeli.setText("Poner año produccion aqui");
+			anioPeli.setText("Poner a�o produccion aqui");
 			anioPeli.setColumns(10);
 		}
 		return anioPeli;
@@ -137,7 +140,6 @@ public class PedirSolicitudPeli extends JFrame {
 	private class Controler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource().equals(Solicitar)){	
-				VideoClub.getGestorGeneral().recuperarBD();
 				String tituloP=tituloPeli.getText();
 				String anioPTexto=anioPeli.getText();
 				int anioP=Integer.parseInt(anioPTexto);
@@ -147,10 +149,16 @@ public class PedirSolicitudPeli extends JFrame {
 			
 			if (e.getSource().equals(Salir)){
 			
-				System.exit(0);
+				volverAInicioSesion();
 				
 			}
 			
 		}
 	}
+	 // Metodo para regresar a la vista de inicio de sesion
+    private void volverAInicioSesion() {
+        JOptionPane.showMessageDialog(this, "Volviendo a inicio de sesion...");
+        this.setVisible(false); // Ocultar la vista actual
+        InicioSesion.getInicioSesion(idUsuario).mostrar(); // Mostrar la vista de inicio de sesion
+    }
 }

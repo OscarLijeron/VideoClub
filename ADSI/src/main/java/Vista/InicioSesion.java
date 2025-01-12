@@ -12,6 +12,8 @@ public class InicioSesion extends JFrame {
     private int idUsuario;
     private JButton verAlquilados;
     private JButton alquilarPelicula;
+    private JButton catalogoAmpliado;
+    private JButton pedirSolicitudPeli;
 
     // Constructor privado que recibe el nombre del usuario
     private InicioSesion(Integer idUsu) {
@@ -83,6 +85,35 @@ public class InicioSesion extends JFrame {
             }
         });
         panelBotones.add(alquilarPelicula);
+        
+        // Boton "Explorar catalogo ampliado"
+        catalogoAmpliado = new JButton("Catalogo Ampliado");
+        catalogoAmpliado.setFont(new Font("Arial", Font.BOLD, 14));
+        catalogoAmpliado.setBackground(new Color(35, 41, 122));
+        catalogoAmpliado.setForeground(Color.WHITE);
+        catalogoAmpliado.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	CatalogoAmpliado frame = new CatalogoAmpliado(idUsuario);
+				frame.setVisible(true);
+                setVisible(false);
+                JOptionPane.showMessageDialog(null, "Explorar Catalogo Ampliado");
+            }
+        });
+        panelBotones.add(catalogoAmpliado);
+     // Boton "Solicitar Pelicula"
+        pedirSolicitudPeli = new JButton("Solicitar Pelicula");
+        pedirSolicitudPeli.setFont(new Font("Arial", Font.BOLD, 14));
+        pedirSolicitudPeli.setBackground(new Color(35, 41, 122));
+        pedirSolicitudPeli.setForeground(Color.WHITE);
+        pedirSolicitudPeli.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	PedirSolicitudPeli frame = new PedirSolicitudPeli(idUsuario);
+				frame.setVisible(true);
+                setVisible(false);
+                JOptionPane.showMessageDialog(null, "Solicitar Pelicula");
+            }
+        });
+        panelBotones.add(pedirSolicitudPeli);
     }
 
     // Metodo para mostrar la ventana de inicio de sesion
