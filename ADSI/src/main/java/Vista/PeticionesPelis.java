@@ -218,7 +218,7 @@ public class PeticionesPelis extends JFrame {
 			
 			if (e.getSource().equals(Salir)){
 			
-				volverAInicioSesion();
+				volverAInicioSesionAdmin();
 				
 			}
 			
@@ -241,9 +241,9 @@ public class PeticionesPelis extends JFrame {
 		return idUsuario;
 	}*/
 	// Metodo para regresar a la vista de inicio de sesion
-    private void volverAInicioSesion() {
+    private void volverAInicioSesionAdmin() {
         JOptionPane.showMessageDialog(this, "Volviendo a inicio de sesion...");
         this.setVisible(false); // Ocultar la vista actual
-        InicioSesion.getInicioSesion(idAdmin).mostrar(); // Mostrar la vista de inicio de sesion
+        InicioSesionAdmin.getInicioSesionAdmin(idAdmin).mostrar(); // Mostrar la vista de inicio de sesion
     }
 }
