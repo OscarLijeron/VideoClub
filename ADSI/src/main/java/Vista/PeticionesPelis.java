@@ -80,7 +80,7 @@ public class PeticionesPelis extends JFrame {
 			panel.add(getAceptar());
 			panel.add(getDenegar());
 			panel.add(getTextField_3());
-			panel.add(getA�oPeli());
+			panel.add(getAñoPeli());
 			panel.add(getGeneroPeli());
 		}
 		return panel;
@@ -145,7 +145,7 @@ public class PeticionesPelis extends JFrame {
 		}
 		return tituloPeli;
 	}
-	private JTextField getA�oPeli() {
+	private JTextField getAñoPeli() {
 		if (añoPeli == null) {
 			añoPeli = new JTextField();
 			añoPeli.setText("Poner a\u00F1o producci\u00F3n");
