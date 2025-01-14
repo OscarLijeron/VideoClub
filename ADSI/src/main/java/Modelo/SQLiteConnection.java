@@ -286,22 +286,31 @@ public class SQLiteConnection {
 		public void registrarAlquiler(int idUsuario, int idPeli) {
 			String url = "jdbc:sqlite:ADSI.db";
 
-	        String sql = "INSERT INTO Alquiler (fechaAlquiler, idUsuario, idPelicula) VALUES (?, ?, ?)";
+            String sql1 = "UPDATE Pelicula SET estaDisponible = 'False' WHERE idPelicula = ?";
+            String sql2 = "INSERT INTO Alquiler (fechaAlquiler, idUsuario, idPelicula) VALUES (?, ?, ?)";
+
 	        LocalDate localDate = LocalDate.now(); // Fecha actual
 	        Date sqlDate = Date.valueOf(localDate); // Convertir a java.sql.Date
 	        try (Connection conn = DriverManager.getConnection(url);
-	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-	        	pstmt.setDate(1, sqlDate); 
-	            pstmt.setInt(2, idUsuario); 
-	            pstmt.setInt(3, idPeli); 
-	            pstmt.executeUpdate();
+                PreparedStatement pstmt1 = conn.prepareStatement(sql1);
+	            PreparedStatement pstmt2 = conn.prepareStatement(sql2);)
+                  {
 
-	            System.out.println("Registro insertado correctamente.");
+                pstmt1.setInt(1, idPeli);
+                pstmt1.executeUpdate();
+
+                System.out.println("Película marcada como no disponible.");
+
+	        	pstmt2.setDate(1, sqlDate); 
+	            pstmt2.setInt(2, idUsuario); 
+	            pstmt2.setInt(3, idPeli); 
+	            pstmt2.executeUpdate();
+
+	            System.out.println("Registro Alquiler insertado correctamente.");
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
-			
 		}
 		public Optional<Pelicula> consultarPelicula(String nombrePelicula, String pGenero, Integer pAñoprod) {
 		    // Ruta de la base de datos SQLite
