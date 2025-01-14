@@ -254,6 +254,7 @@ public class SQLiteConnection {
                     Integer año = rs.getInt("año");
                     Boolean estaDisponible = rs.getBoolean("estaDisponible");
                     GestorPeliculas.getGestorPeliculas().añadirPeliAlCatalogoParaRecuperar(nombre, año, genero, estaDisponible);
+                    System.out.println("Pelicula recuperada: " + nombre + " " + año + " " + genero + " " + estaDisponible);
                 }
 
             } catch (Exception e) {

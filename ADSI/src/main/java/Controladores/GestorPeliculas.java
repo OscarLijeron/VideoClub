@@ -70,6 +70,7 @@ public class GestorPeliculas {
 	}
 	public void añadirPeliAlCatalogoParaRecuperar(String pNombre,Integer pAño,String pGenero, boolean estaDisp) {
 		Pelicula pPeli=new Pelicula(pNombre,pAño,pGenero, estaDisp);
+        System.err.println("Pelicula añadida al catalogo: "+pPeli.getNombrePelicula()+" "+pPeli.getAñoProd()+" "+pPeli.getGenero()+" "+pPeli.estaDisponible());
 		this.catalogoPelis.add(pPeli);
 	}
 	public JSONArray mostrarCatalogoAmpliado(String pTitulo) {
