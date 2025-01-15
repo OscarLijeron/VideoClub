@@ -111,8 +111,12 @@ public class EliminarCuentas extends JFrame {
                 }
                 int idUsuario = Integer.parseInt(idUsuarioTexto);
 
-                VideoClub.getGestorGeneral().eliminarCuenta(idUsuario);
-                JOptionPane.showMessageDialog(null, "Cuenta eliminada.");
+                boolean resultado = VideoClub.getGestorGeneral().comprobarSiEsAdminOActual(idUsuario, pIdAdmin);
+
+                if (!resultado){
+                    VideoClub.getGestorGeneral().eliminarCuenta(idUsuario);
+                    JOptionPane.showMessageDialog(null, "Cuenta eliminada.");
+                }
 
                 // Recargar las cuentas
                 JSONArray cuentas = GestorUsuarios.getGestorUsuarios().mostrarUsuariosParaBorrar();

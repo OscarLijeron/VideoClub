@@ -95,5 +95,9 @@ public class VideoClub {
 		return this.gestorU.comprobarExistenciaUsuario(pIdUsuario);
 	}
 
+	public boolean comprobarSiEsAdminOActual(Integer pIdUsuario,Integer pIdAdmin){
+		return this.gestorU.comprobarSiEsAdminOActual(pIdUsuario,pIdAdmin);
+	}
+
 
 }

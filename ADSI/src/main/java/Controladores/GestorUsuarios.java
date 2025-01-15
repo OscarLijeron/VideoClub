@@ -337,5 +337,20 @@ public class GestorUsuarios {
 		return false;
 	}
 
+	public boolean comprobarSiEsAdminOActual(Integer pIdUsuario, Integer pIdAdmin){
+		Usuario usuario = obtenerUsuarioPorId(pIdUsuario);
+		if(usuario!=null){
+			if(usuario.esAdmin()){
+				return true;
+			}
+			else{
+				if (usuario.getId()==pIdAdmin){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 }
 
