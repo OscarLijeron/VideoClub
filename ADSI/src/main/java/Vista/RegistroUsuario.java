@@ -1,6 +1,9 @@
 package Vista;
 
 import javax.swing.*;
+
+import Controladores.VideoClub;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -89,6 +92,7 @@ public class RegistroUsuario extends JFrame {
                     JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
                 } else {
                     // Aqui puedes a�adir la logica para enviar la solicitud de registro
+                    VideoClub.getGestorGeneral().registrarse(nombre, contraseña, correo);
                     JOptionPane.showMessageDialog(null, "Solicitud de registro enviada.");
                 }
             }

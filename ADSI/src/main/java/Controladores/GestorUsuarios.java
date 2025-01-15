@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import Modelo.Pelicula;
 import Modelo.SQLiteConnection;
@@ -119,6 +120,7 @@ public class GestorUsuarios {
 			.orElse(null); // Devuelve null si no encuentra un usuario
 		
 			if (admin!=null) {
+				BD.AñadirSolUsuario(pNombre, pContraseña, pCorreo);
 				Usuario usuario = new Usuario(pNombre, pContraseña, pCorreo, "Usuario");
 				admin.SolicitarRegistro(usuario);
 			}
@@ -143,9 +145,8 @@ public class GestorUsuarios {
 			else {
 				Usuario usuario = solUsuario.get();
 				this.catalogoUsuarios.add(usuario);
-				admin.ValidarUsuario(usuario);	
 				admin.eliminarSolicitudRegistro(usuario);			
-				BD.RegistrarUsuario(usuario.getNombre(),usuario.getContraseña(), usuario.getCorreo(),pIdAdmin);
+				BD.RegistrarUsuario(pIdUsuario,pIdAdmin);
 			}
 		}
 		else{
@@ -163,13 +164,12 @@ public class GestorUsuarios {
 	}
 
 	public Integer iniciarSesion(String pNombre, String pContraseña, String pCorreo) {
-		Integer idUsuario = BD.consultarIdUsuario(pNombre,pCorreo,pContraseña);
-		if(idUsuario!= null) {
-			return idUsuario;
+		for (Usuario usuario : catalogoUsuarios) {
+			if (usuario.getNombre().equals(pNombre) && usuario.getContraseña().equals(pContraseña) && usuario.getCorreo().equals(pCorreo)) {
+				return usuario.getId();
+			}
 		}
-		else {
-			return null;
-		}
+		return null;
 
 	}
 
@@ -198,7 +198,8 @@ public class GestorUsuarios {
 			}
 			else {
 				Usuario usuario = solUsuario.get();	
-				admin.eliminarSolicitudRegistro(usuario);		
+				admin.eliminarSolicitudRegistro(usuario);
+				BD.EliminarUsuario(pIdUsuario);		
 				
 			}
 		}
@@ -220,6 +221,60 @@ public class GestorUsuarios {
 		else{
 			System.out.println("No se encontro ningun usuario");
 		}
+	}
+
+	public void añadirSolicitudUsuarioParaRecuperar(String pNombre, String pContraseña, String pCorreo, String pRol) {
+		Usuario unUsuario=new Usuario(pNombre, pContraseña, pCorreo, pRol);
+		Usuario admin = this.catalogoUsuarios.stream()
+			.filter(p -> p.esAdmin())
+			.findFirst()
+			.orElse(null); // Devuelve null si no encuentra un usuario
+
+		if (admin!=null){
+			admin.SolicitarRegistro(unUsuario);
+		}
+		else{
+			System.out.println("No se encontró ningún usuario");
+		}
+	}
+
+	public JSONArray mostrarSolicitudesUsuario(Integer pID) {
+		Usuario usuario = this.catalogoUsuarios.stream()
+                .filter(p -> p.tieneEsteId(pID))
+                .findFirst()
+                .orElse(null); // Devuelve null si no encuentra un usuario
+
+		if (usuario != null) {
+			System.out.println("Usuario encontrado");
+		} else {
+			System.out.println("Usuario con ID " + pID + " no encontrado.");
+		}
+
+		return usuario.mostrarSolicitudesUsuario();
+		
+		
+	}
+
+	public JSONArray mostrarUsuarios() {
+		JSONArray jsonArray = new JSONArray();
+		for (Usuario usuario : this.catalogoUsuarios) {
+			JSONObject jsonUsuario = new JSONObject();
+			jsonUsuario.put("nombre", usuario.getNombre());
+			jsonUsuario.put("contraseña", usuario.getContraseña());
+			jsonUsuario.put("correo", usuario.getCorreo());
+			jsonUsuario.put("id",usuario.getId());
+			jsonArray.put(jsonUsuario);
+		}
+		return jsonArray; 
+	}
+
+	public boolean comprobarExistenciaUsuario(Integer pIdUsuario){
+		for (Usuario usuario : catalogoUsuarios) {
+			if (usuario.getId()==pIdUsuario) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

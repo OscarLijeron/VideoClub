@@ -25,19 +25,8 @@ public class Usuario {
 		this.id=this.BD.consultarIdUsuario(pNombre, pCorreo, pContraseña);
 		
 	}
-	public void IniciarSesion() {
-		
-	}
-	public void ValidarUsuario(Usuario pUsuario) {
-		this.solicitudesUsuario.remove(pUsuario);
-		//
-	}
-	public void EliminarCuenta() {
-		
-	}
     public void SolicitarRegistro(Usuario pUsuario) {
     	this.solicitudesUsuario.add(pUsuario);
-		//
 	}
 	public void alquilarPelicula(Alquiler pAlquiler) {
 		this.misAlquileres.add(pAlquiler);
@@ -136,6 +125,7 @@ public class Usuario {
 			jsonUsuario.put("nombre", usuario.getNombre());
 			jsonUsuario.put("contraseña", usuario.getContraseña());
 			jsonUsuario.put("correo", usuario.getCorreo());
+			jsonUsuario.put("id",usuario.getId());
 			jsonArray.put(jsonUsuario);
 		}
 		return jsonArray; 

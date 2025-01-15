@@ -2,7 +2,6 @@ package Vista;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +10,7 @@ public class InicioSesionAdmin extends JFrame {
     private static InicioSesionAdmin instance = null;
     private int idUsuario;
     private JButton peticionesPelis;
+    private JButton solicitudesRegistro; // Nuevo botón
 
     // Constructor privado que recibe el nombre del usuario
     private InicioSesionAdmin(Integer idUsu) {
@@ -50,25 +50,38 @@ public class InicioSesionAdmin extends JFrame {
 
         // Panel principal para los botones
         JPanel panelBotones = new JPanel();
-        panelBotones.setLayout(new GridLayout(3, 1, 10, 10));
+        panelBotones.setLayout(new GridLayout(3, 1, 10, 10)); // Cambiar a 3 filas para acomodar el nuevo botón
         contentPane.add(panelBotones, BorderLayout.CENTER);
 
-        // Boton "peticionesPeli"
-        peticionesPelis = new JButton("Ver peticiones peliculas");
+        // Botón "Ver peticiones películas"
+        peticionesPelis = new JButton("Ver peticiones películas");
         peticionesPelis.setFont(new Font("Arial", Font.BOLD, 14));
         peticionesPelis.setBackground(new Color(35, 41, 122));
         peticionesPelis.setForeground(Color.WHITE);
         peticionesPelis.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	PeticionesPelis frame = new PeticionesPelis(1);
-				frame.setVisible(true);
+                PeticionesPelis frame = new PeticionesPelis(1);
+                frame.setVisible(true);
                 setVisible(false);
-                JOptionPane.showMessageDialog(null, "Ver peticiones peliculas");
+                JOptionPane.showMessageDialog(null, "Ver peticiones películas");
             }
         });
         panelBotones.add(peticionesPelis);
 
-        
+        // Botón "Ver solicitudes de registro"
+        solicitudesRegistro = new JButton("Ver solicitudes de registro");
+        solicitudesRegistro.setFont(new Font("Arial", Font.BOLD, 14));
+        solicitudesRegistro.setBackground(new Color(35, 41, 122));
+        solicitudesRegistro.setForeground(Color.WHITE);
+        solicitudesRegistro.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SolicitudesRegistro frame = new SolicitudesRegistro(idUsuario); // Cambia a la clase correspondiente
+                frame.setVisible(true);
+                setVisible(false);
+                JOptionPane.showMessageDialog(null, "Ver solicitudes de registro");
+            }
+        });
+        panelBotones.add(solicitudesRegistro);
     }
 
     // Metodo para mostrar la ventana de inicio de sesion

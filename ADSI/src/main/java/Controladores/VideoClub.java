@@ -42,6 +42,7 @@ public class VideoClub {
 		this.BD.recuperarUsuarios();
 		this.BD.recuperarSolicitudPelis();
 		this.BD.recuperarAlquileres();
+		this.BD.recuperarSolicitudesUsuarios();
 	}
 
     public JSONArray obtenerAlquileresUsuario(int idUsuario) {
@@ -89,5 +90,10 @@ public class VideoClub {
 	public void recuperarAlquiler (int idUsuario, String nombrePeli, int añoProd, String genero, Date fechaAlquiler) {
 		this.gestorA.recuperarAlquiler(idUsuario, nombrePeli, añoProd, genero, fechaAlquiler);
 	}
+
+	public boolean comprobarExistenciaUsuario(Integer pIdUsuario){
+		return this.gestorU.comprobarExistenciaUsuario(pIdUsuario);
+	}
+
 
 }

@@ -212,30 +212,31 @@ public class SQLiteConnection {
         }
 	}
         
-        public void recuperarUsuarios() {
-            // Ruta de la base de datos SQLite
-            String url = "jdbc:sqlite:ADSI.db";
-
-            // Consulta SQL para recuperar los datos de la tabla Usuarios
-            String sql = "SELECT nombre, correo, contraseña, rol FROM Usuarios";
-
-            try (Connection conn = DriverManager.getConnection(url);
-                 Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery(sql)) {
-
-                // Recorrer los resultados y mostrar los datos por pantalla
-                while (rs.next()) {
-                    String nombre = rs.getString("nombre");
-                    String correo = rs.getString("correo");
-                    String contraseña = rs.getString("contraseña");
-                    String rol = rs.getString("rol");
-                    GestorUsuarios.getGestorUsuarios().añadirUsuarioParaRecuperar(nombre, contraseña, correo, rol);
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
+    public void recuperarUsuarios() {
+        // Ruta de la base de datos SQLite
+        String url = "jdbc:sqlite:ADSI.db";
+    
+        // Consulta SQL para recuperar los datos según las condiciones especificadas
+        String sql = "SELECT nombre, correo, contraseña, rol FROM Usuarios " +
+                     "WHERE idValidador IS NOT NULL OR (idValidador IS NULL AND rol = 'Admin')";
+    
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+    
+            // Recorrer los resultados y mostrar los datos por pantalla
+            while (rs.next()) {
+                String nombre = rs.getString("nombre");
+                String correo = rs.getString("correo");
+                String contraseña = rs.getString("contraseña");
+                String rol = rs.getString("rol");
+                GestorUsuarios.getGestorUsuarios().añadirUsuarioParaRecuperar(nombre, contraseña, correo, rol);
             }
+    
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
         public void recuperarPelis() {
             // Ruta de la base de datos SQLite
             String url = "jdbc:sqlite:ADSI.db";
@@ -348,25 +349,28 @@ public class SQLiteConnection {
 		    return Optional.empty();
 		}
 
-        public void RegistrarUsuario(String pNombre,String pContraseña, String pCorreo, Integer idValidador) {
+        public void RegistrarUsuario(Integer idUsuario, Integer idValidador) {
+            // Ruta de la base de datos SQLite
             String url = "jdbc:sqlite:ADSI.db";
-
-            String sql = "INSERT INTO Usuarios (nombre, contraseña, correo , rol, idValidador) VALUES (?, ?, ?, ?, ?)";
+        
+            // Consulta SQL para actualizar el idValidador de un usuario basado en su correo
+            String sql = "UPDATE Usuarios SET idValidador = ? WHERE id = ?";
+        
             try (Connection conn = DriverManager.getConnection(url);
-                PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                
-                pstmt.setString(1, pNombre); 
-                pstmt.setString(2, pContraseña); 
-                pstmt.setString(3, pCorreo); 
-                pstmt.setString(4, "Usuario");
-                pstmt.setInt(5, idValidador);
+                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        
+                // Establecer los valores de los parámetros
+                pstmt.setInt(1, idValidador); // Nuevo valor para idValidador
+                pstmt.setInt(2, idUsuario); // Correo del usuario a actualizar
+        
+                // Ejecutar la actualización
                 pstmt.executeUpdate();
-            
-                
+        
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        
             
         public void EliminarUsuario(Integer pId) {
             String url = "jdbc:sqlite:ADSI.db";
@@ -519,6 +523,51 @@ public class SQLiteConnection {
                     }
                 }
 
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        public void recuperarSolicitudesUsuarios() {
+            // Ruta de la base de datos SQLite
+            String url = "jdbc:sqlite:ADSI.db";
+        
+            // Consulta SQL para recuperar los usuarios con idValidador NULL, excluyendo los que tienen rol 'admin'
+            String sql = "SELECT nombre, correo, contraseña, rol FROM Usuarios " +
+                         "WHERE idValidador IS NULL AND rol != 'Admin'";
+        
+            try (Connection conn = DriverManager.getConnection(url);
+                 Statement stmt = conn.createStatement();
+                 ResultSet rs = stmt.executeQuery(sql)) {
+        
+                // Recorrer los resultados y mostrar los datos por pantalla
+                while (rs.next()) {
+                    String nombre = rs.getString("nombre");
+                    String correo = rs.getString("correo");
+                    String contraseña = rs.getString("contraseña");
+                    String rol = rs.getString("rol");
+                    GestorUsuarios.getGestorUsuarios().añadirSolicitudUsuarioParaRecuperar(nombre, contraseña, correo, rol);
+                }
+        
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        public void AñadirSolUsuario(String pNombre,String pContraseña, String pCorreo) {
+            String url = "jdbc:sqlite:ADSI.db";
+
+            String sql = "INSERT INTO Usuarios (nombre, contraseña, correo , rol) VALUES (?, ?, ?, ?)";
+            try (Connection conn = DriverManager.getConnection(url);
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                
+                pstmt.setString(1, pNombre); 
+                pstmt.setString(2, pContraseña); 
+                pstmt.setString(3, pCorreo); 
+                pstmt.setString(4, "Usuario");    
+                pstmt.executeUpdate();
+            
+                
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -8,16 +8,16 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ActualizarDatosPersonales extends JFrame {
+public class ModificarCuenta extends JFrame {
     private JPanel contentPane;
     private JTextField txtNombre;
     private JTextField txtContraseña;
     private JTextField txtCorreo;
-    private JButton btnActualizar;
+    private JButton btnModificar;
     private JButton btnVolver;
 
-    public ActualizarDatosPersonales(Integer pIdUsuario) {
-        setTitle("Actualizar Datos Personales");
+    public ModificarCuenta(Integer pIdAdmin,Integer pIdUsuario) {
+        setTitle("Modificar Datos Cuenta");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
 
@@ -31,7 +31,7 @@ public class ActualizarDatosPersonales extends JFrame {
         panelTitulo.setBackground(new Color(35, 41, 122));
         contentPane.add(panelTitulo, BorderLayout.NORTH);
 
-        JLabel lblTitulo = new JLabel("Actualizar Datos Personales");
+        JLabel lblTitulo = new JLabel("Modificar Datos Cuenta");
         lblTitulo.setForeground(Color.WHITE);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 18));
         lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -77,12 +77,12 @@ public class ActualizarDatosPersonales extends JFrame {
         panelBotones.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 10));
         contentPane.add(panelBotones, BorderLayout.SOUTH);
 
-        // Botón para actualizar datos
-        btnActualizar = new JButton("Actualizar Datos");
-        btnActualizar.setFont(new Font("Arial", Font.BOLD, 14));
-        btnActualizar.setBackground(new Color(35, 41, 122));
-        btnActualizar.setForeground(Color.WHITE);
-        btnActualizar.addActionListener(new ActionListener() {
+        // Botón para solicitar registro
+        btnModificar = new JButton("Actualizar Datos");
+        btnModificar.setFont(new Font("Arial", Font.BOLD, 14));
+        btnModificar.setBackground(new Color(35, 41, 122));
+        btnModificar.setForeground(Color.WHITE);
+        btnModificar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String nombre = txtNombre.getText();
                 String contraseña = txtContraseña.getText();
@@ -96,16 +96,20 @@ public class ActualizarDatosPersonales extends JFrame {
                 }
             }
         });
-        panelBotones.add(btnActualizar);
+        panelBotones.add(btnModificar);
 
-        // Botón para volver a la página inicial
+        // Botón para volver a la página anterior
         btnVolver = new JButton("Volver");
         btnVolver.setFont(new Font("Arial", Font.BOLD, 14));
         btnVolver.setBackground(new Color(35, 41, 122));
         btnVolver.setForeground(Color.WHITE);
         btnVolver.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Aquí puedes añadir la lógica para volver a la pagina de iniciar sesion
+               
+                VerCuentasParaModificar frame = new VerCuentasParaModificar(pIdAdmin); // Cambia a la clase correspondiente
+                frame.setVisible(true);
+                setVisible(false);
+                JOptionPane.showMessageDialog(null, "Volviendo al catálogo de cuentas");
                 
             }
         });
