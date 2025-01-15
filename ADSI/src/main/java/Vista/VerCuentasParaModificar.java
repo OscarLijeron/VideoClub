@@ -74,7 +74,7 @@ public class VerCuentasParaModificar extends JFrame {
         btnCargarSolicitudes.setForeground(Color.WHITE);
         btnCargarSolicitudes.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JSONArray cuentas = GestorUsuarios.getGestorUsuarios().mostrarUsuarios();
+                JSONArray cuentas = GestorUsuarios.getGestorUsuarios().mostrarUsuariosParaModificar(pIdAdmin);
                 StringBuilder cuentasText = new StringBuilder();
 
                 if (cuentas != null && cuentas.length() > 0) {
@@ -97,7 +97,7 @@ public class VerCuentasParaModificar extends JFrame {
         });
         panelBotones.add(btnCargarSolicitudes);
 
-        // Botón para eliminar cuenta
+        // Botón para modificar cuenta
         btnModificarDatos = new JButton("Modificar datos");
         btnModificarDatos.setFont(new Font("Arial", Font.BOLD, 14));
         btnModificarDatos.setBackground(new Color(255, 69, 0));
@@ -134,9 +134,9 @@ public class VerCuentasParaModificar extends JFrame {
         btnVolver.setForeground(Color.WHITE);
         btnVolver.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(VerCuentasParaModificar.this, "Volviendo al inicio de sesión...");
-                setVisible(false);
-                // Aquí llamarías a la ventana de inicio de sesión
+                JOptionPane.showMessageDialog(null, "Volviendo a inicio de sesion...");
+                setVisible(false); // Ocultar la vista actual
+                InicioSesionAdmin.getInicioSesionAdmin(pIdAdmin).mostrar(); // Mostrar la vista de inicio de sesion
             }
         });
         panelBotones.add(btnVolver);

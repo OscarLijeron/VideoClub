@@ -2,7 +2,6 @@ package Vista;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +13,7 @@ public class InicioSesion extends JFrame {
     private JButton alquilarPelicula;
     private JButton catalogoAmpliado;
     private JButton pedirSolicitudPeli;
+    private JButton actualizarDatosPersonales;
 
     // Constructor privado que recibe el nombre del usuario
     private InicioSesion(Integer idUsu) {
@@ -34,7 +34,7 @@ public class InicioSesion extends JFrame {
         // Configuracion de la ventana
         setTitle("Bienvenido");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 450, 300);
+        setBounds(100, 100, 450, 350); // Ajustamos la altura para acomodar un botón adicional
         JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -53,7 +53,7 @@ public class InicioSesion extends JFrame {
 
         // Panel principal para los botones
         JPanel panelBotones = new JPanel();
-        panelBotones.setLayout(new GridLayout(3, 1, 10, 10));
+        panelBotones.setLayout(new GridLayout(4, 1, 10, 10)); // Cambiamos a 4 filas para el botón adicional
         contentPane.add(panelBotones, BorderLayout.CENTER);
 
         // Boton "Ver Alquilados"
@@ -85,7 +85,7 @@ public class InicioSesion extends JFrame {
             }
         });
         panelBotones.add(alquilarPelicula);
-        
+
         // Boton "Explorar catalogo ampliado"
         catalogoAmpliado = new JButton("Catalogo Ampliado");
         catalogoAmpliado.setFont(new Font("Arial", Font.BOLD, 14));
@@ -93,27 +93,43 @@ public class InicioSesion extends JFrame {
         catalogoAmpliado.setForeground(Color.WHITE);
         catalogoAmpliado.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	CatalogoAmpliado frame = new CatalogoAmpliado(idUsuario);
-				frame.setVisible(true);
+                CatalogoAmpliado frame = new CatalogoAmpliado(idUsuario);
+                frame.setVisible(true);
                 setVisible(false);
                 JOptionPane.showMessageDialog(null, "Explorar Catalogo Ampliado");
             }
         });
         panelBotones.add(catalogoAmpliado);
-     // Boton "Solicitar Pelicula"
+
+        // Boton "Solicitar Pelicula"
         pedirSolicitudPeli = new JButton("Solicitar Pelicula");
         pedirSolicitudPeli.setFont(new Font("Arial", Font.BOLD, 14));
         pedirSolicitudPeli.setBackground(new Color(35, 41, 122));
         pedirSolicitudPeli.setForeground(Color.WHITE);
         pedirSolicitudPeli.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	PedirSolicitudPeli frame = new PedirSolicitudPeli(idUsuario);
-				frame.setVisible(true);
+                PedirSolicitudPeli frame = new PedirSolicitudPeli(idUsuario);
+                frame.setVisible(true);
                 setVisible(false);
                 JOptionPane.showMessageDialog(null, "Solicitar Pelicula");
             }
         });
         panelBotones.add(pedirSolicitudPeli);
+
+        // Boton "Actualizar Datos Personales"
+        actualizarDatosPersonales = new JButton("Actualizar Datos Personales");
+        actualizarDatosPersonales.setFont(new Font("Arial", Font.BOLD, 14));
+        actualizarDatosPersonales.setBackground(new Color(35, 41, 122));
+        actualizarDatosPersonales.setForeground(Color.WHITE);
+        actualizarDatosPersonales.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ActualizarDatosPersonales frame = new ActualizarDatosPersonales(idUsuario);
+                frame.setVisible(true);
+                setVisible(false);
+                JOptionPane.showMessageDialog(null, "Actualizar tus datos personales");
+            }
+        });
+        panelBotones.add(actualizarDatosPersonales);
     }
 
     // Metodo para mostrar la ventana de inicio de sesion

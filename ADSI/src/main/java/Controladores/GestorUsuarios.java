@@ -172,11 +172,13 @@ public class GestorUsuarios {
 	}
 		
 	public void eliminarCuenta(Integer pIdUsuario) {
-		//Creo que me falta algo en esta
 		Usuario usuario = this.obtenerUsuarioPorId(pIdUsuario);
 		if (usuario !=null) {
 			this.catalogoUsuarios.remove(usuario);
 			BD.EliminarUsuario(pIdUsuario);
+		}
+		else{
+			System.out.println("No se encontró al usuario");
 		}
 	}
 
@@ -272,15 +274,32 @@ public class GestorUsuarios {
 		
 	}
 
-	public JSONArray mostrarUsuarios() {
+	public JSONArray mostrarUsuariosParaBorrar() {
 		JSONArray jsonArray = new JSONArray();
 		for (Usuario usuario : this.catalogoUsuarios) {
-			JSONObject jsonUsuario = new JSONObject();
-			jsonUsuario.put("nombre", usuario.getNombre());
-			jsonUsuario.put("contraseña", usuario.getContraseña());
-			jsonUsuario.put("correo", usuario.getCorreo());
-			jsonUsuario.put("id",usuario.getId());
-			jsonArray.put(jsonUsuario);
+			if (!usuario.esAdmin()){
+				JSONObject jsonUsuario = new JSONObject();
+				jsonUsuario.put("nombre", usuario.getNombre());
+				jsonUsuario.put("contraseña", usuario.getContraseña());
+				jsonUsuario.put("correo", usuario.getCorreo());
+				jsonUsuario.put("id",usuario.getId());
+				jsonArray.put(jsonUsuario);
+			}
+		}
+		return jsonArray; 
+	}
+
+	public JSONArray mostrarUsuariosParaModificar(Integer pIdAdmin) {
+		JSONArray jsonArray = new JSONArray();
+		for (Usuario usuario : this.catalogoUsuarios) {
+			if (usuario.getId() != pIdAdmin){
+				JSONObject jsonUsuario = new JSONObject();
+				jsonUsuario.put("nombre", usuario.getNombre());
+				jsonUsuario.put("contraseña", usuario.getContraseña());
+				jsonUsuario.put("correo", usuario.getCorreo());
+				jsonUsuario.put("id",usuario.getId());
+				jsonArray.put(jsonUsuario);
+			}
 		}
 		return jsonArray; 
 	}
@@ -319,3 +338,4 @@ public class GestorUsuarios {
 	}
 
 }
+

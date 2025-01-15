@@ -74,7 +74,7 @@ public class EliminarCuentas extends JFrame {
         btnCargarSolicitudes.setForeground(Color.WHITE);
         btnCargarSolicitudes.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JSONArray cuentas = GestorUsuarios.getGestorUsuarios().mostrarUsuarios();
+                JSONArray cuentas = GestorUsuarios.getGestorUsuarios().mostrarUsuariosParaBorrar();
                 StringBuilder cuentasText = new StringBuilder();
 
                 if (cuentas != null && cuentas.length() > 0) {
@@ -115,7 +115,7 @@ public class EliminarCuentas extends JFrame {
                 JOptionPane.showMessageDialog(null, "Cuenta eliminada.");
 
                 // Recargar las cuentas
-                JSONArray cuentas = GestorUsuarios.getGestorUsuarios().mostrarUsuarios();
+                JSONArray cuentas = GestorUsuarios.getGestorUsuarios().mostrarUsuariosParaBorrar();
                 StringBuilder cuentasText = new StringBuilder();
                 if (cuentas != null && cuentas.length() > 0) {
                     for (int i = 0; i < cuentas.length(); i++) {
@@ -144,9 +144,9 @@ public class EliminarCuentas extends JFrame {
         btnVolver.setForeground(Color.WHITE);
         btnVolver.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(EliminarCuentas.this, "Volviendo al inicio de sesión...");
-                EliminarCuentas.this.setVisible(false);
-                // Aquí llamarías a la ventana de inicio de sesión
+                JOptionPane.showMessageDialog(null, "Volviendo a inicio de sesion...");
+                setVisible(false); // Ocultar la vista actual
+                InicioSesionAdmin.getInicioSesionAdmin(pIdAdmin).mostrar(); // Mostrar la vista de inicio de sesion
             }
         });
         panelBotones.add(btnVolver);

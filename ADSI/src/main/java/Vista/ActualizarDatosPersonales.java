@@ -105,8 +105,9 @@ public class ActualizarDatosPersonales extends JFrame {
         btnVolver.setForeground(Color.WHITE);
         btnVolver.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Aquí puedes añadir la lógica para volver a la pagina de iniciar sesion
-                
+                JOptionPane.showMessageDialog(null, "Volviendo a inicio de sesion...");
+                setVisible(false); // Ocultar la vista actual
+                InicioSesion.getInicioSesion(pIdUsuario).mostrar(); // Mostrar la vista de inicio de sesion     
             }
         });
         panelBotones.add(btnVolver);
