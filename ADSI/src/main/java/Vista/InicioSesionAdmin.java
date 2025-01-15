@@ -11,7 +11,7 @@ public class InicioSesionAdmin extends JFrame {
     private int idUsuario;
     private JButton peticionesPelis;
     private JButton solicitudesRegistro;
-    private JButton verCuentas; // Nuevo botón
+    private JButton modificarCuentas; // Nuevo botón
     private JButton eliminarCuentas; // Nuevo botón
 
     // Constructor privado que recibe el nombre del usuario
@@ -86,19 +86,19 @@ public class InicioSesionAdmin extends JFrame {
         panelBotones.add(solicitudesRegistro);
 
         // Botón "Ver Cuentas"
-        verCuentas = new JButton("Ver Cuentas");
-        verCuentas.setFont(new Font("Arial", Font.BOLD, 14));
-        verCuentas.setBackground(new Color(35, 41, 122));
-        verCuentas.setForeground(Color.WHITE);
-        verCuentas.addActionListener(new ActionListener() {
+        modificarCuentas = new JButton("Modificar Cuentas");
+        modificarCuentas.setFont(new Font("Arial", Font.BOLD, 14));
+        modificarCuentas.setBackground(new Color(35, 41, 122));
+        modificarCuentas.setForeground(Color.WHITE);
+        modificarCuentas.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 VerCuentasParaModificar frame = new VerCuentasParaModificar(idUsuario); // Cambia a la clase correspondiente
                 frame.setVisible(true);
                 setVisible(false);
-                JOptionPane.showMessageDialog(null, "Ver cuentas de usuarios");
+                JOptionPane.showMessageDialog(null, "Modficar cuentas de usuarios");
             }
         });
-        panelBotones.add(verCuentas);
+        panelBotones.add(modificarCuentas);
 
         // Botón "Eliminar Cuentas"
         eliminarCuentas = new JButton("Eliminar Cuentas");

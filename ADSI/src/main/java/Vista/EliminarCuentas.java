@@ -76,15 +76,9 @@ public class EliminarCuentas extends JFrame {
                     return;
                 }
                 int idUsuario = (int) tableModel.getValueAt(selectedRow, 0);
-                boolean resultado = VideoClub.getGestorGeneral().comprobarSiEsAdminOActual(idUsuario, pIdAdmin);
-
-                if (!resultado) {
-                    VideoClub.getGestorGeneral().eliminarCuenta(idUsuario);
-                    JOptionPane.showMessageDialog(null, "Cuenta eliminada.");
-                    cargarCuentas(); // Recargar las cuentas después de la eliminación
-                } else {
-                    JOptionPane.showMessageDialog(null, "No se puede eliminar esta cuenta (es administrador o cuenta actual).");
-                }
+                VideoClub.getGestorGeneral().eliminarCuenta(idUsuario);
+                JOptionPane.showMessageDialog(null, "Cuenta eliminada.");
+                cargarCuentas(); // Recargar las cuentas después de la eliminación
             }
         });
         panelBotones.add(btnEliminarCuenta);

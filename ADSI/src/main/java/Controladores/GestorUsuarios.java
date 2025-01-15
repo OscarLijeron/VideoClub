@@ -226,21 +226,53 @@ public class GestorUsuarios {
 			System.out.println("No se encontro ningun usuario administrador");
 		}
 	}
-
-	public void actualizarDatosPersonales(Integer pIdUsuario, String pNombre, String pContraseña, String pCorreo) {
+	public Integer actualizarDatosPersonales(Integer pIdUsuario, String pNombre, String pContraseña, String pCorreo) {
+		// Obtener el usuario actual por su ID
 		Usuario usuario = this.catalogoUsuarios.stream()
-			.filter(p -> p.tieneEsteId(pIdUsuario))
-			.findFirst()
-			.orElse(null); // Devuelve null si no encuentra un usuario
-
-		if (usuario!=null) {
-			BD.ActualizarDatosUsuario(pIdUsuario, pNombre, pContraseña, pCorreo);
-			usuario.actualizarDatos(pNombre,pContraseña,pCorreo);
+				.filter(p -> p.tieneEsteId(pIdUsuario))
+				.findFirst()
+				.orElse(null); // Devuelve null si no encuentra un usuario
+	
+		if (usuario == null) {
+			System.out.println("No se encontró ningún usuario");
+			return 1; // Usuario no encontrado
 		}
-		else{
-			System.out.println("No se encontro ningun usuario");
+	
+		// Verificar si los datos propuestos son idénticos a los actuales
+		boolean esNombreIgual = pNombre.equals(usuario.getNombre());
+		boolean esCorreoIgual = pCorreo.equals(usuario.getCorreo());
+		boolean esContraseñaIgual = pContraseña.equals(usuario.getContraseña());
+	
+		if (esNombreIgual && esCorreoIgual && esContraseñaIgual) {
+			System.out.println("No se realizaron cambios en los datos del usuario");
+			return 4; // No se hicieron cambios
 		}
+	
+		// Verificar si los nuevos datos ya están en uso por otro usuario
+		boolean existeOtroUsuarioConDatos = this.catalogoUsuarios.stream()
+				.filter(u -> !u.tieneEsteId(pIdUsuario)) // Excluir al usuario actual
+				.anyMatch(u -> u.getNombre().equals(pNombre) || u.getCorreo().equals(pCorreo));
+	
+		if (existeOtroUsuarioConDatos) {
+			System.out.println("Ya existe otro usuario con esos datos");
+			return 3; // Datos en uso por otro usuario
+		}
+	
+		// Verificar si los nuevos datos ya están en uso por una solicitud de usuario
+		boolean existeSolicitudConDatos = comprobarExistenciaSolicitudUsuario(pNombre, pCorreo);
+		if (existeSolicitudConDatos) {
+			System.out.println("Ya existe una solicitud de usuario con esos datos");
+			return 2; // Datos en uso por una solicitud de usuario
+		}
+	
+		// Actualizar los datos del usuario en la base de datos y en la lista
+		BD.ActualizarDatosUsuario(pIdUsuario, pNombre, pContraseña, pCorreo);
+		usuario.actualizarDatos(pNombre, pContraseña, pCorreo);
+		System.out.println("Datos actualizados");
+		return 0; // Éxito
 	}
+	
+	
 
 	public void añadirSolicitudUsuarioParaRecuperar(String pNombre, String pContraseña, String pCorreo, String pRol) {
 		Usuario unUsuario=new Usuario(pNombre, pContraseña, pCorreo, pRol);
@@ -337,20 +369,6 @@ public class GestorUsuarios {
 		return false;
 	}
 
-	public boolean comprobarSiEsAdminOActual(Integer pIdUsuario, Integer pIdAdmin){
-		Usuario usuario = obtenerUsuarioPorId(pIdUsuario);
-		if(usuario!=null){
-			if(usuario.esAdmin()){
-				return true;
-			}
-			else{
-				if (usuario.getId()==pIdAdmin){
-					return true;
-				}
-			}
-		}
-		return false;
-	}
 
 }
 

@@ -91,8 +91,22 @@ public class ModificarCuenta extends JFrame {
                 if (nombre.isEmpty() || contraseña.isEmpty() || correo.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
                 } else {
-                    VideoClub.getGestorGeneral().actualizarDatosPersonales(pIdUsuario,nombre,correo,contraseña);
-                    JOptionPane.showMessageDialog(null, "Datos actualizados.");
+                    Integer resultado = VideoClub.getGestorGeneral().actualizarDatosPersonales(pIdUsuario,nombre,contraseña,correo);
+                    if (resultado==0){
+                        JOptionPane.showMessageDialog(null, "Datos actualizados.");
+                    }
+                    if (resultado==1){
+                        JOptionPane.showMessageDialog(null, "Usuario no encontrado.");
+                    }
+                    if (resultado==2){
+                        JOptionPane.showMessageDialog(null, "Ya existe una solicitud usuario con esos datos.");
+                    }
+                    if (resultado==3){
+                        JOptionPane.showMessageDialog(null, "Ya existe un usuario con esos datos.");
+                    }
+                    if (resultado==4){
+                        JOptionPane.showMessageDialog(null, "No se han realizado cambios porque los datos son iguales a los que ya tenía.");
+                    }
                 }
             }
         });

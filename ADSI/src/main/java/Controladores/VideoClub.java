@@ -78,8 +78,8 @@ public class VideoClub {
 		this.gestorU.eliminarSolicitudRegistro(pIdAdmin,pIdUsuario);
 	}
 
-	public void actualizarDatosPersonales(Integer pIdUsuario, String pNombre, String pContraseña, String pCorreo) {
-		this.gestorU.actualizarDatosPersonales(pIdUsuario,pNombre,pContraseña,pCorreo);
+	public Integer actualizarDatosPersonales(Integer pIdUsuario, String pNombre, String pContraseña, String pCorreo) {
+		return this.gestorU.actualizarDatosPersonales(pIdUsuario,pNombre,pContraseña,pCorreo);
 	}
 
 	public void eliminarAlquilerVencido(int idUsuario, String nombrePeli, int añoProd, String genero) {
@@ -95,9 +95,7 @@ public class VideoClub {
 		return this.gestorU.comprobarExistenciaUsuario(pIdUsuario);
 	}
 
-	public boolean comprobarSiEsAdminOActual(Integer pIdUsuario,Integer pIdAdmin){
-		return this.gestorU.comprobarSiEsAdminOActual(pIdUsuario,pIdAdmin);
-	}
+	
 
 
 }
