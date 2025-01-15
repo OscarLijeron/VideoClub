@@ -113,20 +113,37 @@ public class GestorUsuarios {
 	}
 	//-------------------------------------------------------------------
 
-	public void registrarse(String pNombre, String pContraseña, String pCorreo) {
-		Usuario admin = this.catalogoUsuarios.stream()
+	public int registrarse(String pNombre, String pContraseña, String pCorreo) {
+		boolean exito = this.comprobarExistenciaUsuarioPorNCC(pNombre,pContraseña,pCorreo);
+		if(!exito){
+			Usuario admin = this.catalogoUsuarios.stream()
 			.filter(p -> p.esAdmin())
 			.findFirst()
 			.orElse(null); // Devuelve null si no encuentra un usuario
 		
 			if (admin!=null) {
-				BD.AñadirSolUsuario(pNombre, pContraseña, pCorreo);
-				Usuario usuario = new Usuario(pNombre, pContraseña, pCorreo, "Usuario");
-				admin.SolicitarRegistro(usuario);
+				boolean encontrado = this.comprobarExistenciaSolicitudUsuario(pNombre, pCorreo);
+				if(!encontrado){
+					BD.AñadirSolUsuario(pNombre, pContraseña, pCorreo);
+					Usuario usuario = new Usuario(pNombre, pContraseña, pCorreo, "Usuario");
+					admin.SolicitarRegistro(usuario);
+					return 0;
+				}
+				else{
+					System.out.println("Ya existe una solicitud con esos datos.");
+					return 1;
+				}
 			}
 			else {
 				System.out.println("No se encontro ningun usuario administrador.");
+				return 2;
 			}
+		}
+		else{
+			System.out.println("Ya existe un usuario registrado con esos datos");
+			return 3;
+		}
+		
 	}
 		
 	public void aceptarSolicitudRegistro(Integer pIdAdmin, Integer pIdUsuario) {
@@ -271,6 +288,30 @@ public class GestorUsuarios {
 	public boolean comprobarExistenciaUsuario(Integer pIdUsuario){
 		for (Usuario usuario : catalogoUsuarios) {
 			if (usuario.getId()==pIdUsuario) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean comprobarExistenciaUsuarioPorNCC(String pNombre, String pContraseña, String pCorreo){
+		for (Usuario usuario : catalogoUsuarios) {
+			if (usuario.getNombre().equals(pNombre) || usuario.getCorreo().equals(pCorreo)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean comprobarExistenciaSolicitudUsuario(String pNombre, String pCorreo){
+		Usuario admin = this.catalogoUsuarios.stream()
+			.filter(p -> p.esAdmin())
+			.findFirst()
+			.orElse(null); // Devuelve null si no encuentra un usuario
+
+		ArrayList<Usuario> solicitudes = admin.getSolicitudesUsuario();
+		for (Usuario usuario : solicitudes){
+			if (usuario.getNombre().equals(pNombre) || usuario.getCorreo().equals(pCorreo)){
 				return true;
 			}
 		}

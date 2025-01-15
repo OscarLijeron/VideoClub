@@ -92,8 +92,19 @@ public class RegistroUsuario extends JFrame {
                     JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
                 } else {
                     // Aqui puedes a�adir la logica para enviar la solicitud de registro
-                    VideoClub.getGestorGeneral().registrarse(nombre, contraseña, correo);
-                    JOptionPane.showMessageDialog(null, "Solicitud de registro enviada.");
+                    int resultado=VideoClub.getGestorGeneral().registrarse(nombre, contraseña, correo);
+                    if (resultado==0){
+                        JOptionPane.showMessageDialog(null, "Solicitud de registro enviada.");
+                    }
+                    if (resultado==1){
+                        JOptionPane.showMessageDialog(null, "Ya existe esa solicitud con esos datos.");
+                    }
+                    if (resultado==2){
+                        JOptionPane.showMessageDialog(null, "No se puedo encontrar ningun admin para enviar la solicitud.");
+                    }
+                    if (resultado==3){
+                        JOptionPane.showMessageDialog(null, "Ya existe un usuario con esos datos.");
+                    }
                 }
             }
         });

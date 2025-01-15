@@ -57,8 +57,8 @@ public class VideoClub {
 		gestorA.alquilarPelicula(idUsuario,  nombrePeli,  añoProd,  genero);
 	}
 
-	public void registrarse(String pNombre, String pContraseña, String pCorreo) {
-		this.gestorU.registrarse(pNombre, pContraseña, pCorreo);
+	public int registrarse(String pNombre, String pContraseña, String pCorreo) {
+		return this.gestorU.registrarse(pNombre, pContraseña, pCorreo);
 	}
 		
 	public void aceptarSolicitudRegistro(Integer pIdAdmin, Integer pIdUsuario) {
