@@ -1,6 +1,7 @@
 package Vista;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,9 +14,9 @@ import Controladores.VideoClub;
 public class EliminarCuentas extends JFrame {
 
     private JPanel contentPane;
-    private JTextField txtIdUsuario;
-    private JTextArea solicitudesArea;
-    private JButton btnCargarSolicitudes;
+    private JTable tableCuentas;
+    private DefaultTableModel tableModel;
+    private JButton btnCargarCuentas;
     private JButton btnEliminarCuenta;
     private JButton btnVolver;
 
@@ -23,7 +24,7 @@ public class EliminarCuentas extends JFrame {
     public EliminarCuentas(Integer pIdAdmin) {
         setTitle("Eliminación de Cuentas");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 500, 400);
+        setBounds(100, 100, 600, 400);
 
         contentPane = new JPanel();
         contentPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -39,63 +40,28 @@ public class EliminarCuentas extends JFrame {
         panelTitulo.add(lblTitulo);
         contentPane.add(panelTitulo, BorderLayout.NORTH);
 
-        // Panel central para los campos de texto y mostrar solicitudes
-        JPanel panelCentral = new JPanel();
-        panelCentral.setLayout(new BorderLayout(10, 10));
-
-        // Panel para el campo de ID Usuario
-        JPanel panelIdUsuario = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-        JLabel lblIdUsuario = new JLabel("ID Usuario:");
-        lblIdUsuario.setFont(new Font("Arial", Font.PLAIN, 14));
-        panelIdUsuario.add(lblIdUsuario);
-
-        txtIdUsuario = new JTextField(10); // Ajustamos el tamaño de la caja de texto
-        txtIdUsuario.setFont(new Font("Arial", Font.PLAIN, 14));
-        panelIdUsuario.add(txtIdUsuario);
-
-        panelCentral.add(panelIdUsuario, BorderLayout.NORTH);
-
-        // Área de texto para mostrar las cuentas
-        solicitudesArea = new JTextArea();
-        solicitudesArea.setEditable(false);
-        solicitudesArea.setFont(new Font("Arial", Font.PLAIN, 14));
-        JScrollPane scrollPane = new JScrollPane(solicitudesArea);
-        panelCentral.add(scrollPane, BorderLayout.CENTER);
-
-        contentPane.add(panelCentral, BorderLayout.CENTER);
+        // Tabla para mostrar las cuentas
+        tableModel = new DefaultTableModel(new Object[]{"ID", "Nombre", "Correo", "Contraseña"}, 0);
+        tableCuentas = new JTable(tableModel);
+        tableCuentas.setFont(new Font("Arial", Font.PLAIN, 14));
+        tableCuentas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Selección única
+        JScrollPane scrollPane = new JScrollPane(tableCuentas);
+        contentPane.add(scrollPane, BorderLayout.CENTER);
 
         // Panel inferior para los botones
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
 
         // Botón para cargar las cuentas
-        btnCargarSolicitudes = new JButton("Cargar Cuentas");
-        btnCargarSolicitudes.setFont(new Font("Arial", Font.BOLD, 14));
-        btnCargarSolicitudes.setBackground(new Color(35, 41, 122));
-        btnCargarSolicitudes.setForeground(Color.WHITE);
-        btnCargarSolicitudes.addActionListener(new ActionListener() {
+        btnCargarCuentas = new JButton("Cargar Cuentas");
+        btnCargarCuentas.setFont(new Font("Arial", Font.BOLD, 14));
+        btnCargarCuentas.setBackground(new Color(35, 41, 122));
+        btnCargarCuentas.setForeground(Color.WHITE);
+        btnCargarCuentas.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JSONArray cuentas = GestorUsuarios.getGestorUsuarios().mostrarUsuariosParaBorrar();
-                StringBuilder cuentasText = new StringBuilder();
-
-                if (cuentas != null && cuentas.length() > 0) {
-                    for (int i = 0; i < cuentas.length(); i++) {
-                        JSONObject cuenta = cuentas.getJSONObject(i);
-                        String nombre = cuenta.getString("nombre");
-                        String correo = cuenta.getString("correo");
-                        String contraseña = cuenta.getString("contraseña");
-                        int id = cuenta.getInt("id");
-                        cuentasText.append("Nombre: ").append(nombre)
-                                .append(", Correo: ").append(correo)
-                                .append(", Contraseña: ").append(contraseña)
-                                .append(", ID: ").append(id).append("\n");
-                    }
-                    solicitudesArea.setText(cuentasText.toString());
-                } else {
-                    solicitudesArea.setText("No se encontraron cuentas.");
-                }
+                cargarCuentas();
             }
         });
-        panelBotones.add(btnCargarSolicitudes);
+        panelBotones.add(btnCargarCuentas);
 
         // Botón para eliminar cuenta
         btnEliminarCuenta = new JButton("Eliminar Cuenta");
@@ -104,38 +70,20 @@ public class EliminarCuentas extends JFrame {
         btnEliminarCuenta.setForeground(Color.WHITE);
         btnEliminarCuenta.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String idUsuarioTexto = txtIdUsuario.getText();
-                if (idUsuarioTexto.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Por favor, ingrese el ID de usuario.");
+                int selectedRow = tableCuentas.getSelectedRow();
+                if (selectedRow == -1) {
+                    JOptionPane.showMessageDialog(null, "Por favor, seleccione un usuario para eliminar.");
                     return;
                 }
-                int idUsuario = Integer.parseInt(idUsuarioTexto);
-
+                int idUsuario = (int) tableModel.getValueAt(selectedRow, 0);
                 boolean resultado = VideoClub.getGestorGeneral().comprobarSiEsAdminOActual(idUsuario, pIdAdmin);
 
-                if (!resultado){
+                if (!resultado) {
                     VideoClub.getGestorGeneral().eliminarCuenta(idUsuario);
                     JOptionPane.showMessageDialog(null, "Cuenta eliminada.");
-                }
-
-                // Recargar las cuentas
-                JSONArray cuentas = GestorUsuarios.getGestorUsuarios().mostrarUsuariosParaBorrar();
-                StringBuilder cuentasText = new StringBuilder();
-                if (cuentas != null && cuentas.length() > 0) {
-                    for (int i = 0; i < cuentas.length(); i++) {
-                        JSONObject cuenta = cuentas.getJSONObject(i);
-                        String nombre = cuenta.getString("nombre");
-                        String correo = cuenta.getString("correo");
-                        String contraseña = cuenta.getString("contraseña");
-                        int id = cuenta.getInt("id");
-                        cuentasText.append("Nombre: ").append(nombre)
-                                .append(", Correo: ").append(correo)
-                                .append(", Contraseña: ").append(contraseña)
-                                .append(", ID: ").append(id).append("\n");
-                    }
-                    solicitudesArea.setText(cuentasText.toString());
+                    cargarCuentas(); // Recargar las cuentas después de la eliminación
                 } else {
-                    solicitudesArea.setText("No se encontraron cuentas.");
+                    JOptionPane.showMessageDialog(null, "No se puede eliminar esta cuenta (es administrador o cuenta actual).");
                 }
             }
         });
@@ -148,13 +96,31 @@ public class EliminarCuentas extends JFrame {
         btnVolver.setForeground(Color.WHITE);
         btnVolver.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Volviendo a inicio de sesion...");
+                JOptionPane.showMessageDialog(null, "Volviendo a inicio de sesión...");
                 setVisible(false); // Ocultar la vista actual
-                InicioSesionAdmin.getInicioSesionAdmin(pIdAdmin).mostrar(); // Mostrar la vista de inicio de sesion
+                InicioSesionAdmin.getInicioSesionAdmin(pIdAdmin).mostrar(); // Mostrar la vista de inicio de sesión
             }
         });
         panelBotones.add(btnVolver);
 
         contentPane.add(panelBotones, BorderLayout.SOUTH);
+    }
+
+    // Método para cargar las cuentas en la tabla
+    private void cargarCuentas() {
+        JSONArray cuentas = GestorUsuarios.getGestorUsuarios().mostrarUsuariosParaBorrar();
+        tableModel.setRowCount(0); // Limpiar la tabla
+        if (cuentas != null && cuentas.length() > 0) {
+            for (int i = 0; i < cuentas.length(); i++) {
+                JSONObject cuenta = cuentas.getJSONObject(i);
+                int id = cuenta.getInt("id");
+                String nombre = cuenta.getString("nombre");
+                String correo = cuenta.getString("correo");
+                String contraseña = cuenta.getString("contraseña");
+                tableModel.addRow(new Object[]{id, nombre, correo, contraseña});
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se encontraron cuentas.");
+        }
     }
 }

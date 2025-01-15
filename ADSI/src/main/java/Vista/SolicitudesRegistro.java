@@ -1,6 +1,7 @@
 package Vista;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,8 +14,8 @@ import Controladores.VideoClub;
 public class SolicitudesRegistro extends JFrame {
 
     private JPanel contentPane;
-    private JTextField txtIdUsuario;
-    private JTextArea solicitudesArea;
+    private JTable tableSolicitudes;
+    private DefaultTableModel tableModel;
     private JButton btnCargarSolicitudes;
     private JButton btnAceptarSolicitud;
     private JButton btnDenegarSolicitud;
@@ -24,7 +25,7 @@ public class SolicitudesRegistro extends JFrame {
     public SolicitudesRegistro(Integer pIdAdmin) {
         setTitle("Gestión de Solicitudes de Registro");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 500, 400);
+        setBounds(100, 100, 700, 400); // Ajustar tamaño para nueva columna
 
         contentPane = new JPanel();
         contentPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -40,30 +41,13 @@ public class SolicitudesRegistro extends JFrame {
         panelTitulo.add(lblTitulo);
         contentPane.add(panelTitulo, BorderLayout.NORTH);
 
-        // Panel central para los campos de texto y mostrar solicitudes
-        JPanel panelCentral = new JPanel();
-        panelCentral.setLayout(new BorderLayout(10, 10));
-
-        // Panel para el campo de ID Usuario
-        JPanel panelIdUsuario = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-        JLabel lblIdUsuario = new JLabel("ID Usuario:");
-        lblIdUsuario.setFont(new Font("Arial", Font.PLAIN, 14));
-        panelIdUsuario.add(lblIdUsuario);
-
-        txtIdUsuario = new JTextField(10); // Ajustamos el tamaño de la caja de texto
-        txtIdUsuario.setFont(new Font("Arial", Font.PLAIN, 14));
-        panelIdUsuario.add(txtIdUsuario);
-
-        panelCentral.add(panelIdUsuario, BorderLayout.NORTH);
-
-        // Área de texto para mostrar las solicitudes
-        solicitudesArea = new JTextArea();
-        solicitudesArea.setEditable(false);
-        solicitudesArea.setFont(new Font("Arial", Font.PLAIN, 14));
-        JScrollPane scrollPane = new JScrollPane(solicitudesArea);
-        panelCentral.add(scrollPane, BorderLayout.CENTER);
-
-        contentPane.add(panelCentral, BorderLayout.CENTER);
+        // Tabla para mostrar las solicitudes
+        tableModel = new DefaultTableModel(new Object[]{"ID", "Nombre", "Correo", "Contraseña"}, 0);
+        tableSolicitudes = new JTable(tableModel);
+        tableSolicitudes.setFont(new Font("Arial", Font.PLAIN, 14));
+        tableSolicitudes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Selección única
+        JScrollPane scrollPane = new JScrollPane(tableSolicitudes);
+        contentPane.add(scrollPane, BorderLayout.CENTER);
 
         // Panel inferior para los botones
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
@@ -75,23 +59,7 @@ public class SolicitudesRegistro extends JFrame {
         btnCargarSolicitudes.setForeground(Color.WHITE);
         btnCargarSolicitudes.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JSONArray solicitudes = GestorUsuarios.getGestorUsuarios().mostrarSolicitudesUsuario(pIdAdmin);
-                StringBuilder solicitudesText = new StringBuilder();
-
-                if (solicitudes != null && solicitudes.length() > 0) {
-                    for (int i = 0; i < solicitudes.length(); i++) {
-                        JSONObject solicitud = solicitudes.getJSONObject(i);
-                        String nombre = solicitud.getString("nombre");
-                        String correo = solicitud.getString("correo");
-                        int id = solicitud.getInt("id");
-                        solicitudesText.append("Nombre: ").append(nombre)
-                                .append(", Correo: ").append(correo)
-                                .append(", ID: ").append(id).append("\n");
-                    }
-                    solicitudesArea.setText(solicitudesText.toString());
-                } else {
-                    solicitudesArea.setText("No se encontraron solicitudes.");
-                }
+                cargarSolicitudes(pIdAdmin);
             }
         });
         panelBotones.add(btnCargarSolicitudes);
@@ -103,32 +71,15 @@ public class SolicitudesRegistro extends JFrame {
         btnAceptarSolicitud.setForeground(Color.WHITE);
         btnAceptarSolicitud.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String idUsuarioTexto = txtIdUsuario.getText();
-                if (idUsuarioTexto.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Por favor, ingrese el ID de usuario.");
+                int selectedRow = tableSolicitudes.getSelectedRow();
+                if (selectedRow == -1) {
+                    JOptionPane.showMessageDialog(null, "Por favor, seleccione una solicitud.");
                     return;
                 }
-                int idUsuario = Integer.parseInt(idUsuarioTexto);
-
+                int idUsuario = (int) tableModel.getValueAt(selectedRow, 0);
                 VideoClub.getGestorGeneral().aceptarSolicitudRegistro(pIdAdmin, idUsuario);
                 JOptionPane.showMessageDialog(null, "Solicitud aceptada.");
-
-                JSONArray solicitudes = GestorUsuarios.getGestorUsuarios().mostrarSolicitudesUsuario(pIdAdmin);
-                StringBuilder solicitudesText = new StringBuilder();
-                if (solicitudes != null && solicitudes.length() > 0) {
-                    for (int i = 0; i < solicitudes.length(); i++) {
-                        JSONObject solicitud = solicitudes.getJSONObject(i);
-                        String nombre = solicitud.getString("nombre");
-                        String correo = solicitud.getString("correo");
-                        int id = solicitud.getInt("id");
-                        solicitudesText.append("Nombre: ").append(nombre)
-                                .append(", Correo: ").append(correo)
-                                .append(", ID: ").append(id).append("\n");
-                    }
-                    solicitudesArea.setText(solicitudesText.toString());
-                } else {
-                    solicitudesArea.setText("No se encontraron solicitudes.");
-                }
+                cargarSolicitudes(pIdAdmin);
             }
         });
         panelBotones.add(btnAceptarSolicitud);
@@ -140,32 +91,15 @@ public class SolicitudesRegistro extends JFrame {
         btnDenegarSolicitud.setForeground(Color.WHITE);
         btnDenegarSolicitud.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String idUsuarioTexto = txtIdUsuario.getText();
-                if (idUsuarioTexto.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Por favor, ingrese el ID de usuario.");
+                int selectedRow = tableSolicitudes.getSelectedRow();
+                if (selectedRow == -1) {
+                    JOptionPane.showMessageDialog(null, "Por favor, seleccione una solicitud.");
                     return;
                 }
-                int idUsuario = Integer.parseInt(idUsuarioTexto);
-
+                int idUsuario = (int) tableModel.getValueAt(selectedRow, 0);
                 VideoClub.getGestorGeneral().eliminarSolicitudRegistro(pIdAdmin, idUsuario);
                 JOptionPane.showMessageDialog(null, "Solicitud denegada.");
-
-                JSONArray solicitudes = GestorUsuarios.getGestorUsuarios().mostrarSolicitudesUsuario(pIdAdmin);
-                StringBuilder solicitudesText = new StringBuilder();
-                if (solicitudes != null && solicitudes.length() > 0) {
-                    for (int i = 0; i < solicitudes.length(); i++) {
-                        JSONObject solicitud = solicitudes.getJSONObject(i);
-                        String nombre = solicitud.getString("nombre");
-                        String correo = solicitud.getString("correo");
-                        int id = solicitud.getInt("id");
-                        solicitudesText.append("Nombre: ").append(nombre)
-                                .append(", Correo: ").append(correo)
-                                .append(", ID: ").append(id).append("\n");
-                    }
-                    solicitudesArea.setText(solicitudesText.toString());
-                } else {
-                    solicitudesArea.setText("No se encontraron solicitudes.");
-                }
+                cargarSolicitudes(pIdAdmin);
             }
         });
         panelBotones.add(btnDenegarSolicitud);
@@ -178,12 +112,31 @@ public class SolicitudesRegistro extends JFrame {
         btnVolver.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(null, "Volviendo a inicio de sesion...");
-                setVisible(false); // Ocultar la vista actual
-                InicioSesionAdmin.getInicioSesionAdmin(pIdAdmin).mostrar(); // Mostrar la vista de inicio de sesion
+                setVisible(false);
+                InicioSesionAdmin.getInicioSesionAdmin(pIdAdmin).mostrar();
             }
         });
         panelBotones.add(btnVolver);
 
         contentPane.add(panelBotones, BorderLayout.SOUTH);
     }
+
+    // Método para cargar las solicitudes en la tabla
+    private void cargarSolicitudes(Integer pIdAdmin) {
+        JSONArray solicitudes = GestorUsuarios.getGestorUsuarios().mostrarSolicitudesUsuario(pIdAdmin);
+        tableModel.setRowCount(0); // Limpiar la tabla
+        if (solicitudes != null && solicitudes.length() > 0) {
+            for (int i = 0; i < solicitudes.length(); i++) {
+                JSONObject solicitud = solicitudes.getJSONObject(i);
+                int id = solicitud.getInt("id");
+                String nombre = solicitud.getString("nombre");
+                String correo = solicitud.getString("correo");
+                String contraseña = solicitud.getString("contraseña"); 
+                tableModel.addRow(new Object[]{id, nombre, correo, contraseña});
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se encontraron solicitudes.");
+        }
+    }
 }
+
