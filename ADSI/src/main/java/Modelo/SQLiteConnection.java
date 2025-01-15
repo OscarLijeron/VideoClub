@@ -292,14 +292,14 @@ public class SQLiteConnection {
 			String url = "jdbc:sqlite:ADSI.db";
 
             String sql1 = "UPDATE Pelicula SET estaDisponible = 'False' WHERE idPelicula = ?";
-            String sql2 = "INSERT INTO Alquiler (fechaAlquiler, idUsuario, idPelicula) VALUES (?, ?, ?)";
+            String sql2 = "INSERT INTO Alquiler (fechaAlquiler, idUsuario, idPelicula) VALUES (?, ?, ?)"; //------------------------------
 
-	        LocalDate localDate = LocalDate.now(); // Fecha actual
-	        Date sqlDate = Date.valueOf(localDate); // Convertir a java.sql.Date
+	        LocalDate localDate = LocalDate.now(); // Fecha actual ------------------------------------------------------------------------
+	        Date sqlDate = Date.valueOf(localDate); // Convertir a java.sql.Date ----------------------------------------------------------
 	        try (Connection conn = DriverManager.getConnection(url);
 
                 PreparedStatement pstmt1 = conn.prepareStatement(sql1);
-	            PreparedStatement pstmt2 = conn.prepareStatement(sql2);)
+	            PreparedStatement pstmt2 = conn.prepareStatement(sql2);) 
                   {
 
                 pstmt1.setInt(1, idPeli);
@@ -307,7 +307,7 @@ public class SQLiteConnection {
 
                 System.out.println("Película marcada como no disponible.");
 
-	        	pstmt2.setDate(1, sqlDate); 
+	        	pstmt2.setDate(1, sqlDate); //------------------------------------------------------------------------------
 	            pstmt2.setInt(2, idUsuario); 
 	            pstmt2.setInt(3, idPeli); 
 	            pstmt2.executeUpdate();
@@ -434,7 +434,7 @@ public class SQLiteConnection {
         }
         
 
-        public void limpiarAlquileresVencidos() {
+        public void limpiarAlquileresVencidos() {  //----------------------------------------------------------------------------------------------------
             String url = "jdbc:sqlite:ADSI.db";
             String sqlSeleccionar = "SELECT idUsuario, idPelicula FROM Alquiler WHERE julianday('now') - julianday(fechaAlquiler) > 2";
             String sqlEliminar = "DELETE FROM Alquiler WHERE idUsuario = ? AND idPelicula = ?";

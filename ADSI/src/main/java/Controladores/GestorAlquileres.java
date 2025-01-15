@@ -44,6 +44,8 @@ public class GestorAlquileres {
         Alquiler nuevoAlquiler = new Alquiler(pelicula, idUsuario);
         this.listaAlquileres.add(nuevoAlquiler);
         GestorUsuarios.getGestorUsuarios().obtenerUsuarioPorId(idUsuario).alquilarPelicula(nuevoAlquiler);
+        Usuario usu = GestorUsuarios.getGestorUsuarios().obtenerUsuarioPorId(idUsuario);
+        usu.mostrarMisAlquileres();
         pelicula.setDisponible(false);
 
         // Registrar en la base de datos

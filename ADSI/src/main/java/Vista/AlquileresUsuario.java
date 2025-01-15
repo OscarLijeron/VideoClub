@@ -20,6 +20,11 @@ public class AlquileresUsuario extends JFrame {
     private AlquileresUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
         initialize();
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent e) {
+                recargarAlquileres();  // Recargamos la lista al mostrar la ventana
+            }
+        });
     }
 
     // Metodo para obtener la instancia de la clase Singleton
@@ -88,5 +93,20 @@ public class AlquileresUsuario extends JFrame {
     // Metodo para mostrar la ventana
     public void mostrar() {
         setVisible(true);
+    }
+
+    private void recargarAlquileres() {
+        // Obtenemos los alquileres actualizados
+        JSONArray alquileres = VideoClub.getGestorGeneral().obtenerAlquileresUsuario(idUsuario);
+        DefaultListModel<String> alquileresModel = new DefaultListModel<>();
+        
+        for (int i = 0; i < alquileres.length(); i++) {
+            JSONObject alquiler = alquileres.getJSONObject(i);
+            String pelicula = alquiler.getString("titulo") + " (" + alquiler.getInt("año") + ")";
+            alquileresModel.addElement(pelicula);
+        }
+    
+        // Actualizamos el modelo de la lista con los nuevos datos
+        listAlquileres.setModel(alquileresModel);
     }
 }

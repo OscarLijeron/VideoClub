@@ -97,6 +97,7 @@ public class Usuario {
 			jsonAlquiler.put("año", alquiler.getPelicula().getAñoProd());
 			jsonAlquiler.put("genero", alquiler.getPelicula().getGenero());
 			jsonArray.put(jsonAlquiler);
+			System.out.println("Pelicula alquilada: "+ alquiler.getPelicula().getNombrePelicula());
 		}
 		return jsonArray;
 	}

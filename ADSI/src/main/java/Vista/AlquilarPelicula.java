@@ -8,8 +8,10 @@ import org.json.JSONObject;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import Controladores.GestorPeliculas;
 import Controladores.VideoClub;
+import Modelo.Pelicula;
 
 public class AlquilarPelicula extends JFrame {
     private static AlquilarPelicula instance = null;
@@ -107,7 +109,16 @@ public class AlquilarPelicula extends JFrame {
                 String nombre = tableModel.getValueAt(row, 0).toString();
                 String anio = tableModel.getValueAt(row, 1).toString();
                 String genero = tableModel.getValueAt(row, 2).toString();
-                VideoClub.getGestorGeneral().alquilarPelicula(this.idUsuario, nombre, Integer.parseInt(anio), genero);
+                Optional<Pelicula> optionalPelicula = GestorPeliculas.getGestorPeliculas().obtenerPeliculaPorNAG(nombre, Integer.parseInt(anio), genero);
+                if (optionalPelicula.isPresent()) {
+                    Pelicula p = optionalPelicula.get();
+                    if (p.estaDisponible()) {
+                        VideoClub.getGestorGeneral().alquilarPelicula(this.idUsuario, nombre, Integer.parseInt(anio), genero);
+                        JOptionPane.showMessageDialog(this, "Película alquilada con éxito.");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "La película no está disponible.");
+                    }
+                } 
             }
         });
 
