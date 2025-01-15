@@ -240,28 +240,31 @@ public class SQLiteConnection {
         public void recuperarPelis() {
             // Ruta de la base de datos SQLite
             String url = "jdbc:sqlite:ADSI.db";
-
-            // Consulta SQL para recuperar los datos de la tabla Usuarios
+        
+            // Consulta SQL para recuperar los datos de la tabla Pelicula
             String sql = "SELECT nombre, genero, año, estaDisponible FROM Pelicula WHERE esSolicitada ='False'";
-
+        
             try (Connection conn = DriverManager.getConnection(url);
                  Statement stmt = conn.createStatement();
                  ResultSet rs = stmt.executeQuery(sql)) {
-
+        
                 // Recorrer los resultados y mostrar los datos por pantalla
                 while (rs.next()) {
                     String nombre = rs.getString("nombre");
                     String genero = rs.getString("genero");
                     Integer año = rs.getInt("año");
-                    Boolean estaDisponible = rs.getBoolean("estaDisponible");
+                    String estaDisponibleTexto = rs.getString("estaDisponible");
+                    Boolean estaDisponible = "True".equalsIgnoreCase(estaDisponibleTexto);
                     GestorPeliculas.getGestorPeliculas().añadirPeliAlCatalogoParaRecuperar(nombre, año, genero, estaDisponible);
                     System.out.println("Pelicula recuperada: " + nombre + " " + año + " " + genero + " " + estaDisponible);
                 }
-
+        
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+
+
         public void recuperarSolicitudPelis() {
             // Ruta de la base de datos SQLite
             String url = "jdbc:sqlite:ADSI.db";
