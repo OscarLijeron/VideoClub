@@ -128,13 +128,13 @@ public class GestorPeliculas {
 	}
 	public static void main(String[] args) {
         try {
-            // Obtener instancia del gestor de pel�culas
+            // Obtener instancia del gestor de peliculas
             GestorPeliculas gestorPeliculas = GestorPeliculas.getGestorPeliculas();
 
-            // T�tulo de pel�cula a buscar (puedes cambiarlo para pruebas)
+            // Titulo de pelicula a buscar (puedes cambiarlo para pruebas)
             String tituloABuscar = "Batman";
 
-            // Llamar al m�todo mostrarCatalogoAmpliado
+            // Llamar al metodo mostrarCatalogoAmpliado
             JSONArray catalogoAmpliado = gestorPeliculas.mostrarCatalogoAmpliado(tituloABuscar);
 
             // Mostrar resultados

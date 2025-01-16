@@ -14,7 +14,7 @@ public class InicioSesionAdmin extends JFrame {
     private JButton modificarCuentas;
     private JButton eliminarCuentas;
     private JButton actualizarDatosPersonales;
-    private JButton volverVistaPrincipal; // Botón para volver a la vista principal
+    private JButton volverVistaPrincipal; // Boton para volver a la vista principal
 
     // Constructor privado que recibe el ID del usuario
     private InicioSesionAdmin(Integer idUsu) {
@@ -32,7 +32,7 @@ public class InicioSesionAdmin extends JFrame {
 
     // Metodo para inicializar los componentes graficos
     private void initialize() {
-        // Configuración de la ventana
+        // Configuracion de la ventana
         setTitle("Bienvenido Administrador");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 500); // Ajustar altura para más botones
@@ -54,11 +54,11 @@ public class InicioSesionAdmin extends JFrame {
 
         // Panel principal para los botones
         JPanel panelBotones = new JPanel();
-        panelBotones.setLayout(new GridLayout(5, 1, 10, 10)); // Cambiar a 5 filas para acomodar el nuevo botón
+        panelBotones.setLayout(new GridLayout(5, 1, 10, 10)); // Cambiar a 5 filas para acomodar el nuevo boton
         contentPane.add(panelBotones, BorderLayout.CENTER);
 
-        // Botón "Ver peticiones películas"
-        peticionesPelis = new JButton("Ver peticiones películas");
+        // Boton "Ver peticiones peliculas"
+        peticionesPelis = new JButton("Ver peticiones peliculas");
         peticionesPelis.setFont(new Font("Arial", Font.BOLD, 14));
         peticionesPelis.setBackground(new Color(35, 41, 122));
         peticionesPelis.setForeground(Color.WHITE);
@@ -67,12 +67,12 @@ public class InicioSesionAdmin extends JFrame {
                 PeticionesPelis frame = new PeticionesPelis(1);
                 frame.setVisible(true);
                 setVisible(false);
-                JOptionPane.showMessageDialog(null, "Ver peticiones películas");
+                JOptionPane.showMessageDialog(null, "Ver peticiones peliculas");
             }
         });
         panelBotones.add(peticionesPelis);
 
-        // Botón "Ver solicitudes de registro"
+        // Boton "Ver solicitudes de registro"
         solicitudesRegistro = new JButton("Ver solicitudes de registro");
         solicitudesRegistro.setFont(new Font("Arial", Font.BOLD, 14));
         solicitudesRegistro.setBackground(new Color(35, 41, 122));
@@ -87,7 +87,7 @@ public class InicioSesionAdmin extends JFrame {
         });
         panelBotones.add(solicitudesRegistro);
 
-        // Botón "Modificar Cuentas"
+        // Boton "Modificar Cuentas"
         modificarCuentas = new JButton("Modificar Cuentas");
         modificarCuentas.setFont(new Font("Arial", Font.BOLD, 14));
         modificarCuentas.setBackground(new Color(35, 41, 122));
@@ -102,7 +102,7 @@ public class InicioSesionAdmin extends JFrame {
         });
         panelBotones.add(modificarCuentas);
 
-        // Botón "Eliminar Cuentas"
+        // Boton "Eliminar Cuentas"
         eliminarCuentas = new JButton("Eliminar Cuentas");
         eliminarCuentas.setFont(new Font("Arial", Font.BOLD, 14));
         eliminarCuentas.setBackground(new Color(35, 41, 122));
@@ -117,7 +117,7 @@ public class InicioSesionAdmin extends JFrame {
         });
         panelBotones.add(eliminarCuentas);
 
-        // Botón "Actualizar Datos Personales"
+        // Boton "Actualizar Datos Personales"
         actualizarDatosPersonales = new JButton("Actualizar Datos Personales");
         actualizarDatosPersonales.setFont(new Font("Arial", Font.BOLD, 14));
         actualizarDatosPersonales.setBackground(new Color(35, 41, 122));
@@ -132,12 +132,12 @@ public class InicioSesionAdmin extends JFrame {
         });
         panelBotones.add(actualizarDatosPersonales);
 
-        // Panel inferior para el botón de volver
+        // Panel inferior para el boton de volver
         JPanel panelInferior = new JPanel();
         panelInferior.setBackground(new Color(35, 41, 122));
         contentPane.add(panelInferior, BorderLayout.SOUTH);
 
-        // Botón para cerrar sesion
+        // Boton para cerrar sesion
         volverVistaPrincipal = new JButton("Cerrar Sesion");
         volverVistaPrincipal.setFont(new Font("Arial", Font.BOLD, 12));
         volverVistaPrincipal.setBackground(Color.WHITE);

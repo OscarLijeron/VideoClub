@@ -117,7 +117,7 @@ public class PeticionesPelis extends JFrame {
 	}
 	private JLabel getTitulo() {
 		if (titulo == null) {
-			titulo = new JLabel("Peticiones Pel\u00EDculas");
+			titulo = new JLabel("Peticiones Peliculas");
 			titulo.setHorizontalAlignment(SwingConstants.CENTER);
 		}
 		return titulo;
@@ -146,7 +146,7 @@ public class PeticionesPelis extends JFrame {
 	private JTextField getAñoPeli() {
 		if (añoPeli == null) {
 			añoPeli = new JTextField();
-			añoPeli.setText("Poner a\u00F1o producci\u00F3n");
+			añoPeli.setText("Poner año produccion");
 			añoPeli.setColumns(15);
 		}
 		return añoPeli;

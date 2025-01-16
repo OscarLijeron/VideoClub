@@ -14,7 +14,7 @@ public class InicioSesion extends JFrame {
     private JButton catalogoAmpliado;
     private JButton pedirSolicitudPeli;
     private JButton actualizarDatosPersonales;
-    private JButton volverVistaPrincipal; // Botón para volver a la vista principal
+    private JButton volverVistaPrincipal; // Boton para volver a la vista principal
 
     // Constructor privado que recibe el nombre del usuario
     private InicioSesion(Integer idUsu) {
@@ -35,7 +35,7 @@ public class InicioSesion extends JFrame {
         // Configuracion de la ventana
         setTitle("Bienvenido");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 450, 400); // Ajustamos la altura para acomodar el botón adicional
+        setBounds(100, 100, 450, 400); // Ajustamos la altura para acomodar el boton adicional
         JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -54,7 +54,7 @@ public class InicioSesion extends JFrame {
 
         // Panel principal para los botones
         JPanel panelBotones = new JPanel();
-        panelBotones.setLayout(new GridLayout(5, 1, 10, 10)); // Cambiamos a 5 filas para acomodar el botón adicional
+        panelBotones.setLayout(new GridLayout(5, 1, 10, 10)); // Cambiamos a 5 filas para acomodar el boton adicional
         contentPane.add(panelBotones, BorderLayout.CENTER);
 
         // Boton "Ver Alquilados"
@@ -132,13 +132,13 @@ public class InicioSesion extends JFrame {
         });
         panelBotones.add(actualizarDatosPersonales);
 
-        // Panel inferior para el botón de volver
+        // Panel inferior para el boton de volver
         JPanel panelInferior = new JPanel();
         panelInferior.setBackground(new Color(35, 41, 122));
         contentPane.add(panelInferior, BorderLayout.SOUTH);
 
-        // Botón para cerrar sesion
-        volverVistaPrincipal = new JButton("Cerrar Sesión");
+        // Boton para cerrar sesion
+        volverVistaPrincipal = new JButton("Cerrar Sesion");
         volverVistaPrincipal.setFont(new Font("Arial", Font.BOLD, 12));
         volverVistaPrincipal.setBackground(Color.WHITE);
         volverVistaPrincipal.setForeground(new Color(35, 41, 122));

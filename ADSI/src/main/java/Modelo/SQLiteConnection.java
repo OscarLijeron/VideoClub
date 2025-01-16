@@ -122,7 +122,7 @@ public class SQLiteConnection {
 	    try (Connection conn = DriverManager.getConnection(url);
 	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-	        // Asignar valores a los par�metros de la consulta
+	        // Asignar valores a los parametros de la consulta
 	        pstmt.setString(1, pNombre);
 	        pstmt.setInt(2, pAño);
 	        pstmt.setString(3, pGenero);
@@ -527,7 +527,7 @@ public class SQLiteConnection {
                             if (rsPelicula.next()) {
                                 String nombre = rsPelicula.getString("nombre");
                                 String genero = rsPelicula.getString("genero");
-                                int año = rsPelicula.getInt("año");
+                                int añño = rsPelicula.getInt("año");
 
                                 // Sincronizar el modelo pasando nombre, género y año
                                 VideoClub.getGestorGeneral().recuperarAlquiler(idUsuario, nombre, año, genero, fechaAlquiler);

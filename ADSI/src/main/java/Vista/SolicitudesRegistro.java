@@ -23,7 +23,7 @@ public class SolicitudesRegistro extends JFrame {
 
     // Constructor que recibe el ID del administrador
     public SolicitudesRegistro(Integer pIdAdmin) {
-        setTitle("Gestión de Solicitudes de Registro");
+        setTitle("Gestion de Solicitudes de Registro");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 700, 400); // Ajustar tamaño para nueva columna
 
@@ -32,10 +32,10 @@ public class SolicitudesRegistro extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout(10, 10));
 
-        // Panel superior para el título
+        // Panel superior para el titulo
         JPanel panelTitulo = new JPanel();
         panelTitulo.setBackground(new Color(35, 41, 122));
-        JLabel lblTitulo = new JLabel("Gestión de Solicitudes de Registro");
+        JLabel lblTitulo = new JLabel("Gestion de Solicitudes de Registro");
         lblTitulo.setForeground(Color.WHITE);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 18));
         panelTitulo.add(lblTitulo);
@@ -45,14 +45,14 @@ public class SolicitudesRegistro extends JFrame {
         tableModel = new DefaultTableModel(new Object[]{"ID", "Nombre", "Correo", "Contraseña"}, 0);
         tableSolicitudes = new JTable(tableModel);
         tableSolicitudes.setFont(new Font("Arial", Font.PLAIN, 14));
-        tableSolicitudes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Selección única
+        tableSolicitudes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Seleccion unica
         JScrollPane scrollPane = new JScrollPane(tableSolicitudes);
         contentPane.add(scrollPane, BorderLayout.CENTER);
 
         // Panel inferior para los botones
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
 
-        // Botón para cargar las solicitudes
+        // Boton para cargar las solicitudes
         btnCargarSolicitudes = new JButton("Cargar Solicitudes");
         btnCargarSolicitudes.setFont(new Font("Arial", Font.BOLD, 14));
         btnCargarSolicitudes.setBackground(new Color(35, 41, 122));
@@ -64,7 +64,7 @@ public class SolicitudesRegistro extends JFrame {
         });
         panelBotones.add(btnCargarSolicitudes);
 
-        // Botón para aceptar solicitud
+        // Boton para aceptar solicitud
         btnAceptarSolicitud = new JButton("Aceptar Solicitud");
         btnAceptarSolicitud.setFont(new Font("Arial", Font.BOLD, 14));
         btnAceptarSolicitud.setBackground(new Color(35, 41, 122));
@@ -84,7 +84,7 @@ public class SolicitudesRegistro extends JFrame {
         });
         panelBotones.add(btnAceptarSolicitud);
 
-        // Botón para denegar solicitud
+        // Boton para denegar solicitud
         btnDenegarSolicitud = new JButton("Denegar Solicitud");
         btnDenegarSolicitud.setFont(new Font("Arial", Font.BOLD, 14));
         btnDenegarSolicitud.setBackground(new Color(255, 69, 0));
@@ -104,7 +104,7 @@ public class SolicitudesRegistro extends JFrame {
         });
         panelBotones.add(btnDenegarSolicitud);
 
-        // Botón para volver
+        // Boton para volver
         btnVolver = new JButton("Volver");
         btnVolver.setFont(new Font("Arial", Font.BOLD, 14));
         btnVolver.setBackground(new Color(35, 41, 122));
@@ -121,7 +121,7 @@ public class SolicitudesRegistro extends JFrame {
         contentPane.add(panelBotones, BorderLayout.SOUTH);
     }
 
-    // Método para cargar las solicitudes en la tabla
+    // Metodo para cargar las solicitudes en la tabla
     private void cargarSolicitudes(Integer pIdAdmin) {
         JSONArray solicitudes = GestorUsuarios.getGestorUsuarios().mostrarSolicitudesUsuario(pIdAdmin);
         tableModel.setRowCount(0); // Limpiar la tabla

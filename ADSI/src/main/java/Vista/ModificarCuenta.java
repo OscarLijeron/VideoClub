@@ -26,7 +26,7 @@ public class ModificarCuenta extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout(0, 0));
 
-        // Panel superior para el título
+        // Panel superior para el titulo
         JPanel panelTitulo = new JPanel();
         panelTitulo.setBackground(new Color(35, 41, 122));
         contentPane.add(panelTitulo, BorderLayout.NORTH);
@@ -77,7 +77,7 @@ public class ModificarCuenta extends JFrame {
         panelBotones.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 10));
         contentPane.add(panelBotones, BorderLayout.SOUTH);
 
-        // Botón para solicitar registro
+        // Boton para solicitar registro
         btnModificar = new JButton("Actualizar Datos");
         btnModificar.setFont(new Font("Arial", Font.BOLD, 14));
         btnModificar.setBackground(new Color(35, 41, 122));
@@ -105,14 +105,14 @@ public class ModificarCuenta extends JFrame {
                         JOptionPane.showMessageDialog(null, "Ya existe un usuario con ese nombre o correo.");
                     }
                     if (resultado==4){
-                        JOptionPane.showMessageDialog(null, "No se han realizado cambios porque los datos son iguales a los que ya tenía.");
+                        JOptionPane.showMessageDialog(null, "No se han realizado cambios porque los datos son iguales a los que ya tenia.");
                     }
                 }
             }
         });
         panelBotones.add(btnModificar);
 
-        // Botón para volver a la página anterior
+        // Boton para volver a la pagina anterior
         btnVolver = new JButton("Volver");
         btnVolver.setFont(new Font("Arial", Font.BOLD, 14));
         btnVolver.setBackground(new Color(35, 41, 122));
@@ -123,7 +123,7 @@ public class ModificarCuenta extends JFrame {
                 VerCuentasParaModificar frame = new VerCuentasParaModificar(pIdAdmin); // Cambia a la clase correspondiente
                 frame.setVisible(true);
                 setVisible(false);
-                JOptionPane.showMessageDialog(null, "Volviendo al catálogo de cuentas");
+                JOptionPane.showMessageDialog(null, "Volviendo al catalogo de cuentas");
                 
             }
         });

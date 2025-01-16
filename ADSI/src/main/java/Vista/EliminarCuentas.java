@@ -22,7 +22,7 @@ public class EliminarCuentas extends JFrame {
 
     // Constructor que recibe el ID del administrador
     public EliminarCuentas(Integer pIdAdmin) {
-        setTitle("Eliminación de Cuentas");
+        setTitle("Eliminacion de Cuentas");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 600, 400);
 
@@ -31,10 +31,10 @@ public class EliminarCuentas extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout(10, 10));
 
-        // Panel superior para el título
+        // Panel superior para el titulo
         JPanel panelTitulo = new JPanel();
         panelTitulo.setBackground(new Color(35, 41, 122));
-        JLabel lblTitulo = new JLabel("Eliminación de Cuentas");
+        JLabel lblTitulo = new JLabel("Eliminacion de Cuentas");
         lblTitulo.setForeground(Color.WHITE);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 18));
         panelTitulo.add(lblTitulo);
@@ -44,14 +44,14 @@ public class EliminarCuentas extends JFrame {
         tableModel = new DefaultTableModel(new Object[]{"ID", "Nombre", "Correo", "Contraseña"}, 0);
         tableCuentas = new JTable(tableModel);
         tableCuentas.setFont(new Font("Arial", Font.PLAIN, 14));
-        tableCuentas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Selección única
+        tableCuentas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Seleccion unica
         JScrollPane scrollPane = new JScrollPane(tableCuentas);
         contentPane.add(scrollPane, BorderLayout.CENTER);
 
         // Panel inferior para los botones
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
 
-        // Botón para cargar las cuentas
+        // Boton para cargar las cuentas
         btnCargarCuentas = new JButton("Cargar Cuentas");
         btnCargarCuentas.setFont(new Font("Arial", Font.BOLD, 14));
         btnCargarCuentas.setBackground(new Color(35, 41, 122));
@@ -63,7 +63,7 @@ public class EliminarCuentas extends JFrame {
         });
         panelBotones.add(btnCargarCuentas);
 
-        // Botón para eliminar cuenta
+        // Boton para eliminar cuenta
         btnEliminarCuenta = new JButton("Eliminar Cuenta");
         btnEliminarCuenta.setFont(new Font("Arial", Font.BOLD, 14));
         btnEliminarCuenta.setBackground(new Color(255, 69, 0));
@@ -78,12 +78,12 @@ public class EliminarCuentas extends JFrame {
                 int idUsuario = (int) tableModel.getValueAt(selectedRow, 0);
                 VideoClub.getGestorGeneral().eliminarCuenta(idUsuario);
                 JOptionPane.showMessageDialog(null, "Cuenta eliminada.");
-                cargarCuentas(); // Recargar las cuentas después de la eliminación
+                cargarCuentas(); // Recargar las cuentas despues de la eliminacion
             }
         });
         panelBotones.add(btnEliminarCuenta);
 
-        // Botón para volver
+        // Boton para volver
         btnVolver = new JButton("Volver");
         btnVolver.setFont(new Font("Arial", Font.BOLD, 14));
         btnVolver.setBackground(new Color(35, 41, 122));
@@ -92,7 +92,7 @@ public class EliminarCuentas extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(null, "Volviendo al menu principal...");
                 setVisible(false); // Ocultar la vista actual
-                InicioSesionAdmin.getInicioSesionAdmin(pIdAdmin).mostrar(); // Mostrar la vista de inicio de sesión
+                InicioSesionAdmin.getInicioSesionAdmin(pIdAdmin).mostrar(); // Mostrar la vista de inicio de sesion
             }
         });
         panelBotones.add(btnVolver);
@@ -100,7 +100,7 @@ public class EliminarCuentas extends JFrame {
         contentPane.add(panelBotones, BorderLayout.SOUTH);
     }
 
-    // Método para cargar las cuentas en la tabla
+    // Metodo para cargar las cuentas en la tabla
     private void cargarCuentas() {
         JSONArray cuentas = GestorUsuarios.getGestorUsuarios().mostrarUsuariosParaBorrar();
         tableModel.setRowCount(0); // Limpiar la tabla

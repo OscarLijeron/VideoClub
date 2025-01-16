@@ -139,11 +139,25 @@ public class PedirSolicitudPeli extends JFrame {
 	private class Controler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource().equals(Solicitar)){	
-				String tituloP=tituloPeli.getText();
-				String anioPTexto=anioPeli.getText();
-				int anioP=Integer.parseInt(anioPTexto);
-				String generoP=generoPeli.getText();
-				GestorUsuarios.getGestorUsuarios().añadirSolicitudPelicula(tituloP, anioP, generoP);
+				try {
+			        // Obtener los valores del formulario
+			        String tituloP = tituloPeli.getText();
+			        String anioPTexto = anioPeli.getText();
+			        int anioP = Integer.parseInt(anioPTexto); // Intentar convertir a entero
+			        String generoP = generoPeli.getText();
+
+			        // Llamar al gestor para añadir la solicitud de pelicula
+			        GestorUsuarios.getGestorUsuarios().añadirSolicitudPelicula(tituloP, anioP, generoP);
+			        System.out.println("Solicitud de pelicula añadida correctamente.");
+			    } catch (NumberFormatException ex) {
+			        // Manejo de error si no se puede convertir a entero
+			        System.out.println("Error: El año ingresado debe ser un numero valido.");
+			        JOptionPane.showMessageDialog(null, "Por favor, ingresa un año valido.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
+			    } catch (Exception ex) {
+			        // Manejo de otras posibles excepciones
+			        ex.printStackTrace();
+			        JOptionPane.showMessageDialog(null, "Ocurrio un error al procesar la solicitud.", "Error", JOptionPane.ERROR_MESSAGE);
+			    }
 			}
 			
 			if (e.getSource().equals(Salir)){

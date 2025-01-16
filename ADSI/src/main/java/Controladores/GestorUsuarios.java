@@ -52,7 +52,7 @@ public class GestorUsuarios {
 		    System.out.println("Si se encontro usuario administrador.");
 		   
 		    Pelicula pPeli = new Pelicula(pNombre, pAño, pGenero);
-		    usuario.AñadirSolicitudPelicula(pPeli);  // Accede al usuario y a�ade la solicitud de pel�cula
+		    usuario.AñadirSolicitudPelicula(pPeli);  // Accede al usuario y añade la solicitud de pelicula
 		} else {
 		    System.out.println("No se encontro ningun usuario administrador.");
 		}

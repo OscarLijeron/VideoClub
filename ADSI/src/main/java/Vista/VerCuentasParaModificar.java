@@ -32,7 +32,7 @@ public class VerCuentasParaModificar extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout(10, 10));
 
-        // Panel superior para el título
+        // Panel superior para el titulo
         JPanel panelTitulo = new JPanel();
         panelTitulo.setBackground(new Color(35, 41, 122));
         JLabel lblTitulo = new JLabel("Usuarios registrados");
@@ -45,14 +45,14 @@ public class VerCuentasParaModificar extends JFrame {
         tableModel = new DefaultTableModel(new Object[]{"ID", "Nombre", "Correo", "Contraseña"}, 0);
         tableCuentas = new JTable(tableModel);
         tableCuentas.setFont(new Font("Arial", Font.PLAIN, 14));
-        tableCuentas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Selección única
+        tableCuentas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Seleccion unica
         JScrollPane scrollPane = new JScrollPane(tableCuentas);
         contentPane.add(scrollPane, BorderLayout.CENTER);
 
         // Panel inferior para los botones
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
 
-        // Botón para cargar las cuentas
+        // Boton para cargar las cuentas
         btnCargarCuentas = new JButton("Cargar Cuentas");
         btnCargarCuentas.setFont(new Font("Arial", Font.BOLD, 14));
         btnCargarCuentas.setBackground(new Color(35, 41, 122));
@@ -64,7 +64,7 @@ public class VerCuentasParaModificar extends JFrame {
         });
         panelBotones.add(btnCargarCuentas);
 
-        // Botón para modificar cuenta
+        // Boton para modificar cuenta
         btnModificarDatos = new JButton("Modificar datos");
         btnModificarDatos.setFont(new Font("Arial", Font.BOLD, 14));
         btnModificarDatos.setBackground(new Color(255, 69, 0));
@@ -80,12 +80,12 @@ public class VerCuentasParaModificar extends JFrame {
                 ModificarCuenta frame = new ModificarCuenta(pIdAdmin, idUsuario);
                 frame.setVisible(true);
                 setVisible(false);
-                JOptionPane.showMessageDialog(null, "Abriendo ventana de modificación.");
+                JOptionPane.showMessageDialog(null, "Abriendo ventana de modificacion.");
             }
         });
         panelBotones.add(btnModificarDatos);
 
-        // Botón para volver
+        // Boton para volver
         btnVolver = new JButton("Volver");
         btnVolver.setFont(new Font("Arial", Font.BOLD, 14));
         btnVolver.setBackground(new Color(35, 41, 122));
@@ -94,7 +94,7 @@ public class VerCuentasParaModificar extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(null, "Volviendo al menu principal...");
                 setVisible(false); // Ocultar la vista actual
-                InicioSesionAdmin.getInicioSesionAdmin(pIdAdmin).mostrar(); // Mostrar la vista de inicio de sesión
+                InicioSesionAdmin.getInicioSesionAdmin(pIdAdmin).mostrar(); // Mostrar la vista de inicio de sesion
             }
         });
         panelBotones.add(btnVolver);
@@ -102,7 +102,7 @@ public class VerCuentasParaModificar extends JFrame {
         contentPane.add(panelBotones, BorderLayout.SOUTH);
     }
 
-    // Método para cargar las cuentas en la tabla
+    // Metodo para cargar las cuentas en la tabla
     private void cargarCuentas(Integer pIdAdmin) {
         JSONArray cuentas = GestorUsuarios.getGestorUsuarios().mostrarUsuariosParaModificar(pIdAdmin);
         tableModel.setRowCount(0); // Limpiar la tabla

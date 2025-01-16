@@ -91,7 +91,7 @@ public class RegistroUsuario extends JFrame {
                 if (nombre.isEmpty() || contraseña.isEmpty() || correo.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
                 } else {
-                    // Aqui puedes a�adir la logica para enviar la solicitud de registro
+                    // Aqui puedes añadir la logica para enviar la solicitud de registro
                     int resultado=VideoClub.getGestorGeneral().registrarse(nombre, contraseña, correo);
                     if (resultado==0){
                         JOptionPane.showMessageDialog(null, "Solicitud de registro enviada.");

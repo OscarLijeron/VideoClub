@@ -31,7 +31,7 @@ public class Pelicula {
     }
     public Double calcularPuntuacionPromedio() {
     	Double rdo=this.listaReseñas.stream()
-    		    .mapToDouble(o -> o.getPuntuacionP()) // Mapea cada rese�a a su puntuaci�n
+    		    .mapToDouble(o -> o.getPuntuacionP()) // Mapea cada reseña a su puntuacion
     		    .average()                           // Calcula la media
     		    .orElse(0.0); 
     	return rdo;
