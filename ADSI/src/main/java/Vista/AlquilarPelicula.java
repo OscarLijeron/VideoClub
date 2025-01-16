@@ -20,6 +20,14 @@ public class AlquilarPelicula extends JFrame {
     private JTextField txtBuscar;
     private DefaultTableModel tableModel;
 
+    private int currentPage = 1;
+    private int itemsPerPage = 5;
+    private int totalItems;
+    private List<JSONObject> peliculasList;
+
+    private JButton btnAnterior;
+    private JButton btnSiguiente;
+
     // Constructor privado
     private AlquilarPelicula(int idUsu) {
         this.idUsuario = idUsu;
@@ -36,7 +44,7 @@ public class AlquilarPelicula extends JFrame {
 
     // Inicializar componentes gráficos
     private void initialize() {
-        setTitle("Alquilar Pelicula");
+        setTitle("Alquilar Película");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 800, 600);
         
@@ -82,15 +90,29 @@ public class AlquilarPelicula extends JFrame {
 
         // Panel inferior con los botones
         JPanel panelInferior = new JPanel();
-        panelInferior.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 10));
+        panelInferior.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         contentPane.add(panelInferior, BorderLayout.SOUTH);
 
+        btnAnterior = new JButton("Anterior");
+        btnAnterior.setFont(new Font("Arial", Font.BOLD, 14));
+        btnAnterior.setBackground(new Color(35, 41, 122));
+        btnAnterior.setForeground(Color.WHITE);
+        panelInferior.add(btnAnterior);
+
+        btnSiguiente = new JButton("Siguiente");
+        btnSiguiente.setFont(new Font("Arial", Font.BOLD, 14));
+        btnSiguiente.setBackground(new Color(35, 41, 122));
+        btnSiguiente.setForeground(Color.WHITE);
+        panelInferior.add(btnSiguiente);
+
+        // Botón para alquilar
         JButton btnAlquilar = new JButton("Alquilar");
         btnAlquilar.setFont(new Font("Arial", Font.BOLD, 14));
         btnAlquilar.setBackground(new Color(35, 41, 122));
         btnAlquilar.setForeground(Color.WHITE);
         panelInferior.add(btnAlquilar);
 
+        // Botón para volver
         JButton btnVolver = new JButton("Volver");
         btnVolver.setFont(new Font("Arial", Font.BOLD, 14));
         btnVolver.setBackground(new Color(35, 41, 122));
@@ -122,37 +144,63 @@ public class AlquilarPelicula extends JFrame {
             }
         });
 
+        btnAnterior.addActionListener(e -> cambiarPagina(-1));
+        btnSiguiente.addActionListener(e -> cambiarPagina(1));
+
         // Cargar todas las peliculas al inicio
         cargarPeliculasDesdeJSON(GestorPeliculas.getGestorPeliculas().mostrarPeliculas());
     }
 
     // Cargar peliculas en la tabla desde un JSONArray
     private void cargarPeliculasDesdeJSON(JSONArray peliculas) {
-        tableModel.setRowCount(0);
+        peliculasList = new ArrayList<>();
         for (int i = 0; i < peliculas.length(); i++) {
-            JSONObject pelicula = peliculas.getJSONObject(i);
+            peliculasList.add(peliculas.getJSONObject(i));
+        }
+        totalItems = peliculasList.size();
+        mostrarPagina(currentPage);
+    }
+
+    // Mostrar una página de películas
+    private void mostrarPagina(int page) {
+        int start = (page - 1) * itemsPerPage;
+        int end = Math.min(start + itemsPerPage, totalItems);
+
+        tableModel.setRowCount(0); // Limpiar la tabla
+
+        for (int i = start; i < end; i++) {
+            JSONObject pelicula = peliculasList.get(i);
             tableModel.addRow(new Object[]{
                     pelicula.getString("Nombre"),
                     pelicula.getInt("Año"),
                     pelicula.getString("Genero")
             });
         }
+
+        btnAnterior.setEnabled(page > 1);
+        btnSiguiente.setEnabled(page * itemsPerPage < totalItems);
+    }
+
+    // Cambiar de página
+    private void cambiarPagina(int direction) {
+        currentPage += direction;
+        mostrarPagina(currentPage);
     }
 
     // Buscar peliculas por nombre
     private void buscarPeliculas() {
         String query = txtBuscar.getText().toLowerCase();
-        JSONArray peliculas = GestorPeliculas.getGestorPeliculas().mostrarPeliculas();
         List<JSONObject> peliculasFiltradas = new ArrayList<>();
 
-        for (int i = 0; i < peliculas.length(); i++) {
-            JSONObject pelicula = peliculas.getJSONObject(i);
+        for (JSONObject pelicula : peliculasList) {
             if (pelicula.getString("Nombre").toLowerCase().contains(query)) {
                 peliculasFiltradas.add(pelicula);
             }
         }
-        // Convertir la lista filtrada a JSONArray
-        cargarPeliculasDesdeJSON(new JSONArray(peliculasFiltradas));
+
+        // Convertir la lista filtrada a JSONArray y recargar la tabla
+        totalItems = peliculasFiltradas.size();
+        mostrarPagina(1);
     }
 
     public void mostrar() {

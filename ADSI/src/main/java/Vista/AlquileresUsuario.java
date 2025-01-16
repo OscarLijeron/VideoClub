@@ -2,32 +2,37 @@ package Vista;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import Controladores.VideoClub;
-
+import javax.swing.table.DefaultTableModel;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import Controladores.VideoClub;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AlquileresUsuario extends JFrame {
     private static AlquileresUsuario instance = null;
     private int idUsuario;
-    private JPanel contentPane;
-    private JList<String> listAlquileres;
+    private JTable tableAlquileres;
+    private DefaultTableModel tableModel;
+    private int currentPage = 1;
+    private int itemsPerPage = 5;
+    private int totalItems;
 
-    // Constructor privado que recibe el nombre del usuario
+    private JButton btnAnterior;
+    private JButton btnSiguiente;
+    private JButton btnVolver;
+
+    private List<JSONObject> alquileresList;
+
+    // Constructor privado
     private AlquileresUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
         initialize();
-        this.addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowActivated(java.awt.event.WindowEvent e) {
-                recargarAlquileres();  // Recargamos la lista al mostrar la ventana
-            }
-        });
     }
 
-    // Metodo para obtener la instancia de la clase Singleton
+    // Singleton
     public static AlquileresUsuario getAlquileresUsuario(int idUsuario) {
         if (instance == null) {
             instance = new AlquileresUsuario(idUsuario);
@@ -35,78 +40,112 @@ public class AlquileresUsuario extends JFrame {
         return instance;
     }
 
-    // Metodo para inicializar los componentes graficos
+    // Inicializar componentes gráficos
     private void initialize() {
-        // Configuracion de la ventana
         setTitle("Mis Alquileres");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 600, 400);
-        contentPane = new JPanel();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setBounds(100, 100, 800, 600);
+        JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout(0, 0));
+        setContentPane(contentPane);
 
-        // Titulo
-        JLabel lblTitle = new JLabel("Peliculas Alquiladas", SwingConstants.CENTER);
-        lblTitle.setFont(new Font("Arial", Font.BOLD, 16));
-        contentPane.add(lblTitle, BorderLayout.NORTH);
+        // Panel superior con el título
+        JPanel panelSuperior = new JPanel();
+        panelSuperior.setBackground(new Color(35, 41, 122));
+        contentPane.add(panelSuperior, BorderLayout.NORTH);
 
-        // Lista de alquileres
-        JSONArray alquileres = VideoClub.getGestorGeneral().obtenerAlquileresUsuario(idUsuario);
-        DefaultListModel<String> alquileresModel = new DefaultListModel<>();
+        JLabel lblTitulo = new JLabel("Mis Alquileres");
+        lblTitulo.setForeground(Color.WHITE);
+        lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
+        lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+        panelSuperior.add(lblTitulo);
 
-        for (int i = 0; i < alquileres.length(); i++) {
-            JSONObject alquiler = alquileres.getJSONObject(i);
-            String pelicula = alquiler.getString("titulo") + " (" + alquiler.getInt("año") + ")";
-            alquileresModel.addElement(pelicula);
-        }
-
-        listAlquileres = new JList<>(alquileresModel);
-        listAlquileres.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        listAlquileres.setFont(new Font("Arial", Font.PLAIN, 14));
-
-        JScrollPane scrollPane = new JScrollPane(listAlquileres);
+        // Tabla para mostrar los alquileres
+        String[] columnNames = {"Título", "Año", "Género"};
+        tableModel = new DefaultTableModel(columnNames, 0);
+        tableAlquileres = new JTable(tableModel);
+        JScrollPane scrollPane = new JScrollPane(tableAlquileres);
         contentPane.add(scrollPane, BorderLayout.CENTER);
 
-        // Panel de botones
-        JPanel panelBotones = new JPanel();
-        contentPane.add(panelBotones, BorderLayout.SOUTH);
+        // Panel inferior con los botones de navegación y el botón "Volver"
+        JPanel panelInferior = new JPanel();
+        panelInferior.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        contentPane.add(panelInferior, BorderLayout.SOUTH);
 
-        // Boton Volver
-        JButton btnVolver = new JButton("Volver");
-        btnVolver.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Accion al hacer clic en Volver
-                volverAInicioSesion();
-            }
-        });
-        panelBotones.add(btnVolver);
+        btnAnterior = new JButton("Anterior");
+        btnAnterior.setFont(new Font("Arial", Font.BOLD, 14));
+        btnAnterior.setBackground(new Color(35, 41, 122));
+        btnAnterior.setForeground(Color.WHITE);
+        panelInferior.add(btnAnterior);
+
+        btnSiguiente = new JButton("Siguiente");
+        btnSiguiente.setFont(new Font("Arial", Font.BOLD, 14));
+        btnSiguiente.setBackground(new Color(35, 41, 122));
+        btnSiguiente.setForeground(Color.WHITE);
+        panelInferior.add(btnSiguiente);
+
+        // Botón Volver
+        btnVolver = new JButton("Volver");
+        btnVolver.setFont(new Font("Arial", Font.BOLD, 14));
+        btnVolver.setBackground(new Color(35, 41, 122));
+        btnVolver.setForeground(Color.WHITE);
+        btnVolver.addActionListener(e -> volverAInicioSesion());
+        panelInferior.add(btnVolver);
+
+        // Listeners de los botones
+        btnAnterior.addActionListener(e -> cambiarPagina(-1));
+        btnSiguiente.addActionListener(e -> cambiarPagina(1));
+
+        // Cargar alquileres y mostrar la primera página
+        cargarAlquileres();
+        mostrarPagina(currentPage);
     }
 
-    // Metodo para regresar a la vista de inicio de sesion
+    // Cargar alquileres desde VideoClub
+    private void cargarAlquileres() {
+        JSONArray alquileres = VideoClub.getGestorGeneral().obtenerAlquileresUsuario(idUsuario);
+        alquileresList = new ArrayList<>();
+        for (int i = 0; i < alquileres.length(); i++) {
+            alquileresList.add(alquileres.getJSONObject(i));
+        }
+        totalItems = alquileresList.size();
+    }
+
+    // Mostrar una página específica de alquileres
+    private void mostrarPagina(int page) {
+        int start = (page - 1) * itemsPerPage;
+        int end = Math.min(start + itemsPerPage, totalItems);
+
+        tableModel.setRowCount(0); // Limpiar la tabla
+
+        for (int i = start; i < end; i++) {
+            JSONObject alquiler = alquileresList.get(i);
+            String titulo = alquiler.getString("titulo");
+            int año = alquiler.getInt("año");
+            String genero = alquiler.getString("genero");
+
+            tableModel.addRow(new Object[]{titulo, año, genero});
+        }
+
+        btnAnterior.setEnabled(page > 1);
+        btnSiguiente.setEnabled(page * itemsPerPage < totalItems);
+    }
+
+    // Cambiar de página
+    private void cambiarPagina(int direction) {
+        currentPage += direction;
+        mostrarPagina(currentPage);
+    }
+
+    // Método para regresar a la vista de inicio de sesión
     private void volverAInicioSesion() {
-        JOptionPane.showMessageDialog(this, "Volviendo a inicio de sesion...");
+        JOptionPane.showMessageDialog(this, "Volviendo a inicio de sesión...");
         this.setVisible(false); // Ocultar la vista actual
-        InicioSesion.getInicioSesion(idUsuario).mostrar(); // Mostrar la vista de inicio de sesion
+        InicioSesion.getInicioSesion(idUsuario).mostrar(); // Mostrar la vista de inicio de sesión
     }
 
-    // Metodo para mostrar la ventana
     public void mostrar() {
         setVisible(true);
-    }
-
-    private void recargarAlquileres() {
-        // Obtenemos los alquileres actualizados
-        JSONArray alquileres = VideoClub.getGestorGeneral().obtenerAlquileresUsuario(idUsuario);
-        DefaultListModel<String> alquileresModel = new DefaultListModel<>();
-        
-        for (int i = 0; i < alquileres.length(); i++) {
-            JSONObject alquiler = alquileres.getJSONObject(i);
-            String pelicula = alquiler.getString("titulo") + " (" + alquiler.getInt("año") + ")";
-            alquileresModel.addElement(pelicula);
-        }
-    
-        // Actualizamos el modelo de la lista con los nuevos datos
-        listAlquileres.setModel(alquileresModel);
     }
 }
