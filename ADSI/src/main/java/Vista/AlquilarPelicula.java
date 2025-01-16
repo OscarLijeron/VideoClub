@@ -21,7 +21,7 @@ public class AlquilarPelicula extends JFrame {
     private DefaultTableModel tableModel;
 
     private int currentPage = 1;
-    private int itemsPerPage = 5;
+    private int itemsPerPage = 10;
     private int totalItems;
     private List<JSONObject> peliculasList;
 
@@ -158,6 +158,7 @@ public class AlquilarPelicula extends JFrame {
             peliculasList.add(peliculas.getJSONObject(i));
         }
         totalItems = peliculasList.size();
+        currentPage = 1; // Reiniciar a la primera página al cargar nuevas películas
         mostrarPagina(currentPage);
     }
 
@@ -189,18 +190,30 @@ public class AlquilarPelicula extends JFrame {
 
     // Buscar peliculas por nombre
     private void buscarPeliculas() {
-        String query = txtBuscar.getText().toLowerCase();
+        String query = txtBuscar.getText().trim().toLowerCase();
+        if (query.isEmpty()) {
+            // Si no hay búsqueda, carga todas las películas
+            cargarPeliculasDesdeJSON(GestorPeliculas.getGestorPeliculas().mostrarPeliculas());
+            return;
+        }
+
+        JSONArray peliculas = GestorPeliculas.getGestorPeliculas().mostrarPeliculas();
         List<JSONObject> peliculasFiltradas = new ArrayList<>();
 
-        for (JSONObject pelicula : peliculasList) {
+        for (int i = 0; i < peliculas.length(); i++) {
+            JSONObject pelicula = peliculas.getJSONObject(i);
             if (pelicula.getString("Nombre").toLowerCase().contains(query)) {
                 peliculasFiltradas.add(pelicula);
             }
         }
 
-        // Convertir la lista filtrada a JSONArray y recargar la tabla
-        totalItems = peliculasFiltradas.size();
-        mostrarPagina(1);
+        if (peliculasFiltradas.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No se encontraron películas que coincidan con el criterio de búsqueda.");
+        }
+
+        // Reiniciar la página y cargar las películas filtradas
+        currentPage = 1;
+        cargarPeliculasDesdeJSON(new JSONArray(peliculasFiltradas));
     }
 
     public void mostrar() {

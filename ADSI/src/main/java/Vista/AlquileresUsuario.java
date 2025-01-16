@@ -17,7 +17,7 @@ public class AlquileresUsuario extends JFrame {
     private JTable tableAlquileres;
     private DefaultTableModel tableModel;
     private int currentPage = 1;
-    private int itemsPerPage = 5;
+    private int itemsPerPage = 10;
     private int totalItems;
 
     private JButton btnAnterior;
@@ -30,6 +30,12 @@ public class AlquileresUsuario extends JFrame {
     private AlquileresUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
         initialize();
+        // Listener para recargar los datos al mostrar la ventana
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent e) {
+                recargarAlquileres(); // Recarga los alquileres al mostrar la ventana
+            }
+        });
     }
 
     // Singleton
@@ -110,6 +116,12 @@ public class AlquileresUsuario extends JFrame {
             alquileresList.add(alquileres.getJSONObject(i));
         }
         totalItems = alquileresList.size();
+    }
+
+    // Recargar alquileres y actualizar la tabla
+    private void recargarAlquileres() {
+        cargarAlquileres(); // Volver a cargar los alquileres
+        mostrarPagina(currentPage); // Actualizar la vista actual
     }
 
     // Mostrar una página específica de alquileres
