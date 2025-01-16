@@ -11,8 +11,9 @@ public class InicioSesionAdmin extends JFrame {
     private int idUsuario;
     private JButton peticionesPelis;
     private JButton solicitudesRegistro;
-    private JButton modificarCuentas; // Nuevo botón
-    private JButton eliminarCuentas; // Nuevo botón
+    private JButton modificarCuentas;
+    private JButton eliminarCuentas;
+    private JButton actualizarDatosPersonales; // Nuevo botón
 
     // Constructor privado que recibe el nombre del usuario
     private InicioSesionAdmin(Integer idUsu) {
@@ -33,7 +34,7 @@ public class InicioSesionAdmin extends JFrame {
         // Configuracion de la ventana
         setTitle("Bienvenido Administrador");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 450, 400); // Ajustar altura para más botones
+        setBounds(100, 100, 450, 450); // Ajustar altura para más botones
         JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -52,7 +53,7 @@ public class InicioSesionAdmin extends JFrame {
 
         // Panel principal para los botones
         JPanel panelBotones = new JPanel();
-        panelBotones.setLayout(new GridLayout(4, 1, 10, 10)); // Cambiar a 4 filas para acomodar los nuevos botones
+        panelBotones.setLayout(new GridLayout(5, 1, 10, 10)); // Cambiar a 5 filas para acomodar el nuevo botón
         contentPane.add(panelBotones, BorderLayout.CENTER);
 
         // Botón "Ver peticiones películas"
@@ -85,7 +86,7 @@ public class InicioSesionAdmin extends JFrame {
         });
         panelBotones.add(solicitudesRegistro);
 
-        // Botón "Ver Cuentas"
+        // Botón "Modificar Cuentas"
         modificarCuentas = new JButton("Modificar Cuentas");
         modificarCuentas.setFont(new Font("Arial", Font.BOLD, 14));
         modificarCuentas.setBackground(new Color(35, 41, 122));
@@ -95,7 +96,7 @@ public class InicioSesionAdmin extends JFrame {
                 VerCuentasParaModificar frame = new VerCuentasParaModificar(idUsuario); // Cambia a la clase correspondiente
                 frame.setVisible(true);
                 setVisible(false);
-                JOptionPane.showMessageDialog(null, "Modficar cuentas de usuarios");
+                JOptionPane.showMessageDialog(null, "Modificar cuentas de usuarios");
             }
         });
         panelBotones.add(modificarCuentas);
@@ -114,6 +115,21 @@ public class InicioSesionAdmin extends JFrame {
             }
         });
         panelBotones.add(eliminarCuentas);
+
+        // Botón "Actualizar Datos Personales"
+        actualizarDatosPersonales = new JButton("Actualizar Datos Personales");
+        actualizarDatosPersonales.setFont(new Font("Arial", Font.BOLD, 14));
+        actualizarDatosPersonales.setBackground(new Color(35, 41, 122));
+        actualizarDatosPersonales.setForeground(Color.WHITE);
+        actualizarDatosPersonales.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ActualizarDatosPersonales frame = new ActualizarDatosPersonales(idUsuario); // Cambia a la clase correspondiente
+                frame.setVisible(true);
+                setVisible(false);
+                JOptionPane.showMessageDialog(null, "Actualizar datos personales");
+            }
+        });
+        panelBotones.add(actualizarDatosPersonales);
     }
 
     // Metodo para mostrar la ventana de inicio de sesion
@@ -121,3 +137,4 @@ public class InicioSesionAdmin extends JFrame {
         setVisible(true);
     }
 }
+
