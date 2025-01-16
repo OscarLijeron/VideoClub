@@ -122,7 +122,8 @@ public class AlquilarPelicula extends JFrame {
         // Listeners
         btnBuscar.addActionListener(e -> buscarPeliculas());
         btnVolver.addActionListener(e -> {
-            this.setVisible(false); // Ocultar la vista actual
+            JOptionPane.showMessageDialog(this, "Volviendo al menú principal...");
+            this.setVisible(false); 
             InicioSesion.getInicioSesion(this.idUsuario).mostrar();
         });
         btnAlquilar.addActionListener(e -> {

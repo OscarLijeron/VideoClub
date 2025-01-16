@@ -33,7 +33,7 @@ public class AlquileresUsuario extends JFrame {
         // Listener para recargar los datos al mostrar la ventana
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent e) {
-                recargarAlquileres(); // Recarga los alquileres al mostrar la ventana
+                recargarAlquileres(); 
             }
         });
     }
@@ -120,8 +120,8 @@ public class AlquileresUsuario extends JFrame {
 
     // Recargar alquileres y actualizar la tabla
     private void recargarAlquileres() {
-        cargarAlquileres(); // Volver a cargar los alquileres
-        mostrarPagina(currentPage); // Actualizar la vista actual
+        cargarAlquileres(); 
+        mostrarPagina(currentPage); 
     }
 
     // Mostrar una página específica de alquileres
@@ -152,9 +152,9 @@ public class AlquileresUsuario extends JFrame {
 
     // Método para regresar a la vista de inicio de sesión
     private void volverAInicioSesion() {
-        JOptionPane.showMessageDialog(this, "Volviendo a inicio de sesión...");
-        this.setVisible(false); // Ocultar la vista actual
-        InicioSesion.getInicioSesion(idUsuario).mostrar(); // Mostrar la vista de inicio de sesión
+        JOptionPane.showMessageDialog(this, "Volviendo al menú principal...");
+        this.setVisible(false); 
+        InicioSesion.getInicioSesion(idUsuario).mostrar(); 
     }
 
     public void mostrar() {

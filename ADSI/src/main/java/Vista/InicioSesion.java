@@ -67,7 +67,7 @@ public class InicioSesion extends JFrame {
                 AlquileresUsuario vistaMisAlq = AlquileresUsuario.getAlquileresUsuario(idUsuario);
                 vistaMisAlq.mostrar();
                 setVisible(false);
-                JOptionPane.showMessageDialog(null, "Mostrar peliculas alquiladas");
+                JOptionPane.showMessageDialog(null, "Mostrando tus alquileres...");
             }
         });
         panelBotones.add(verAlquilados);
@@ -82,7 +82,7 @@ public class InicioSesion extends JFrame {
                 AlquilarPelicula vistaAlqPeli = AlquilarPelicula.getAlquilarPelicula(idUsuario);
                 vistaAlqPeli.mostrar();
                 setVisible(false);
-                JOptionPane.showMessageDialog(null, "Proceso de alquiler de pelicula");
+                JOptionPane.showMessageDialog(null, "Proceso de alquiler de película...");
             }
         });
         panelBotones.add(alquilarPelicula);
