@@ -7,9 +7,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import Controladores.GestorUsuarios;
-import Controladores.VideoClub;
+
+//Este import me sale que sobra en el codigo, lo comento para que no moleste
+//import Controladores.VideoClub;
 
 public class VerCuentasParaModificar extends JFrame {
 

@@ -1,26 +1,25 @@
 package Modelo;
 import java.sql.Statement;
-
 import Controladores.GestorPeliculas;
 import Controladores.GestorUsuarios;
 import Controladores.VideoClub;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.sql.Date;
 import java.sql.Timestamp;
-
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+
+// Estos imports me salen que sobran asi que si algun momento llegan a ser necesarios los descomentamos
+//import java.time.LocalDate;
+//import java.sql.Date;
+//import java.util.concurrent.Executors;
+//import java.util.concurrent.TimeUnit;
 
 public class SQLiteConnection {
 	private static SQLiteConnection miDB=new SQLiteConnection();

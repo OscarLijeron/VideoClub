@@ -1,26 +1,25 @@
 package Vista;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import Controladores.GestorUsuarios;
-import Controladores.VideoClub;
-
-import java.awt.BorderLayout;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+//Estos imports me salen que sobran en el codigo, los comento para que no molesten
+/*import java.awt.EventQueue;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import Controladores.VideoClub;
+import java.awt.BorderLayout;
+import javax.swing.SwingConstants;*/
+
 
 public class PedirSolicitudPeli extends JFrame {
 
@@ -89,7 +88,7 @@ public class PedirSolicitudPeli extends JFrame {
 	private JTextField getAnioPeli() {
 		if (anioPeli == null) {
 			anioPeli = new JTextField();
-			anioPeli.setText("Poner a�o produccion aqui");
+			anioPeli.setText("Poner año produccion aqui");
 			anioPeli.setColumns(10);
 		}
 		return anioPeli;
