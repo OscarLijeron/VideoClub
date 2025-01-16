@@ -14,6 +14,7 @@ public class InicioSesion extends JFrame {
     private JButton catalogoAmpliado;
     private JButton pedirSolicitudPeli;
     private JButton actualizarDatosPersonales;
+    private JButton volverVistaPrincipal; // Botón para volver a la vista principal
 
     // Constructor privado que recibe el nombre del usuario
     private InicioSesion(Integer idUsu) {
@@ -34,7 +35,7 @@ public class InicioSesion extends JFrame {
         // Configuracion de la ventana
         setTitle("Bienvenido");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 450, 350); // Ajustamos la altura para acomodar un botón adicional
+        setBounds(100, 100, 450, 400); // Ajustamos la altura para acomodar el botón adicional
         JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -53,7 +54,7 @@ public class InicioSesion extends JFrame {
 
         // Panel principal para los botones
         JPanel panelBotones = new JPanel();
-        panelBotones.setLayout(new GridLayout(4, 1, 10, 10)); // Cambiamos a 4 filas para el botón adicional
+        panelBotones.setLayout(new GridLayout(5, 1, 10, 10)); // Cambiamos a 5 filas para acomodar el botón adicional
         contentPane.add(panelBotones, BorderLayout.CENTER);
 
         // Boton "Ver Alquilados"
@@ -130,6 +131,27 @@ public class InicioSesion extends JFrame {
             }
         });
         panelBotones.add(actualizarDatosPersonales);
+
+        // Panel inferior para el botón de volver
+        JPanel panelInferior = new JPanel();
+        panelInferior.setBackground(new Color(35, 41, 122));
+        contentPane.add(panelInferior, BorderLayout.SOUTH);
+
+        // Botón "Volver a la vista principal"
+        volverVistaPrincipal = new JButton("Cerrar Sesion");
+        volverVistaPrincipal.setFont(new Font("Arial", Font.BOLD, 12));
+        volverVistaPrincipal.setBackground(Color.WHITE);
+        volverVistaPrincipal.setForeground(new Color(35, 41, 122));
+        volverVistaPrincipal.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                VistaPrincipal vistaInicial = new VistaPrincipal();
+                vistaInicial.setVisible(true);
+                setVisible(false);
+                JOptionPane.showMessageDialog(null, "Volviendo a la vista principal...");
+                
+            }
+        });
+        panelInferior.add(volverVistaPrincipal);
     }
 
     // Metodo para mostrar la ventana de inicio de sesion

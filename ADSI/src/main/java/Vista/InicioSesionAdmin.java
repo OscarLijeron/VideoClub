@@ -13,9 +13,10 @@ public class InicioSesionAdmin extends JFrame {
     private JButton solicitudesRegistro;
     private JButton modificarCuentas;
     private JButton eliminarCuentas;
-    private JButton actualizarDatosPersonales; // Nuevo botón
+    private JButton actualizarDatosPersonales;
+    private JButton volverVistaPrincipal; // Botón para volver a la vista principal
 
-    // Constructor privado que recibe el nombre del usuario
+    // Constructor privado que recibe el ID del usuario
     private InicioSesionAdmin(Integer idUsu) {
         this.idUsuario = idUsu;
         initialize();
@@ -31,10 +32,10 @@ public class InicioSesionAdmin extends JFrame {
 
     // Metodo para inicializar los componentes graficos
     private void initialize() {
-        // Configuracion de la ventana
+        // Configuración de la ventana
         setTitle("Bienvenido Administrador");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 450, 450); // Ajustar altura para más botones
+        setBounds(100, 100, 450, 500); // Ajustar altura para más botones
         JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -93,7 +94,7 @@ public class InicioSesionAdmin extends JFrame {
         modificarCuentas.setForeground(Color.WHITE);
         modificarCuentas.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                VerCuentasParaModificar frame = new VerCuentasParaModificar(idUsuario); // Cambia a la clase correspondiente
+                VerCuentasParaModificar frame = new VerCuentasParaModificar(idUsuario);
                 frame.setVisible(true);
                 setVisible(false);
                 JOptionPane.showMessageDialog(null, "Modificar cuentas de usuarios");
@@ -108,7 +109,7 @@ public class InicioSesionAdmin extends JFrame {
         eliminarCuentas.setForeground(Color.WHITE);
         eliminarCuentas.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                EliminarCuentas frame = new EliminarCuentas(idUsuario); // Cambia a la clase correspondiente
+                EliminarCuentas frame = new EliminarCuentas(idUsuario);
                 frame.setVisible(true);
                 setVisible(false);
                 JOptionPane.showMessageDialog(null, "Eliminar cuentas de usuarios");
@@ -123,13 +124,33 @@ public class InicioSesionAdmin extends JFrame {
         actualizarDatosPersonales.setForeground(Color.WHITE);
         actualizarDatosPersonales.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ActualizarDatosPersonales frame = new ActualizarDatosPersonales(idUsuario); // Cambia a la clase correspondiente
+                ActualizarDatosPersonales frame = new ActualizarDatosPersonales(idUsuario);
                 frame.setVisible(true);
                 setVisible(false);
                 JOptionPane.showMessageDialog(null, "Actualizar datos personales");
             }
         });
         panelBotones.add(actualizarDatosPersonales);
+
+        // Panel inferior para el botón de volver
+        JPanel panelInferior = new JPanel();
+        panelInferior.setBackground(new Color(35, 41, 122));
+        contentPane.add(panelInferior, BorderLayout.SOUTH);
+
+        // Botón "Volver a la vista principal"
+        volverVistaPrincipal = new JButton("Cerrar Sesion");
+        volverVistaPrincipal.setFont(new Font("Arial", Font.BOLD, 12));
+        volverVistaPrincipal.setBackground(Color.WHITE);
+        volverVistaPrincipal.setForeground(new Color(35, 41, 122));
+        volverVistaPrincipal.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                VistaPrincipal vistaInicial = new VistaPrincipal();
+                vistaInicial.setVisible(true);
+                setVisible(false);
+                JOptionPane.showMessageDialog(null, "Volviendo a la vista principal...");
+            }
+        });
+        panelInferior.add(volverVistaPrincipal);
     }
 
     // Metodo para mostrar la ventana de inicio de sesion
@@ -137,4 +158,5 @@ public class InicioSesionAdmin extends JFrame {
         setVisible(true);
     }
 }
+
 

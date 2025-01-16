@@ -97,13 +97,13 @@ public class RegistroUsuario extends JFrame {
                         JOptionPane.showMessageDialog(null, "Solicitud de registro enviada.");
                     }
                     if (resultado==1){
-                        JOptionPane.showMessageDialog(null, "Ya existe esa solicitud con esos datos.");
+                        JOptionPane.showMessageDialog(null, "Ya existe una solicitud con ese nombre o correo .");
                     }
                     if (resultado==2){
                         JOptionPane.showMessageDialog(null, "No se puedo encontrar ningun admin para enviar la solicitud.");
                     }
                     if (resultado==3){
-                        JOptionPane.showMessageDialog(null, "Ya existe un usuario con esos datos.");
+                        JOptionPane.showMessageDialog(null, "Ya existe un usuario con ese nombre o correo.");
                     }
                 }
             }

@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.EmptyBorder;
 
-import Controladores.GestorUsuarios;
+
 import Controladores.VideoClub;
 
 import java.awt.event.ActionEvent;
@@ -108,7 +108,7 @@ public class VistaPrincipal extends JFrame {
                     Integer idUsuario = VideoClub.getGestorGeneral().iniciarSesion(usuarioNombre,contraseñaIngresada,correoIngresado);
                     if (idUsuario!=null){
                         boolean esAdmin = false;
-                        esAdmin = GestorUsuarios.getGestorUsuarios().comprobarQueEsAdmin(idUsuario);
+                        esAdmin = VideoClub.getGestorGeneral().comprobarSiEsAdmin(idUsuario);
                         if (esAdmin){
                             // Aqui iria la vista para el admin
                             JOptionPane.showMessageDialog(null, "Usuario es Admin");
