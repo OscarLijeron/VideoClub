@@ -1,23 +1,19 @@
 package Modelo;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Alquiler {
 	private Pelicula peliculaAlquilada;
 	private int idUsuario;
-	private Date fechaAlquiler;
+	private Timestamp fechaAlquiler;
 
 	public Alquiler(Pelicula pPelicula, int idUsuario) {
 		this.peliculaAlquilada=pPelicula;
 		this.idUsuario=idUsuario;
-		// Obtiene la fecha actual como LocalDate
-        LocalDate fechaActual = LocalDate.now();
-		this.fechaAlquiler=Date.from(fechaActual.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		this.fechaAlquiler=new Timestamp(System.currentTimeMillis());
 	}
 
-	public Alquiler(Pelicula pPelicula, int idUsuario, Date fechaAlquiler) {
+	public Alquiler(Pelicula pPelicula, int idUsuario, Timestamp fechaAlquiler) {
 		this.peliculaAlquilada=pPelicula;
 		this.idUsuario=idUsuario;
 		this.fechaAlquiler=fechaAlquiler;
@@ -29,7 +25,7 @@ public class Alquiler {
 	public Pelicula getPelicula() {
 		return this.peliculaAlquilada;
 	}
-	public Date getFechaAlquiler() {
+	public Timestamp getFechaAlquiler() {
 		return this.fechaAlquiler;
 	}
 	public int getIdUsuario() {
@@ -37,11 +33,7 @@ public class Alquiler {
 	}	
 	
 	public Boolean estaVencido() {
-		// Obtiene la fecha actual como LocalDate
-		LocalDate fechaActual = LocalDate.now();
-		Date fechaActualDate=Date.from(fechaActual.atStartOfDay(ZoneId.systemDefault()).toInstant());
-		long diferencia=fechaActualDate.getTime()-this.fechaAlquiler.getTime();
-		long dias=diferencia/(1000*60*60*24);
-		return dias>2;
+		// si la fecha actual es mayor a la fecha de alquiler + 48 horas
+		return (System.currentTimeMillis() > this.fechaAlquiler.getTime() + 172800000);
 	}
 }

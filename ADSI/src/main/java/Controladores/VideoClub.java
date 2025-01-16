@@ -1,7 +1,7 @@
 package Controladores;
 
 import org.json.JSONArray;
-import java.util.Date;
+import java.sql.Timestamp;
 
 import Modelo.Pelicula;
 import Modelo.SQLiteConnection;
@@ -87,7 +87,7 @@ public class VideoClub {
 	}
 
 
-	public void recuperarAlquiler (int idUsuario, String nombrePeli, int añoProd, String genero, Date fechaAlquiler) {
+	public void recuperarAlquiler (int idUsuario, String nombrePeli, int añoProd, String genero, Timestamp fechaAlquiler) {
 		this.gestorA.recuperarAlquiler(idUsuario, nombrePeli, añoProd, genero, fechaAlquiler);
 	}
 

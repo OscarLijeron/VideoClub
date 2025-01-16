@@ -10,10 +10,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -289,34 +292,36 @@ public class SQLiteConnection {
             }
         }
 		public void registrarAlquiler(int idUsuario, int idPeli) {
-			String url = "jdbc:sqlite:ADSI.db";
-
+            String url = "jdbc:sqlite:ADSI.db";
+        
             String sql1 = "UPDATE Pelicula SET estaDisponible = 'False' WHERE idPelicula = ?";
-            String sql2 = "INSERT INTO Alquiler (fechaAlquiler, idUsuario, idPelicula) VALUES (?, ?, ?)"; //------------------------------
-
-	        LocalDate localDate = LocalDate.now(); // Fecha actual ------------------------------------------------------------------------
-	        Date sqlDate = Date.valueOf(localDate); // Convertir a java.sql.Date ----------------------------------------------------------
-	        try (Connection conn = DriverManager.getConnection(url);
-
-                PreparedStatement pstmt1 = conn.prepareStatement(sql1);
-	            PreparedStatement pstmt2 = conn.prepareStatement(sql2);) 
-                  {
-
+            String sql2 = "INSERT INTO Alquiler (fechaAlquiler, idUsuario, idPelicula) VALUES (?, ?, ?)";
+        
+            // Obtener la fecha y hora actual en el formato deseado
+            LocalDateTime ahora = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String fechaAlquilerTexto = ahora.format(formatter); // Genera el texto formateado
+        
+            try (Connection conn = DriverManager.getConnection(url);
+                 PreparedStatement pstmt1 = conn.prepareStatement(sql1);
+                 PreparedStatement pstmt2 = conn.prepareStatement(sql2)) {
+        
+                // Marcar la película como no disponible
                 pstmt1.setInt(1, idPeli);
                 pstmt1.executeUpdate();
-
                 System.out.println("Película marcada como no disponible.");
-
-	        	pstmt2.setDate(1, sqlDate); //------------------------------------------------------------------------------
-	            pstmt2.setInt(2, idUsuario); 
-	            pstmt2.setInt(3, idPeli); 
-	            pstmt2.executeUpdate();
-
-	            System.out.println("Registro Alquiler insertado correctamente.");
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-		}
+        
+                // Insertar el alquiler en la base de datos
+                pstmt2.setString(1, fechaAlquilerTexto); // Insertar la fecha formateada como texto
+                pstmt2.setInt(2, idUsuario);
+                pstmt2.setInt(3, idPeli);
+                pstmt2.executeUpdate();
+        
+                System.out.println("Registro Alquiler insertado correctamente.");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 		public Optional<Pelicula> consultarPelicula(String nombrePelicula, String pGenero, Integer pAñoprod) {
 		    // Ruta de la base de datos SQLite
 		    String url = "jdbc:sqlite:ADSI.db";
@@ -433,12 +438,11 @@ public class SQLiteConnection {
             }
         }
         
-
-        public void limpiarAlquileresVencidos() {  //----------------------------------------------------------------------------------------------------
+        public void limpiarAlquileresVencidos() {  
             String url = "jdbc:sqlite:ADSI.db";
-            String sqlSeleccionar = "SELECT idUsuario, idPelicula FROM Alquiler WHERE julianday('now') - julianday(fechaAlquiler) > 2";
+            String sqlSeleccionar = "SELECT idUsuario, idPelicula FROM Alquiler WHERE julianday('now') - julianday(fechaAlquiler) > 2"; 
             String sqlEliminar = "DELETE FROM Alquiler WHERE idUsuario = ? AND idPelicula = ?";
-            String sqlActualizarPelicula = "UPDATE Pelicula SET estaDisponible = 1 WHERE idPelicula = ?";
+            String sqlActualizarPelicula = "UPDATE Pelicula SET estaDisponible = 'True' WHERE idPelicula = ?";
             String sqlNombreGnroAño = "SELECT nombre, genero, año FROM Pelicula WHERE idPelicula = ?";
         
             try (Connection conn = DriverManager.getConnection(url);
@@ -499,15 +503,22 @@ public class SQLiteConnection {
             // Consulta SQL para recuperar los datos de la tabla Alquiler
             String sql = "SELECT idUsuario, idPelicula, fechaAlquiler FROM Alquiler";
 
+            // Formato del campo fecha almacenado como TEXT en la base de datos
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
             try (Connection conn = DriverManager.getConnection(url);
-                 Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery(sql)) {
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
 
                 // Recorrer los resultados y mostrar los datos por pantalla
                 while (rs.next()) {
                     int idUsuario = rs.getInt("idUsuario");
                     int idPelicula = rs.getInt("idPelicula");
-                    Date fechaAlquiler = rs.getDate("fechaAlquiler");
+            
+                    // Convertir la fechaAlquiler (TEXT) a Timestamp
+                    String fechaAlquilerTexto = rs.getString("fechaAlquiler");
+                    LocalDateTime fechaAlquilerLocalDateTime = LocalDateTime.parse(fechaAlquilerTexto, formatter);
+                    Timestamp fechaAlquiler = Timestamp.valueOf(fechaAlquilerLocalDateTime);
 
                     // Obtener el nombre, género y año de la película
                     String sqlNombreGnroAño = "SELECT nombre, genero, año FROM Pelicula WHERE idPelicula = ?";
