@@ -156,7 +156,7 @@ public class CatalogoAmpliado extends JFrame {
 	}
 	 // Metodo para regresar a la vista de inicio de sesion
     private void volverAInicioSesion() {
-        JOptionPane.showMessageDialog(this, "Volviendo a inicio de sesion...");
+        JOptionPane.showMessageDialog(this, "Volviendo al menu principal...");
         this.setVisible(false); // Ocultar la vista actual
         InicioSesion.getInicioSesion(idUsuario).mostrar(); // Mostrar la vista de inicio de sesion
     }

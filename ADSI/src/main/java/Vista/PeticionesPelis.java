@@ -240,7 +240,7 @@ public class PeticionesPelis extends JFrame {
 	}*/
 	// Metodo para regresar a la vista de inicio de sesion
     private void volverAInicioSesionAdmin() {
-        JOptionPane.showMessageDialog(this, "Volviendo a inicio de sesion...");
+        JOptionPane.showMessageDialog(this, "Volviendo al menu principal...");
         this.setVisible(false); // Ocultar la vista actual
         InicioSesionAdmin.getInicioSesionAdmin(idAdmin).mostrar(); // Mostrar la vista de inicio de sesion
     }

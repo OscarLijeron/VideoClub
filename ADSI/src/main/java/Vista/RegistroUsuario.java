@@ -117,7 +117,7 @@ public class RegistroUsuario extends JFrame {
         btnVolver.setForeground(Color.WHITE);
         btnVolver.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Aqui puedes añadir la logica para volver a la pagina inicial
+                JOptionPane.showMessageDialog(null, "Volviendo a la vista inicial...");
                 VistaPrincipal vistaPrincipal = new VistaPrincipal();
                 vistaPrincipal.setVisible(true);
                 dispose();

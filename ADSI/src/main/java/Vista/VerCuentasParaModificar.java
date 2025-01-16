@@ -92,7 +92,7 @@ public class VerCuentasParaModificar extends JFrame {
         btnVolver.setForeground(Color.WHITE);
         btnVolver.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Volviendo a inicio de sesión...");
+                JOptionPane.showMessageDialog(null, "Volviendo al menu principal...");
                 setVisible(false); // Ocultar la vista actual
                 InicioSesionAdmin.getInicioSesionAdmin(pIdAdmin).mostrar(); // Mostrar la vista de inicio de sesión
             }

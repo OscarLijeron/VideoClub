@@ -121,12 +121,12 @@ public class ActualizarDatosPersonales extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 boolean admin = VideoClub.getGestorGeneral().comprobarSiEsAdmin(pIdUsuario);
                 if(!admin){
-                    JOptionPane.showMessageDialog(null, "Volviendo a inicio de sesion...");
+                    JOptionPane.showMessageDialog(null, "Volviendo al menu principal...");
                     setVisible(false); // Ocultar la vista actual
                     InicioSesion.getInicioSesion(pIdUsuario).mostrar(); // Mostrar la vista de inicio de sesion 
                 }
                 else{
-                    JOptionPane.showMessageDialog(null, "Volviendo a inicio de sesion...");
+                    JOptionPane.showMessageDialog(null, "Volviendo al menu principal...");
                     setVisible(false); // Ocultar la vista actual
                     InicioSesionAdmin.getInicioSesionAdmin(pIdUsuario).mostrar(); // Mostrar la vista de inicio de sesion 
                 }   

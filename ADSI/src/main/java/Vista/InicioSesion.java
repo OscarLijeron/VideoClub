@@ -137,7 +137,7 @@ public class InicioSesion extends JFrame {
         panelInferior.setBackground(new Color(35, 41, 122));
         contentPane.add(panelInferior, BorderLayout.SOUTH);
 
-        // Botón "Volver a la vista principal"
+        // Botón para cerrar sesion
         volverVistaPrincipal = new JButton("Cerrar Sesión");
         volverVistaPrincipal.setFont(new Font("Arial", Font.BOLD, 12));
         volverVistaPrincipal.setBackground(Color.WHITE);

@@ -111,7 +111,7 @@ public class SolicitudesRegistro extends JFrame {
         btnVolver.setForeground(Color.WHITE);
         btnVolver.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Volviendo a inicio de sesion...");
+                JOptionPane.showMessageDialog(null, "Volviendo al menu principal...");
                 setVisible(false);
                 InicioSesionAdmin.getInicioSesionAdmin(pIdAdmin).mostrar();
             }

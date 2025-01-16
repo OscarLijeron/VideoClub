@@ -137,17 +137,16 @@ public class InicioSesionAdmin extends JFrame {
         panelInferior.setBackground(new Color(35, 41, 122));
         contentPane.add(panelInferior, BorderLayout.SOUTH);
 
-        // Botón "Volver a la vista principal"
+        // Botón para cerrar sesion
         volverVistaPrincipal = new JButton("Cerrar Sesion");
         volverVistaPrincipal.setFont(new Font("Arial", Font.BOLD, 12));
         volverVistaPrincipal.setBackground(Color.WHITE);
         volverVistaPrincipal.setForeground(new Color(35, 41, 122));
         volverVistaPrincipal.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                VistaPrincipal vistaInicial = new VistaPrincipal();
-                vistaInicial.setVisible(true);
-                setVisible(false);
-                JOptionPane.showMessageDialog(null, "Volviendo a la vista principal...");
+                instance = null; 
+                dispose(); 
+                System.exit(0);
             }
         });
         panelInferior.add(volverVistaPrincipal);
