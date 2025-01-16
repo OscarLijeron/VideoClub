@@ -527,7 +527,7 @@ public class SQLiteConnection {
                             if (rsPelicula.next()) {
                                 String nombre = rsPelicula.getString("nombre");
                                 String genero = rsPelicula.getString("genero");
-                                int añño = rsPelicula.getInt("año");
+                                int año = rsPelicula.getInt("año");
 
                                 // Sincronizar el modelo pasando nombre, género y año
                                 VideoClub.getGestorGeneral().recuperarAlquiler(idUsuario, nombre, año, genero, fechaAlquiler);
