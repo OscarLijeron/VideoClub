@@ -34,6 +34,6 @@ public class Alquiler {
 	
 	public Boolean estaVencido() {
 		// si la fecha actual es mayor a la fecha de alquiler + 48 horas
-		return (System.currentTimeMillis() > this.fechaAlquiler.getTime() + 172800000);
+		return (System.currentTimeMillis() >= this.fechaAlquiler.getTime() + 172800000);
 	}
 }

@@ -439,7 +439,7 @@ public class SQLiteConnection {
         
         public void limpiarAlquileresVencidos() {  
             String url = "jdbc:sqlite:ADSI.db";
-            String sqlSeleccionar = "SELECT idUsuario, idPelicula FROM Alquiler WHERE julianday('now') - julianday(fechaAlquiler) > 2"; 
+            String sqlSeleccionar = "SELECT idUsuario, idPelicula FROM Alquiler WHERE julianday('now') - julianday(fechaAlquiler) >= 2"; 
             String sqlEliminar = "DELETE FROM Alquiler WHERE idUsuario = ? AND idPelicula = ?";
             String sqlActualizarPelicula = "UPDATE Pelicula SET estaDisponible = 'True' WHERE idPelicula = ?";
             String sqlNombreGnroAño = "SELECT nombre, genero, año FROM Pelicula WHERE idPelicula = ?";
