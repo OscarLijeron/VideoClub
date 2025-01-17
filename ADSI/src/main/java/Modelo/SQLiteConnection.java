@@ -290,16 +290,15 @@ public class SQLiteConnection {
                 e.printStackTrace();
             }
         }
-		public void registrarAlquiler(int idUsuario, int idPeli) {
+		public void registrarAlquiler(int idUsuario, int idPeli, Timestamp fechaAlq) {
             String url = "jdbc:sqlite:ADSI.db";
         
             String sql1 = "UPDATE Pelicula SET estaDisponible = 'False' WHERE idPelicula = ?";
             String sql2 = "INSERT INTO Alquiler (fechaAlquiler, idUsuario, idPelicula) VALUES (?, ?, ?)";
         
-            // Obtener la fecha y hora actual en el formato deseado
-            LocalDateTime ahora = LocalDateTime.now();
+            // Convertir el Timestamp al formato deseado
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            String fechaAlquilerTexto = ahora.format(formatter); // Genera el texto formateado
+            String fechaAlquilerTexto = fechaAlq.toLocalDateTime().format(formatter);
         
             try (Connection conn = DriverManager.getConnection(url);
                  PreparedStatement pstmt1 = conn.prepareStatement(sql1);
@@ -311,7 +310,7 @@ public class SQLiteConnection {
                 System.out.println("Película marcada como no disponible.");
         
                 // Insertar el alquiler en la base de datos
-                pstmt2.setString(1, fechaAlquilerTexto); // Insertar la fecha formateada como texto
+                pstmt2.setString(1, fechaAlquilerTexto); // Insertar la fecha convertida
                 pstmt2.setInt(2, idUsuario);
                 pstmt2.setInt(3, idPeli);
                 pstmt2.executeUpdate();
@@ -439,7 +438,7 @@ public class SQLiteConnection {
         
         public void limpiarAlquileresVencidos() {  
             String url = "jdbc:sqlite:ADSI.db";
-            String sqlSeleccionar = "SELECT idUsuario, idPelicula FROM Alquiler WHERE julianday('now') - julianday(fechaAlquiler) >= 2"; 
+            String sqlSeleccionar = "SELECT idUsuario, idPelicula FROM Alquiler WHERE datetime(fechaAlquiler, '+2 days') <= datetime('now')";
             String sqlEliminar = "DELETE FROM Alquiler WHERE idUsuario = ? AND idPelicula = ?";
             String sqlActualizarPelicula = "UPDATE Pelicula SET estaDisponible = 'True' WHERE idPelicula = ?";
             String sqlNombreGnroAño = "SELECT nombre, genero, año FROM Pelicula WHERE idPelicula = ?";

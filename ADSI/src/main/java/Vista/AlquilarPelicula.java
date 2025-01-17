@@ -8,10 +8,9 @@ import org.json.JSONObject;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import Controladores.GestorPeliculas;
 import Controladores.VideoClub;
-import Modelo.Pelicula;
+
 
 public class AlquilarPelicula extends JFrame {
     private static AlquilarPelicula instance = null;
@@ -126,22 +125,23 @@ public class AlquilarPelicula extends JFrame {
             this.setVisible(false); 
             InicioSesion.getInicioSesion(this.idUsuario).mostrar();
         });
-        btnAlquilar.addActionListener(e -> {
+        btnAlquilar.addActionListener(e -> { 
             int row = tablePeliculas.getSelectedRow();
             if (row != -1) {
                 String nombre = tableModel.getValueAt(row, 0).toString();
                 String anio = tableModel.getValueAt(row, 1).toString();
                 String genero = tableModel.getValueAt(row, 2).toString();
-                Optional<Pelicula> optionalPelicula = GestorPeliculas.getGestorPeliculas().obtenerPeliculaPorNAG(nombre, Integer.parseInt(anio), genero);
-                if (optionalPelicula.isPresent()) {
-                    Pelicula p = optionalPelicula.get();
-                    if (p.estaDisponible()) {
-                        VideoClub.getGestorGeneral().alquilarPelicula(this.idUsuario, nombre, Integer.parseInt(anio), genero);
-                        JOptionPane.showMessageDialog(this, "Película alquilada con éxito.");
-                    } else {
-                        JOptionPane.showMessageDialog(this, "La película no está disponible.");
-                    }
-                } 
+                int rdo = VideoClub.getGestorGeneral().alquilarPelicula(this.idUsuario, nombre, Integer.parseInt(anio), genero);
+                
+                if (rdo == 0) {
+                    JOptionPane.showMessageDialog(this, "Película no encontrada en el catálogo.");
+                } else if (rdo == 1) {
+                    JOptionPane.showMessageDialog(this, "La película no está disponible.");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Película alquilada con éxito.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Seleccione una película para alquilar.");
             }
         });
 

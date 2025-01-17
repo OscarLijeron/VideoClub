@@ -53,8 +53,8 @@ public class VideoClub {
 		return gestorP.mostrarPeliculas();
 	}
 
-	public void alquilarPelicula(int idUsuario, String nombrePeli, int añoProd, String genero) {
-		gestorA.alquilarPelicula(idUsuario,  nombrePeli,  añoProd,  genero);
+	public int alquilarPelicula(int idUsuario, String nombrePeli, int añoProd, String genero) {
+		return gestorA.alquilarPelicula(idUsuario,  nombrePeli,  añoProd,  genero);
 	}
 
 	public int registrarse(String pNombre, String pContraseña, String pCorreo) {

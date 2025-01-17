@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import Modelo.Alquiler;
 import Modelo.Pelicula;
 import Modelo.SQLiteConnection;
 import Modelo.Usuario;
@@ -367,6 +368,11 @@ public class GestorUsuarios {
 			}
 		}
 		return false;
+	}
+
+	public void alquilarPelicula(int idUsuario, Alquiler nuevoAlquiler) {
+		Usuario usuario = this.obtenerUsuarioPorId(idUsuario);
+		usuario.alquilarPelicula(nuevoAlquiler);
 	}
 
 
