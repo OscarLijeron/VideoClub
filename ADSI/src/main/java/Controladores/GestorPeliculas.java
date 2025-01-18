@@ -47,21 +47,21 @@ public class GestorPeliculas {
     }
 
     public JSONArray mostrarPeliculas() {
-        JSONArray peliculas = new JSONArray(); // Inicializa un JSONArray vacio
+        JSONArray peliculas = new JSONArray(); 
 
-        if (this.catalogoPelis.size() > 0) { // Verifica si hay peliculas en el catalogo
-            for (Pelicula p : this.catalogoPelis) { // Recorre todas las peliculas del catalogo
-                JSONObject pelicula = new JSONObject(); // Inicializa un JSONObject vacio
-                pelicula.put("Nombre", p.getNombrePelicula()); // Añade el nombre de la pelicula
-                pelicula.put("Año", p.getAñoProd()); // Añade el año de produccion
-                pelicula.put("Genero", p.getGenero()); // Añade el genero de la pelicula
-                peliculas.put(pelicula); // Añade el JSONObject al JSONArray
+        if (this.catalogoPelis.size() > 0) { 
+            for (Pelicula p : this.catalogoPelis) { 
+                JSONObject pelicula = new JSONObject(); 
+                pelicula.put("Nombre", p.getNombrePelicula()); 
+                pelicula.put("Año", p.getAñoProd()); 
+                pelicula.put("Genero", p.getGenero());
+                peliculas.put(pelicula); 
             }
         } else {
-            System.out.println("No hay peliculas en el catalogo."); // Mensaje si no hay peliculas
+            System.out.println("No hay peliculas en el catalogo."); 
         }
 
-        return peliculas; // Devuelve el catalogo de peliculas (vacio si no hay peliculas)
+        return peliculas; 
     }
 
 
