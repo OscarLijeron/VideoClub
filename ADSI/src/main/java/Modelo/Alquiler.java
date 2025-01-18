@@ -20,7 +20,11 @@ public class Alquiler {
 	}
 
 	public Boolean esEstaPeli(Pelicula pPelicula) {
-		return this.peliculaAlquilada.equals(pPelicula);
+		if (pPelicula.getNombrePelicula().equals(this.peliculaAlquilada.getNombrePelicula()) && pPelicula.getAñoProd()==this.peliculaAlquilada.getAñoProd() && pPelicula.getGenero().equals(this.peliculaAlquilada.getGenero())) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	public Pelicula getPelicula() {
 		return this.peliculaAlquilada;

@@ -1,6 +1,7 @@
 package Modelo;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -59,9 +60,16 @@ public class Usuario {
 	}
 
 	public void eliminarAlquiler(Alquiler pAlquiler) {
-		this.misAlquileres.remove(pAlquiler);
-		//
+		Iterator<Alquiler> iterator = this.misAlquileres.iterator();
+		while (iterator.hasNext()) {
+			Alquiler alquiler = iterator.next();
+			if (alquiler.esEstaPeli(pAlquiler.getPelicula())) {
+				iterator.remove(); 
+				return; 
+			}
+		}
 	}
+	
 	public JSONArray mostrarSolicitudesPeli() {
 		JSONArray jsonArray = new JSONArray();
         System.out.print(this.solicitudesPelicula.size());

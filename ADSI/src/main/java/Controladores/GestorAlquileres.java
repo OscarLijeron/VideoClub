@@ -63,14 +63,14 @@ public class GestorAlquileres {
             return;
         }
         Pelicula pelicula = peliOpt.get();
-        Optional<Alquiler> alquilerOpt = this.listaAlquileres.stream().filter(a -> a.getPelicula().equals(pelicula) && a.getIdUsuario() == idUsuario).findFirst();
+        Optional<Alquiler> alquilerOpt = this.listaAlquileres.stream().filter(a -> a.esEstaPeli(pelicula) && a.getIdUsuario() == idUsuario).findFirst();
         if (alquilerOpt.isEmpty()) {
             System.out.println("El usuario no tiene alquilada la pelicula.");
             return;
         }
         Alquiler alquiler = alquilerOpt.get();
         if (alquiler.estaVencido()) {
-            this.listaAlquileres.remove(alquiler);
+            this.listaAlquileres.removeIf(a -> a.esEstaPeli(alquiler.getPelicula()));
             GestorUsuarios.getGestorUsuarios().obtenerUsuarioPorId(idUsuario).eliminarAlquiler(alquiler);
             pelicula.setDisponible(true);
             System.out.println("Alquiler eliminado exitosamente.");
