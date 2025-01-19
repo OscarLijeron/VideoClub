@@ -67,12 +67,14 @@ public class AlquileresUsuario extends JFrame {
         lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
         panelSuperior.add(lblTitulo);
 
+        
         // Tabla para mostrar los alquileres
-        String[] columnNames = {"Título", "Año", "Género"};
+        String[] columnNames = {"Título", "Año", "Género", "Fecha de Alquiler"}; // Agregar columna
         tableModel = new DefaultTableModel(columnNames, 0);
         tableAlquileres = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(tableAlquileres);
         contentPane.add(scrollPane, BorderLayout.CENTER);
+
 
         // Panel inferior con los botones de navegación y el botón "Volver"
         JPanel panelInferior = new JPanel();
@@ -136,13 +138,16 @@ public class AlquileresUsuario extends JFrame {
             String titulo = alquiler.getString("titulo");
             int año = alquiler.getInt("año");
             String genero = alquiler.getString("genero");
+            String fechaAlquiler = alquiler.getString("fecha"); // Obtener la fecha
 
-            tableModel.addRow(new Object[]{titulo, año, genero});
+            // Agregar la fila a la tabla incluyendo la fecha de alquiler
+            tableModel.addRow(new Object[]{titulo, año, genero, fechaAlquiler});
         }
 
         btnAnterior.setEnabled(page > 1);
         btnSiguiente.setEnabled(page * itemsPerPage < totalItems);
     }
+
 
     // Cambiar de página
     private void cambiarPagina(int direction) {

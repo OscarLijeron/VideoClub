@@ -32,6 +32,10 @@ public class Alquiler {
 	public Timestamp getFechaAlquiler() {
 		return this.fechaAlquiler;
 	}
+
+	public String getFecha(){
+		return this.fechaAlquiler.toString();
+	}
 	public int getIdUsuario() {
 		return this.idUsuario;
 	}	
