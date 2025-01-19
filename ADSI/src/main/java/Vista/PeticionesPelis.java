@@ -265,4 +265,10 @@ public class PeticionesPelis extends JFrame {
         this.setVisible(false); // Ocultar la vista actual
         InicioSesionAdmin.getInicioSesionAdmin(idAdmin).mostrar(); // Mostrar la vista de inicio de sesion
     }
+	private void mostrarMensajeDenegacionExitosa() {
+    	JOptionPane.showMessageDialog(this, "Solicitud denegada correctamente.");
+    }
+    private void mostrarMensajeAceptacionExitosa() {
+    	JOptionPane.showMessageDialog(this, "Solicitud aceptada correctamente.");
+    }
 }
