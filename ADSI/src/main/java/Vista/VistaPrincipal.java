@@ -162,7 +162,9 @@ public class VistaPrincipal extends JFrame {
         VerCatalogo.setPreferredSize(new Dimension(150, 40));
         VerCatalogo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Aqui puedes agregar el codigo para ver el catálogo
+                Catalogo vistaCatalogo = Catalogo.getCatalogo();
+                vistaCatalogo.setVisible(true);
+                setVisible(false);
             }
         });
         botonesPanel.add(VerCatalogo);
