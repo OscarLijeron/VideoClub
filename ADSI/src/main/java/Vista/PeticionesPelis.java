@@ -193,6 +193,7 @@ public class PeticionesPelis extends JFrame {
 			if (e.getSource().equals(Aceptar)){			
 				//String idUsuarioTexto=idUsuario.getText();
 				//int idUsuario=Integer.parseInt(idUsuarioTexto);
+				try {
 				int idUsuario=idAdmin;
 				String tituloP=tituloPeli.getText();
 				String añoPTexto=añoPeli.getText();
@@ -200,17 +201,37 @@ public class PeticionesPelis extends JFrame {
 				String generoP=generoPeli.getText();
 				VideoClub.getGestorGeneral().eliminarSolicitudPelicula(idUsuario, tituloP, añoP, generoP);
 				VideoClub.getGestorGeneral().añadirPeliAlCatalogo(tituloP, añoP, generoP);
-							
+				mostrarMensajeAceptacionExitosa();
+				} catch (NumberFormatException ex) {
+			        // Manejo de error si no se puede convertir a entero
+			        System.out.println("Error: El año ingresado debe ser un numero valido.");
+			        JOptionPane.showMessageDialog(null, "Por favor, ingresa un año valido.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
+			    } catch (Exception ex) {
+			        // Manejo de otras posibles excepciones
+			        ex.printStackTrace();
+			        JOptionPane.showMessageDialog(null, "Ocurrio un error al procesar la solicitud.", "Error", JOptionPane.ERROR_MESSAGE);
+			    }			
 			}
 			if (e.getSource().equals(Denegar)){			
 				//String idUsuarioTexto=idUsuario.getText();
 				//int idUsuario=Integer.parseInt(idUsuarioTexto);
+				try {
 				int idUsuario=idAdmin;
 				String tituloP=tituloPeli.getText();
 				String añoPTexto=añoPeli.getText();
 				int añoP=Integer.parseInt(añoPTexto);
 				String generoP=generoPeli.getText();
 				VideoClub.getGestorGeneral().eliminarSolicitudPelicula(idUsuario, tituloP, añoP, generoP);
+				mostrarMensajeDenegacionExitosa();
+				} catch (NumberFormatException ex) {
+			        // Manejo de error si no se puede convertir a entero
+			        System.out.println("Error: El año ingresado debe ser un numero valido.");
+			        JOptionPane.showMessageDialog(null, "Por favor, ingresa un año valido.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
+			    } catch (Exception ex) {
+			        // Manejo de otras posibles excepciones
+			        ex.printStackTrace();
+			        JOptionPane.showMessageDialog(null, "Ocurrio un error al procesar la solicitud.", "Error", JOptionPane.ERROR_MESSAGE);
+			    }
 				
 			}
 			

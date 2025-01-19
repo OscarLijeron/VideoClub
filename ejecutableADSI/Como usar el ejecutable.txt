@@ -1,0 +1,12 @@
+En esta Carpeta esta el ejecutable ADSIfinal.jar y el archivo ADSI.db que es la base de datos.
+
+Primero que todo el ADSIfinal.jar debe ser ejecutado en la misma carpeta donde este ADSI.db .
+
+Segundo, en la base de datos ya hay un administrador insertado, para probar sus distintas funcionalidades deberás iniciar sesión con estos datos: Nombre:admin  Correo:hola Contraseña:hola .Si quieres usar un usuario que ya esta insertado en la base de datos para probar sus  funcionalidades puede susar este con la siguientes credenciales: Nombre:bruno Correo:bruno@correo.com Contraseña:hola
+
+Tercero, para deslogearte tienes que cerrar el ejecutable.
+
+Cuarto, recomiendo usar la pantalla completa para utilizar las funcionalidades debido que hay algunas vistas que con la pantalla minimizada no se ven botones o textboxes.
+
+
+
